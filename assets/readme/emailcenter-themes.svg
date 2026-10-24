@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="926" viewBox="0 0 1100 926">
+<rect width="100%" height="100%" fill="#101827"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif}.title{font-size:19px;font-weight:700;fill:#eef4ff}.meta{font-size:13px;fill:#aebbd0}</style>
+<rect x="22" y="22" width="520" height="114" rx="12" fill="#f4f6fa" stroke="#dce3ed"/>
+<text class="title" x="38" y="52">Klar · Hell</text>
+<text class="meta" x="38" y="74">Helles Theme · Paar: dark</text>
+<rect x="38" y="90" width="145" height="30" rx="5" fill="#f4f6fa" stroke="#dce3ed"/>
+<rect x="193" y="90" width="145" height="30" rx="5" fill="#ffffff" stroke="#dce3ed"/>
+<rect x="348" y="90" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="110">Akzent</text>
+<rect x="560" y="22" width="520" height="114" rx="12" fill="#101827" stroke="#34425b"/>
+<text class="title" x="576" y="52">Nacht · Dunkel</text>
+<text class="meta" x="576" y="74">Dunkles Theme · Paar: light</text>
+<rect x="576" y="90" width="145" height="30" rx="5" fill="#101827" stroke="#34425b"/>
+<rect x="731" y="90" width="145" height="30" rx="5" fill="#192438" stroke="#34425b"/>
+<rect x="886" y="90" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="110">Akzent</text>
+<rect x="22" y="150" width="520" height="114" rx="12" fill="#f5f1e8" stroke="#dbd0be"/>
+<text class="title" x="38" y="180">Elfenbein · Hell</text>
+<text class="meta" x="38" y="202">Helles Theme · Paar: graphite</text>
+<rect x="38" y="218" width="145" height="30" rx="5" fill="#f5f1e8" stroke="#dbd0be"/>
+<rect x="193" y="218" width="145" height="30" rx="5" fill="#fffcf5" stroke="#dbd0be"/>
+<rect x="348" y="218" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="238">Akzent</text>
+<rect x="560" y="150" width="520" height="114" rx="12" fill="#191919" stroke="#4b4741"/>
+<text class="title" x="576" y="180">Graphit · Dunkel</text>
+<text class="meta" x="576" y="202">Dunkles Theme · Paar: ivory</text>
+<rect x="576" y="218" width="145" height="30" rx="5" fill="#191919" stroke="#4b4741"/>
+<rect x="731" y="218" width="145" height="30" rx="5" fill="#272727" stroke="#4b4741"/>
+<rect x="886" y="218" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="238">Akzent</text>
+<rect x="22" y="278" width="520" height="114" rx="12" fill="#edf6f1" stroke="#c9dfd3"/>
+<text class="title" x="38" y="308">Minze · Hell</text>
+<text class="meta" x="38" y="330">Helles Theme · Paar: forest</text>
+<rect x="38" y="346" width="145" height="30" rx="5" fill="#edf6f1" stroke="#c9dfd3"/>
+<rect x="193" y="346" width="145" height="30" rx="5" fill="#fbfffc" stroke="#c9dfd3"/>
+<rect x="348" y="346" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="366">Akzent</text>
+<rect x="560" y="278" width="520" height="114" rx="12" fill="#0f211d" stroke="#365b4b"/>
+<text class="title" x="576" y="308">Wald · Dunkel</text>
+<text class="meta" x="576" y="330">Dunkles Theme · Paar: mint</text>
+<rect x="576" y="346" width="145" height="30" rx="5" fill="#0f211d" stroke="#365b4b"/>
+<rect x="731" y="346" width="145" height="30" rx="5" fill="#18332b" stroke="#365b4b"/>
+<rect x="886" y="346" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="366">Akzent</text>
+<rect x="22" y="406" width="520" height="114" rx="12" fill="#f8f0f5" stroke="#e3cee3"/>
+<text class="title" x="38" y="436">Rosé · Hell</text>
+<text class="meta" x="38" y="458">Helles Theme · Paar: plum</text>
+<rect x="38" y="474" width="145" height="30" rx="5" fill="#f8f0f5" stroke="#e3cee3"/>
+<rect x="193" y="474" width="145" height="30" rx="5" fill="#fffcff" stroke="#e3cee3"/>
+<rect x="348" y="474" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="494">Akzent</text>
+<rect x="560" y="406" width="520" height="114" rx="12" fill="#221828" stroke="#5c4265"/>
+<text class="title" x="576" y="436">Pflaume · Dunkel</text>
+<text class="meta" x="576" y="458">Dunkles Theme · Paar: rose</text>
+<rect x="576" y="474" width="145" height="30" rx="5" fill="#221828" stroke="#5c4265"/>
+<rect x="731" y="474" width="145" height="30" rx="5" fill="#33223b" stroke="#5c4265"/>
+<rect x="886" y="474" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="494">Akzent</text>
+<rect x="22" y="534" width="520" height="114" rx="12" fill="#eaf3fa" stroke="#b7cfde"/>
+<text class="title" x="38" y="564">Ozean · Fließend</text>
+<text class="meta" x="38" y="586">Helles Theme · Paar: aurora</text>
+<rect x="38" y="602" width="145" height="30" rx="5" fill="#eaf3fa" stroke="#b7cfde"/>
+<rect x="193" y="602" width="145" height="30" rx="5" fill="#fafdff" stroke="#b7cfde"/>
+<rect x="348" y="602" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="622">Akzent</text>
+<rect x="560" y="534" width="520" height="114" rx="12" fill="#101e2b" stroke="#476577"/>
+<text class="title" x="576" y="564">Aurora · Leuchtend</text>
+<text class="meta" x="576" y="586">Dunkles Theme · Paar: ocean</text>
+<rect x="576" y="602" width="145" height="30" rx="5" fill="#101e2b" stroke="#476577"/>
+<rect x="731" y="602" width="145" height="30" rx="5" fill="#1b3044" stroke="#476577"/>
+<rect x="886" y="602" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="622">Akzent</text>
+<rect x="22" y="662" width="520" height="114" rx="12" fill="#fff3e7" stroke="#dfc7b3"/>
+<text class="title" x="38" y="692">Sonnenaufgang · Sanft</text>
+<text class="meta" x="38" y="714">Helles Theme · Paar: ember</text>
+<rect x="38" y="730" width="145" height="30" rx="5" fill="#fff3e7" stroke="#dfc7b3"/>
+<rect x="193" y="730" width="145" height="30" rx="5" fill="#fffdf9" stroke="#dfc7b3"/>
+<rect x="348" y="730" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="750">Akzent</text>
+<rect x="560" y="662" width="520" height="114" rx="12" fill="#251b1c" stroke="#71514d"/>
+<text class="title" x="576" y="692">Glut · Warm</text>
+<text class="meta" x="576" y="714">Dunkles Theme · Paar: sunrise</text>
+<rect x="576" y="730" width="145" height="30" rx="5" fill="#251b1c" stroke="#71514d"/>
+<rect x="731" y="730" width="145" height="30" rx="5" fill="#3c2929" stroke="#71514d"/>
+<rect x="886" y="730" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="750">Akzent</text>
+<rect x="22" y="790" width="520" height="114" rx="12" fill="#f2f2ef" stroke="#b7c1b9"/>
+<text class="title" x="38" y="820">Papier · Geradlinig</text>
+<text class="meta" x="38" y="842">Helles Theme · Paar: terminal</text>
+<rect x="38" y="858" width="145" height="30" rx="5" fill="#f2f2ef" stroke="#b7c1b9"/>
+<rect x="193" y="858" width="145" height="30" rx="5" fill="#ffffff" stroke="#b7c1b9"/>
+<rect x="348" y="858" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="405" y="878">Akzent</text>
+<rect x="560" y="790" width="520" height="114" rx="12" fill="#101713" stroke="#45614e"/>
+<text class="title" x="576" y="820">Terminal · Präzise</text>
+<text class="meta" x="576" y="842">Dunkles Theme · Paar: paper</text>
+<rect x="576" y="858" width="145" height="30" rx="5" fill="#101713" stroke="#45614e"/>
+<rect x="731" y="858" width="145" height="30" rx="5" fill="#1b2820" stroke="#45614e"/>
+<rect x="886" y="858" width="48" height="30" rx="5" fill="#2862c4"/>
+<text class="meta" x="943" y="878">Akzent</text>
+</svg>
