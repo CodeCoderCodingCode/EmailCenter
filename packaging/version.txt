@@ -1,0 +1,3 @@
+VSVersionInfo(
+ ffi=FixedFileInfo(filevers=(1,0,1,0), prodvers=(1,0,1,0), mask=0x3f, flags=0x0, OS=0x40004, fileType=0x1, subtype=0x0, date=(0,0)),
+ kids=[StringFileInfo([StringTable('040704B0', [StringStruct('CompanyName','EmailCenter'), StringStruct('FileDescription','EmailCenter – Bewerbungen und E-Mail-Builder'), StringStruct('FileVersion','1.0.1'), StringStruct('InternalName','EmailCenter'), StringStruct('OriginalFilename','EmailCenter.exe'), StringStruct('ProductName','EmailCenter'), StringStruct('ProductVersion','1.0.1')])]), VarFileInfo([VarStruct('Translation',[1031,1200])])])

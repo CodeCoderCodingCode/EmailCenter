@@ -1,0 +1,77 @@
+EMAILCENTER — A5 SPRACHE / UI, PRÜFBERICHT
+Stand: 13.10.2026
+
+UMFANG
+- App-Beschriftungen und Fach-/Fehlermeldungen DE/EN, Projektassistent und Dialoge.
+- Dynamische Status-/Empfänger-/Budget-/Fortschrittsanzeigen.
+- Persistente Sprache, englischer Neustart und Rückwechsel.
+- Schutz eigener Namen, Zusatzfelder, Mail-/HTML-/Dokumentinhalte und Platzhalter.
+- Auswahl-IDs, Eingaben, Cursor/Markierung (auch Emoji) und Kalenderzeit erhalten.
+- Mailrenderer-Clear/HTML-Metadaten und Theme-Aktionsbeschriftung korrigiert.
+
+GEPRÜFT
+- 37 neue Sprachtests; 11 bestehende Endspurt-Tests.
+- Vor der letzten Kontextprüfung: kombinierte 41 Tests erfolgreich.
+- Derselbe Qt-Prozess, fertige Sprach-/Toast-/Kopierprüfungen: 3 Wiederholungen mit je
+  48 Tests, alle erfolgreich (144).
+- Englische Kontextprüfung zusätzlich erfolgreich; kein Versandversuch.
+- Mit Toast-, Quellen- und Zeitumstellungsprüfungen: 48 kombinierte Prüfungen
+  bestanden. Doppelte lokale Stunde in EN: erstes/zweites Vorkommen ergeben
+  2026-10-25T00:30:00Z / 2026-10-25T01:30:00Z; eigener Titel bleibt erhalten.
+- Qt-Rendering 100/125/150/200 % mit passenden Pixelverhältnissen.
+- 492 verwendete Katalogquellen, null fehlende Einträge; Eingaben unverändert.
+- Copy/Deepcopy/Pickle erhalten angezeigten Text und Sprachmetadaten; 17
+  Kopier-/Builder-Bedingungs-/Arbeitsstandprüfungen erfolgreich.
+- 1938 einfache Katalogtexte / 221 Formatvorlagen; Argumente/Encoding geprüft.
+
+FINALER GESAMTLAUF
+Abschließender Lauf mit tools/run_completion_checks.py: erfolgreich.
+638 Tests in 463.077 Sekunden: 637 bestanden, ein optionaler nativer Vault-Test
+übersprungen. Gesamtdauer inklusive Prüfumschlag: 464.583 Sekunden.
+Quellprüfsummen vor/nach dem Lauf identisch; code_changed_during_run ist leer.
+Der übersprungene native Vault-Test ist opt-in; diese Suite ist keine native
+Windows-Abnahme. Frühere getrennte Tresorprüfung: docs/37_Runtime_Dependencies.md.
+Ergebnis und geprüfte Quellprüfsummen:
+docs/abnahme/A5_Localization/Full_Test_Result.json.
+Vollständiger Ablauf: docs/38_Localization_Full_Test_Output.txt.
+Zusätzlich: 144 wiederholte UI-Prüfungen bestanden. Geprüfter Codeprüfstand mit
+Schema 13: docs/abnahme/Code_Snapshot.json (CRC und SHA-256 je Archivdatei).
+
+ZWISCHENLÄUFE
+- Drei Builder-Prüfungen fanden einen Kopierfehler bei übersetzten Fehler-
+  vorschauen (str-Unterklasse ohne Wiederherstellung der Metadaten). Korrigiert;
+  gezieltes 17-Test-Paket besteht.
+- Ein früher Theme-Aktionstest fand alte Beschriftungsmetadaten; korrigiert.
+- Ein kombinierter neuer UI-Zwischenlauf brach beim Theme mit nativer
+  Zugriffsverletzung ab; ein weiterer endete ohne unittest-Abschluss.
+  Verzögerte Qt-Löschereignisse werden in den neuen
+  Dialogtests nun ausdrücklich abgearbeitet; kombinierte Wiederholungen bestehen.
+- Ein laufender 630-Test-Zwischenlauf nutzte nach sieben Katalogergänzungen noch
+  den importierten alten Katalog: 1 Katalogfehler / 1 optionaler Skip.
+  Dieser gemischte Prüfstand zählt nicht als finale Prüfung.
+- Ein 632-Test-Zwischenlauf bestand mit einem optionalen Skip. Die zusätzliche
+  Quellprüfung erkannte die während des Laufs ergänzten Toasts; dieser Stand wird
+  deshalb nicht als finaler Codeprüfstand übernommen.
+- Ein 634-Test-Zwischenlauf bestand mit optionalem Skip, erkannte jedoch weitere
+  Quelländerungen. Der folgende 636-Test-Lauf fand die drei oben beschriebenen
+  Kopierfehler. Beide sind Zwischenstände; der finale 638-Test-Lauf besteht mit
+  unveränderten Quellen.
+
+GRENZEN
+- QT_QPA_PLATFORM=offscreen: keine tatsächliche Windows-DPI-/Tastaturabnahme.
+- Frühere sporadische Qt-MemoryError-Ursache nicht geklärt; nativer Langlauf A7 offen.
+- Eigene Dokumente, tatsächlicher Mailclient, zusätzliche freigegebene Gmail-
+  Szenarien und eigenes produktives Projekt gemeinsam abnehmen.
+- Historische und fremde Provider-/Systemmeldungen behalten ihre Originalsprache.
+- Mailtexte und Vorlagen sind Inhalte; ein UI-Sprachwechsel schreibt sie nicht um.
+- A5-Sprachprüfungen ohne echte E-Mails. Separater konkret freigegebener A4-Lauf:
+  TEST 3 synchronisiert/sofort gesendet, TEST 4 mit persönlichem PDF geplant gesendet;
+  zwei neue Versuche / beide Sent, Termin nicht unterschritten. Gmail-Rückvergleich
+  von Empfänger/Betreff/Text/PDF-Name/Hash stimmt. docs/39_Gmail_Attachment_Review.md.
+  Empfang beider neuen Mails und korrekte PDF-Anzeige vom Benutzer bestätigt.
+- Vorlagen, Dokumentation, Guided-Modi, Anmeldung über
+  Neustarts und Installer folgen nach Abschluss der Phase A in B1–B5.
+
+ANLEITUNG / RESTLISTE
+docs/38_Localization_UI_Completion.md
+docs/34_Final_TODO.md

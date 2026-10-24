@@ -1,0 +1,123 @@
+EMAILCENTER — EINSTELLUNGEN UND DESIGN
+Stand: 2026-10-12
+
+BEDIENUNG
+1. Einstellungen in der Seitenleiste oder oberen Leiste öffnen. Ein Projekt
+   muss dafür nicht geöffnet sein.
+2. Tabs Design / Zeitzone, Export, Word Replace, Hotkeys und E-Mail-Builder auswählen.
+   Acht Designs, eigene Akzentfarbe und Anzeigezeitzone konfigurieren:
+   Klar/Nacht, Elfenbein/Graphit, Minze/Wald und Rosé/Pflaume.
+   Eigene Farbe öffnet den Farbdialog. Zeitzonen können auch direkt eingegeben
+   werden, beispielsweise Europe/Berlin, UTC oder Asia/Tokyo.
+3. Speichern und anwenden übernimmt die Auswahl sofort und speichert sie
+   für den nächsten Programmstart. Es ist kein Neustart nötig.
+4. Änderungen verwerfen stellt die zuletzt geladenen/gespeicherten Werte wieder her.
+5. Standardwerte setzt zunächst nur das Formular zurück. Erst Speichern und
+   anwenden speichert diese Auswahl.
+6. Neu laden liest die Einstellungen erneut von der Datei; ungespeicherte
+   Formularänderungen werden dabei verworfen.
+
+DESIGN UND ZEITZONEN
+- Hell/Dunkel in der oberen Leiste wechselt zum passenden Design des gewählten
+  Paares und speichert die Auswahl ebenfalls; Builder-Graph/Vorschau bleiben erhalten.
+  Noch nicht gespeicherte Änderungen aller anderen Felder im Einstellungsformular
+  bleiben dabei zur späteren Übernahme erhalten.
+- Akzentfarben gelten für Schaltflächen, Auswahl, Fokus und Tabs. Auf eigenen
+  Farben wird schwarzer oder weißer Text passend zur Lesbarkeit verwendet.
+- Die Anzeigezeitzone gilt für Bewerbungstermine und den Filter Heute in
+  Nachfassen. Neue eigene Erinnerungen verwenden sie als Vorgabe.
+- Eigene bestehende Erinnerungen behalten ihre gespeicherte Zeitzone.
+- Eine geänderte Anzeigezeitzone verschiebt keinen gespeicherten Termin.
+  UTC-Zeitpunkte und bestehende E-Mail-Aufträge bleiben unverändert.
+- Die Einstellungen gelten für die ganze App, unabhängig vom geöffneten Projekt.
+EXPORT
+- Standardformat CSV/XLSX, absoluter Standardordner (leer: exports im Projekt),
+  CSV-Trennzeichen und Zeichensatz. Neue Exportdialoge übernehmen diese Vorgaben.
+- Ein konkreter Export kann Format/Optionen ändern, ohne die globalen Vorgaben zu speichern.
+
+WORD REPLACE
+- Ersatzformatierung: erster Text-Run, Absatzstandard, Fett oder Kursiv.
+- Frei wählbares Dateinamensmuster mit Nummer/Name/Projektfeldern; leer für bisherige Namen.
+- Groß-/Kleinschreibung, ganze Wörter, fehlende Feldwerte sperren oder Originaltext behalten.
+- Standardformat DOCX/PDF und absoluter Standardordner; leer verwendet exports/word_replace.
+- LibreOffice-Programmdatei und Konvertierungszeitlimit je Datei: 10–600 Sekunden.
+  Ein leerer Programmpfad sucht übliche Installationen/PATH. PDF benötigt LibreOffice.
+- Geänderte Such-/Konvertervorgaben erfordern eine neue Word-Vorschau. Ein reiner
+  Designwechsel erhält die aktuelle Word-Prüfung und eigene Laufoptionen.
+- Pfade werden beim Speichern auf absolutes Format geprüft. Verfügbarkeit/Dateityp
+  des Konverters und Schreibbarkeit des Ziels werden beim tatsächlichen Einsatz geprüft.
+HOTKEYS
+- Belegungen pro Aktion eingeben; leer deaktiviert. Konflikte/reservierte Kombinationen
+  werden erklärt. Speichern übernimmt die Werte sofort und beim nächsten Start.
+- Hilfe zeigt aktive Belegungen. Nur Hotkeys zurücksetzen betrifft zunächst das Formular.
+- Getrennte Canvas-Belegungen für Bausteine/Stecker/Verbindungen, Löschen,
+  Duplizieren/Undo/Redo und Zoom. Wirken nur bei Fokus auf der Zeichenfläche;
+  Konflikte mit App-Hotkeys und Windows-Tasten erklären. Details: 26_Hotkeys.txt.
+
+E-MAIL-BUILDER
+- Raster, Einrasten und Standardzoom 25–250 % dauerhaft speichern.
+- Autosicherung standardmäßig aktiv, Eingabepause drei Sekunden; 1–60 Sekunden
+  einstellbar. Sichert unfertige Eingaben im Hintergrund und vor Projektwechsel/
+  Backup/Schließen; beim Builder-Öffnen wiederherstellen. Arbeitsstände liegen im
+  Projekt, die Einstellungen dazu in preferences.json.
+- Unter Plan manuell sichern/neu laden, auch bei ausgeschalteter Autosicherung.
+  Benannte Versionen/Ctrl+S bleiben unabhängig. Quellen/Vorschau/Freigabe nach
+  Wiederherstellung erneut prüfen. Konflikte pausieren die Sicherung.
+- Änderungen gelten sofort; Themewechsel erhalten Graph und Vorschau.
+- Palette/Eigenschaften ein-/ausblenden, Breiten und kompakte Werkzeuge speichern.
+- Sprachwahl, Startmodus, Listen-/Backup-/Mailvorgaben sind implementiert.
+  Vollständige englische Fachtexte und praktische Abnahme bleiben offen.
+
+BENACHRICHTIGUNGEN UND BEWEGUNG
+- Toastdauer 2–30 Sekunden; Info und Erfolg getrennt aktivieren/deaktivieren.
+- Fehler dauerhaft anzeigen bis zum Schließen; spätere Erfolge verdrängen sie nicht.
+- Reduzierte Bewegung deaktiviert Toastanimationen und kurze Seite-/Themeübergänge.
+- Projektbezogene Adresse/Format/Profil/DOCX/Liste im Arbeitsbereich bearbeiten;
+  die globale Einstellungsseite bleibt projektunabhängig. Details: 29_Sprint_7_Expansion.md.
+
+SPEICHERUNG UND FEHLER
+- preferences.json liegt im von Qt bestimmten Benutzer-Konfigurationsordner
+  (QStandardPaths.AppConfigLocation), nicht im Projekt und nicht in dessen Backup.
+- Format 1 enthält Design, Akzentfarbe, Anzeigezeitzone sowie optionale Export-/Word-Replace-Vorgaben und Hotkey-Belegungen.
+  Alte Format-1-Dateien erhalten für neue Felder Standardwerte. OAuth-Tokens,
+  Projektdaten und Nachrichten werden dort nicht gespeichert.
+- Speicherung ersetzt die Datei über eine vollständig geschriebene temporäre
+  Datei im selben Ordner. Schreibfehler erhalten den bisherigen Dateiinhalt
+  und die bisher angewendeten Einstellungen; Formulareingaben bleiben erhalten.
+- Änderungen der Datei seit dem Laden werden vor dem Speichern erkannt;
+  anschließend Neu laden und erneut bearbeiten.
+- Fehlende Datei: Standardwerte, ohne automatisch eine Datei anzulegen.
+- Beschädigte/ungültige Einstellungen: Standardwerte bzw. gültige einzelne Werte
+  und ein Hinweis auf der Einstellungsseite. Kein automatisches Überschreiben.
+- Eine beschädigte Datei kann durch ausdrücklich gespeicherte gültige Werte
+  ersetzt werden. Unbekannte Formatversionen werden gegen Überschreiben gesperrt.
+
+PRÜFUNG
+- 14 Tests prüfen Validierung, Speichern/Laden, Teilfehler, JSON-Fehler,
+  unbekannte Versionen, Dateigröße, Schreibfehler und geänderte Dateien.
+- 7 zusätzliche Qt-Tests prüfen Neustart, Formulareingaben, eigene Farben,
+  Lesbarkeit, Standardwerte, Verwerfen, Designwechsel und Anzeigezeitzone.
+- Ein zusätzlicher Reminder-Test prüft Anzeige-/Heute-Zeitzone, ohne UTC-Zeitpunkte zu ändern.
+- Tests verwenden eigene Einstellungsdateien im temporären Testverzeichnis.
+  Die persönlichen Benutzereinstellungen werden dabei nicht geschrieben.
+- Qt-Tests entsorgen geschlossene Fenster vollständig, bevor das nächste
+  Testfenster entsteht. Den aktuellen Gesamtstand nennt README_START_HERE.txt.
+- docs/settings_preview.png zeigt die frühere Designansicht; neu sind die Export-/Word-Replace-Tabs.
+- Den aktuellen Gesamtstand nennt README_START_HERE.txt.
+Neue Abläufe: docs/23_Data_Export.txt und docs/24_Word_Replace.txt.
+Gebündelte manuelle Prüfung: docs/25_Bundled_Acceptance.md.
+Hotkey-Standardbelegung und Grenzen: docs/26_Hotkeys.txt.
+
+ENDSPURT-VORGABEN
+- DE/EN speichern; Navigation und zentrale Einstellungen umschalten.
+- Standardmodus und Startansicht neuer Projekte festlegen.
+- Bevorzugte Konto-Adresse/Signaturname, Format, Zeitzone, Versandmodus,
+  Abstand, Tagesbudget und Zeitfenster einstellen; neue Planung bleibt freigabepflichtig.
+- Datensatzlisten: 10–200 Zeilen, wechselnde Farben, Umbruch und kompakte Zeilen.
+- Backup-Ziel und Aufbewahrung: 0 = alles behalten; nur eigene unveränderte,
+  verifizierte Archive werden entfernt. Wiederherstellung in neuen Ordner.
+- Builder: Standard-Textbausteine wählen und per Drag & Drop ordnen;
+  gespeicherte Undo-/Redo-Graphhistorie über Neustarts erhalten.
+- Lokalen Diagnosebericht unter Backup/Wiederherstellung exportieren.
+Projektvorgaben haben bei neuen Vorgängen Vorrang. Bestehende Entwürfe behalten
+ihre Werte. Vollständige Anleitung und Grenzen: docs/31_Endspurt.md.

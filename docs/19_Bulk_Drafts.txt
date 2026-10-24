@@ -1,0 +1,68 @@
+BULK-E-MAILS — PERSÖNLICHE LOKALE ENTWURFSGRUPPEN
+Stand: 2026-10-12. Sprint 7A / Sprint 6-Ausbau.
+
+Erweiterung: Direkte Excel-/CSV-Importzeilen, manuelle Tabellen und DOCX-Text
+stehen als Quellen bereit. Eigene Dateien und persönliche DOCX-/PDF-Anschreiben
+verwenden dieselben Werte wie E-Mail. Anleitung: docs/20_Bulk_Data_Sources.txt.
+Gemeinsame Freigabe und steuerbare Batch-Ausführung: docs/21_Bulk_Delivery.txt.
+
+ABLAUF
+1. Projekt öffnen → Arbeitsbereich → Bulk-E-Mails · Empfänger und Vorschau.
+2. Eine gespeicherte E-Mail-Vorlagenversion und einen Gruppennamen wählen.
+   Konto ist optional; es kann später beim Senden gewählt werden. Signatur optional.
+3. Kontakte suchen und ankreuzen. Die Auswahl bleibt bei Suche/Seitenwechsel erhalten.
+   Sichtbare auswählen betrifft die aktuelle Seite (25 Kontakte); Alle abwählen
+   entfernt die gesamte Auswahl. Maximal 100 Kontakte pro Entwurfsgruppe.
+   Importierte Kontakte stehen nach erfolgreichem Import ebenfalls hier zur Wahl.
+4. Jeden ausgewählten Kontakt rechts wählen. Optional eine zugehörige Bewerbung
+   wählen und die angebotenen Dokumente einzeln ankreuzen. Unzugehörige Kontakte
+   oder Dokumente sperren die Nachricht; nichts wird automatisch angehängt.
+5. Eigene Platzhalterwerte in der Tabelle ergänzen. Leere eigene Werte lassen die
+   Kontakt-/Bewerbungswerte gelten. Fehlende Pflichtwerte sind in der Vorschau sichtbar.
+6. Gemeinsame Dateien optional auswählen; sie werden jedem gewählten Kontakt
+   angehängt. Je Nachricht maximal 20 Anhänge und zusammen 20 MiB.
+7. Alle Vorschauen laden. Jede Nachricht besitzt eigenen Betreff/Text und genau
+   einen An-Empfänger. HTML erscheint als Quelltext; Signatur und Anhangnamen
+   sind sichtbar. Im Empfängermenü zwischen den Vorschauen wechseln.
+8. Ungültige/fehlende Adressen korrigieren oder abwählen. Bei gleicher Adresse
+   (ohne Beachtung der Groß-/Kleinschreibung) einen Kontakt ausdrücklich abwählen.
+   Es gibt keine automatische Zusammenführung oder Bcc-Sammelnachricht.
+9. Alle Nachrichten/Anhänge prüfen, Checkbox setzen und lokale Entwürfe erstellen.
+   Die Rückfrage bestätigt nur lokale Speicherung. Jeder Entwurf bleibt separat.
+10. Unter Gespeicherte Gruppen die Gruppe wählen. Einzelentwürfe lassen sich öffnen
+    und bearbeiten. Gruppenversand öffnen bereitet feste Aufträge vor und ermöglicht
+    gemeinsame Freigabe, Planung, Fortschritt, Pause/Fortsetzen und Abbruch.
+    Anleitung: docs/21_Bulk_Delivery.txt. Entwurfsänderungen nach Vorbereitung
+    verändern bestehende Versandkopien nicht.
+
+KONSISTENZ UND FEHLER
+- Vorschau liest nur; Abbrechen erstellt weder Gruppe noch Entwürfe.
+- Änderung an Auswahl, Vorlage, Konto, Signatur, Werten oder Anhängen verwirft
+  die Vorschau-Bestätigung. Vor Speichern werden Daten und Dateiinhalte erneut geprüft.
+- Eine DB-Transaktion speichert Gruppe, Einträge und alle Entwürfe. Fehler nehmen
+  DB-Änderungen und bereits kopierte Dateien zurück. Eingaben bleiben in der UI erhalten.
+- Jeder Entwurf bekommt eigene Anhangkopien mit Hashwerten. Spätere Änderungen
+  an Quellen oder Vorlagen verändern die gespeicherten Inhalte nicht.
+- Vorschaukennung gilt nur einmal und nur im aktuell geöffneten Projekt.
+- Beim Wiederöffnen bleiben Gruppen/Zuordnungen erhalten. Die Gruppenansicht
+  zeigt den aktuellen Betreff/An-Empfänger; ursprünglicher Kontakt bleibt zugeordnet.
+- Migration 005 ergänzt zwei Gruppentabellen; bestehende Entwürfe/Aufträge bleiben erhalten.
+- Datei-/DB-Arbeit läuft im Worker; der Dialog kann während einer Operation nicht schließen.
+
+ERWEITERUNGEN
+- Kontaktgruppen und gespeicherte Empfängerfilter: Auswahl/Suche/Gruppe/gültige Adressen.
+- Konkrete DOCX-Version je Zeile und optionale neue Domain-Bewerbung; bestätigter
+  Versandbeleg aktualisiert frühen Bewerbungsstatus und separaten Mailstatus.
+- Budget/Versandfenster/Quotensperren und Hintergrundstart in offener App:
+  docs/21_Bulk_Delivery.txt. Builder, Word Replace und Hotkeys sind implementiert.
+
+NOCH OFFEN
+- Echte Gmail-/PDF-/Windows-Abnahme; Pakete H/I in docs/25_Bundled_Acceptance.md.
+Neue Bedienung: docs/29_Sprint_7_Expansion.md.
+
+PRÜFUNG
+Acht neue Servicetests und sechs Qt-Tests prüfen persönliche Inhalte, Fehler,
+Pflichtwerte, Duplikate, Pagination, Anlagen, Dateirennen, atomare Rücknahme,
+Wiederöffnen, Vorschaualterung und Schutz vor doppelter Erstellung.
+Keine echte Gmail-Anmeldung und kein echter Versand in diesen Tests.
+Screenshot mit Testdaten: docs/bulk_preview.png.

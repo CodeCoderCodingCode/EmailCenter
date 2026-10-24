@@ -1,0 +1,617 @@
+# Technisches Architekturkonzept
+## Universal Email & Document Automation
+
+**Dokumentversion:** 1.0  
+**Status:** Architekturentwurf  
+**Grundlage:** Anforderungsdokument Version 1.0  
+**Zielplattform:** Windows Desktop  
+**Technologiebasis:** Python, PySide6, SQLite
+
+---
+
+# 1. Architekturziele
+
+Die Architektur muss fünf zentrale Anforderungen erfüllen:
+
+1. **Modularität:** Neue Funktionen dürfen nicht erfordern, dass bestehende Module vollständig umgeschrieben werden.
+2. **Wiederverwendbarkeit:** Alle Anwendungsmodi verwenden gemeinsame Komponenten für Dokumente, E-Mails, Datenimport und Workflows.
+3. **Zuverlässigkeit:** Aufgaben, Ergebnisse und Fehler müssen dauerhaft nachvollziehbar sein.
+4. **Datenschutz:** Projekte und ihre Daten bleiben lokal, Zugangsdaten werden separat geschützt.
+5. **Erweiterbarkeit:** Die Anwendung soll später weitere E-Mail-Anbieter, zusätzliche Workflow-Bausteine und gegebenenfalls einen Serverbetrieb unterstützen können.
+
+Die Architektur soll nicht unnötig kompliziert werden. Insbesondere werden anfangs keine Microservices, kein eigener Cloudserver und kein komplexes Plugin-Laufzeitsystem benötigt.
+
+# 2. Gesamtarchitektur
+
+Die Anwendung wird in logisch getrennte Schichten aufgeteilt.
+
+```mermaid
+flowchart TB
+    UI["PySide6 Desktop UI"]
+    APP["Application Layer"]
+    CORE["Domain Core"]
+    INFRA["Infrastructure Layer"]
+    DATA["SQLite + Project Files"]
+    EXT["External Integrations"]
+
+    UI --> APP
+    APP --> CORE
+    APP --> INFRA
+    INFRA --> DATA
+    INFRA --> EXT
+
+    EXT --> DOC["LibreOffice"]
+    EXT --> GMAIL["Gmail API"]
+    EXT --> OS["Windows Credential Manager"]
+```
+
+## 2.1 Presentation Layer
+
+Verantwortlich für die Benutzeroberfläche.
+
+Enthält:
+
+- Fenster und Dialoge
+- Sidebar und Tabs
+- Tabellen und Formulare
+- Vorlageneditor
+- Dokumentvorschau
+- Kalender, Warteschlange und Historie
+- Benutzerinteraktionen und Feedback
+
+Die UI darf keine direkten SQL-Abfragen ausführen und keine komplexe Geschäftslogik enthalten.
+
+## 2.2 Application Layer
+
+Orchestriert konkrete Anwendungsfälle.
+
+Beispiele:
+
+- Bewerbung anlegen
+- XLSX importieren
+- Vorlage personalisieren
+- PDF exportieren
+- Versandauftrag planen
+- Batch pausieren
+- Backup erstellen
+- Projekt migrieren
+
+Diese Schicht koordiniert die Domain-Logik und Infrastruktur, ohne selbst für die Darstellung oder die konkrete externe API-Implementierung zuständig zu sein.
+
+## 2.3 Domain Core
+
+Enthält die zentralen fachlichen Regeln.
+
+Beispiele:
+
+- Bewerbungsstatus
+- Platzhalterregeln
+- Datenvalidierung
+- Versandzustände
+- Workflow-Ausführung
+- Wiederaufnahme unterbrochener Aufgaben
+- Regeln gegen doppelte lokale Verarbeitung
+
+Der Domain Core soll möglichst unabhängig von PySide6, SQLite und Gmail bleiben. Dadurch kann er automatisiert getestet und später in anderen Laufzeitumgebungen wiederverwendet werden.
+
+## 2.4 Infrastructure Layer
+
+Stellt konkrete technische Funktionen bereit:
+
+- SQLite-Zugriff
+- Dateisystemzugriff
+- DOCX-Verarbeitung
+- PDF-Konvertierung
+- Gmail API
+- OAuth
+- Backup und Migration
+- Zeitplanung
+- Betriebssystemintegration
+
+Externe Systeme werden hinter klar definierten Schnittstellen gekapselt.
+
+# 3. Modulstruktur
+
+Die folgende Struktur ist ein Architekturvorschlag, kein bereits existierender Projektordner.
+
+```text
+email_document_automation/
+├── pyproject.toml
+├── README.md
+├── src/
+│   └── app/
+│       ├── main.py
+│       ├── bootstrap.py
+│       │
+│       ├── ui/
+│       │   ├── windows/
+│       │   ├── dialogs/
+│       │   ├── views/
+│       │   ├── widgets/
+│       │   ├── editors/
+│       │   ├── themes/
+│       │   └── resources/
+│       │
+│       ├── application/
+│       │   ├── projects/
+│       │   ├── documents/
+│       │   ├── imports/
+│       │   ├── applications/
+│       │   ├── contacts/
+│       │   ├── email/
+│       │   ├── scheduling/
+│       │   ├── workflows/
+│       │   ├── backups/
+│       │   └── diagnostics/
+│       │
+│       ├── domain/
+│       │   ├── projects/
+│       │   ├── documents/
+│       │   ├── contacts/
+│       │   ├── applications/
+│       │   ├── email/
+│       │   ├── workflows/
+│       │   └── common/
+│       │
+│       ├── infrastructure/
+│       │   ├── database/
+│       │   ├── filesystem/
+│       │   ├── docx/
+│       │   ├── pdf/
+│       │   ├── gmail/
+│       │   ├── oauth/
+│       │   ├── credentials/
+│       │   ├── scheduler/
+│       │   ├── backups/
+│       │   └── logging/
+│       │
+│       ├── shared/
+│       │   ├── config/
+│       │   ├── localization/
+│       │   ├── events/
+│       │   └── errors/
+│       │
+│       └── resources/
+│
+└── tests/
+    ├── unit/
+    ├── integration/
+    ├── ui/
+    └── end_to_end/
+```
+
+## 3.1 Warum diese Aufteilung?
+
+Ein Gmail-Fehler sollte nicht die Dokumentverarbeitung beeinflussen. Eine Änderung des UI-Frameworks sollte nicht erfordern, die Bewerbungslogik neu zu schreiben. Eine spätere Serveranwendung soll auf die Workflow-Logik zugreifen können, ohne eine Desktop-Oberfläche starten zu müssen.
+
+Die Ordner sind deshalb nach Verantwortlichkeiten gegliedert, nicht nach einzelnen Bildschirmen.
+
+# 4. Zentrale Komponenten und Schnittstellen
+
+## 4.1 Projektverwaltung
+
+Verantwortlich für:
+
+- Projekte öffnen und schließen
+- Projektkonfiguration lesen und speichern
+- Projektordner validieren
+- Projekt duplizieren
+- Projekt importieren und exportieren
+- Versionsprüfung und Migration
+- Wiederherstellung nach Fehlern
+
+Ein Projekt wird über einen zentralen Project Service geöffnet. Andere Module erhalten kontrollierte Zugriffe auf die zugehörigen Daten und Dateien.
+
+## 4.2 Dokument-Service
+
+Der Dokument-Service koordiniert:
+
+1. Vorlage laden
+2. Dokumentstruktur analysieren
+3. Platzhalter erkennen
+4. Werte zuordnen
+5. Pflichtfelder prüfen
+6. Arbeitskopie erstellen
+7. Platzhalter ersetzen
+8. Struktur validieren
+9. DOCX-Ergebnis speichern
+10. PDF-Konvertierung durchführen
+11. Ergebnisse protokollieren
+
+DOCX-Verarbeitung und PDF-Konvertierung bleiben getrennte technische Komponenten. Das erleichtert Fehlerdiagnose und späteren Austausch der PDF-Engine.
+
+## 4.3 Import-Service
+
+Der Import-Service übernimmt XLSX und CSV.
+
+Er führt die Verarbeitung in einem nachvollziehbaren Ablauf durch:
+
+- Quelldatei lesen
+- Spaltenüberschriften erkennen
+- Importprofil anwenden
+- Felder zuordnen
+- Daten normalisieren
+- Pflichtfelder prüfen
+- Dubletten erkennen
+- Zeilenstatus berechnen
+- Vorschau bereitstellen
+- Freigegebene Datensätze verarbeiten
+- Ergebnisse und Fehler protokollieren
+
+Der Import-Service kennt keine Gmail-spezifischen Versanddetails. Er liefert validierte Datensätze an den jeweils zuständigen Workflow.
+
+## 4.4 E-Mail-Service
+
+Der E-Mail-Service erstellt und verwaltet Nachrichten unabhängig vom konkreten Versandzeitpunkt.
+
+Aufgaben:
+
+- Nachrichtentext personalisieren
+- Betreff generieren
+- Signatur einfügen
+- Anhänge zuordnen
+- Vorschau erzeugen
+- Entwurf speichern
+- Versandauftrag vorbereiten
+
+Der Versand selbst erfolgt über eine separate Schnittstelle zum E-Mail-Provider.
+
+## 4.5 Provider-Schnittstelle
+
+Die Gmail-Integration wird hinter einer abstrakten Schnittstelle gekapselt.
+
+Konzeptionell:
+
+```python
+class EmailProvider:
+    def create_draft(self, message):
+        raise NotImplementedError
+
+    def send_message(self, message):
+        raise NotImplementedError
+
+    def list_sent_messages(self, query):
+        raise NotImplementedError
+
+    def reconcile_message(self, message):
+        raise NotImplementedError
+```
+
+Dies ist nur ein Schnittstellenentwurf. Die tatsächlichen Methodensignaturen und Rückgabetypen werden bei der Implementierung definiert.
+
+Die erste konkrete Implementierung verwendet Gmail. Später können weitere Provider ergänzt werden, ohne die gesamte Versandlogik umzubauen.
+
+## 4.6 Workflow-Engine
+
+Die Workflow-Engine verbindet vorhandene Dienste.
+
+Ein Bewerbungsworkflow könnte beispielsweise aus diesen Schritten bestehen:
+
+```text
+Daten importieren
+      ↓
+Daten validieren
+      ↓
+Vorlage auswählen
+      ↓
+Dokument personalisieren
+      ↓
+DOCX und PDF erzeugen
+      ↓
+E-Mail zusammenstellen
+      ↓
+Vorschau und Freigabe
+      ↓
+Versand planen
+      ↓
+Ergebnis dokumentieren
+```
+
+Jeder Schritt erhält definierte Eingaben, Ausgaben und Fehlerzustände. Ein fehlgeschlagener Schritt darf nicht automatisch alle vorherigen Schritte wiederholen.
+
+# 5. Datenbankarchitektur
+
+## 5.1 Grundprinzip
+
+SQLite speichert strukturierte Daten und Beziehungen. Dokumente und Anhänge liegen als Dateien im Projektordner.
+
+Die Datenbank enthält keine Gmail-Passwörter oder OAuth-Tokens.
+
+## 5.2 Vorgesehene Tabellen
+
+| Tabelle | Zweck |
+|---|---|
+| `project_metadata` | Projektversion und grundlegende Metadaten |
+| `applicant_profiles` | Bewerberprofile |
+| `companies` | Unternehmen |
+| `contacts` | Ansprechpartner und weitere Kontakte |
+| `job_postings` | Stellen |
+| `applications` | Einzelne Bewerbungen |
+| `documents` | Dokumentmetadaten und Dateiverweise |
+| `templates` | Vorlagen |
+| `template_versions` | Vorlagenhistorie |
+| `email_drafts` | Nachrichtenentwürfe |
+| `email_jobs` | Geplante und ausgeführte Versandaufträge |
+| `email_attempts` | Einzelne Versandversuche und Ergebnisse |
+| `import_profiles` | Wiederverwendbare Importzuordnungen |
+| `workflow_definitions` | Gespeicherte Workflows |
+| `workflow_runs` | Workflow-Ausführungen |
+| `workflow_steps` | Ergebnisse einzelner Workflow-Schritte |
+| `reminders` | Lokale Erinnerungen |
+| `activity_log` | Relevante Aktivitäten |
+| `backup_metadata` | Informationen zu Backups |
+
+Diese Tabelle ist ein logischer Entwurf. Tabellen, Felder und Beziehungen werden erst nach Prüfung der konkreten Anwendungsfälle verbindlich.
+
+## 5.3 Beziehungen
+
+Ein Unternehmen kann mehrere Kontakte und Stellen besitzen. Eine Stelle kann mehreren Bewerbungen zugeordnet sein, sofern dies fachlich erforderlich ist.
+
+Eine Bewerbung kann mehrere Dokumente, E-Mail-Aufträge, Erinnerungen und Aktivitätseinträge besitzen.
+
+E-Mail-Aufträge werden unabhängig von Bewerbungsstatus und Dokumentstatus verwaltet.
+
+## 5.4 Datenbankregeln
+
+- Eindeutige IDs für persistente Datensätze
+- Fremdschlüssel und Integritätsprüfungen
+- Transaktionen für zusammengehörige Datenbankänderungen
+- Versionierte Datenbankschemata
+- Definierte Löschregeln
+- Keine dauerhaften Dateiverweise ohne Existenzprüfung
+- Keine stillschweigende Wiederverwendung gelöschter IDs
+
+Für länger laufende Dateisystemaktionen muss die Anwendung mitdenken, dass SQLite-Transaktionen externe Dateioperationen nicht automatisch rückgängig machen.
+
+# 6. Projektordner und Dateiverwaltung
+
+## 6.1 Vorgeschlagene Struktur
+
+```text
+MyProject/
+├── project.json
+├── database/
+│   └── project.sqlite
+├── imports/
+│   ├── original/
+│   └── processed/
+├── templates/
+│   ├── documents/
+│   ├── emails/
+│   └── versions/
+├── documents/
+│   ├── generated/
+│   └── exports/
+├── attachments/
+├── workflows/
+├── backups/
+├── logs/
+└── trash/
+```
+
+Diese Struktur ist ein Vorschlag und kann nach Prüfung der Anforderungen angepasst werden.
+
+## 6.2 Dateiverwaltung
+
+Jede verwaltete Datei erhält einen Datensatz mit Metadaten, beispielsweise:
+
+- Interne ID
+- Relativer Pfad
+- Dateityp
+- Ursprünglicher Dateiname
+- Erstellungszeitpunkt
+- Zugehöriges Projekt oder Objekt
+- Optionaler Hash zur Integritäts- und Änderungsprüfung
+
+Relative Pfade erleichtern die Übertragung des Projektordners.
+
+Temporäre Dateien werden von dauerhaften Projektdaten getrennt gehalten und nach erfolgreichem Abschluss beziehungsweise Wiederherstellung kontrolliert bereinigt.
+
+## 6.3 Schutz vor Überschreiben
+
+Vorlagen und Quelldateien werden standardmäßig nicht direkt verändert.
+
+Generierte Dokumente erhalten eigene Dateipfade. Namenskonflikte führen zu einer nachvollziehbaren Auswahl oder einer konfigurierten Versionierung, nicht zu unbemerktem Datenverlust.
+
+# 7. Aufgabenverarbeitung und Hintergrundprozesse
+
+## 7.1 Hintergrundverarbeitung
+
+Die Desktop-Oberfläche darf keine lang laufenden Aufgaben synchron auf dem UI-Thread ausführen.
+
+PySide6-Hintergrundmechanismen werden für passende Aufgaben eingesetzt. Die konkrete Wahl zwischen Threads und separaten Prozessen hängt vom jeweiligen Arbeitsschritt ab.
+
+Beispiele:
+
+- PDF-Konvertierung
+- DOCX-Verarbeitung
+- Massenimport
+- Gmail-Abgleich
+- Große Exporte
+- Backup und Wiederherstellung
+
+## 7.2 Persistente Aufgaben
+
+Ein Versandauftrag wird dauerhaft gespeichert, bevor er zur Ausführung freigegeben wird.
+
+Die Oberfläche zeigt den Status der Aufgabe an. Der Hintergrundprozess aktualisiert den Zustand und schreibt relevante Ergebnisse in die Datenbank.
+
+Ein Neustart darf den Fortschritt nicht allein aus dem Arbeitsspeicher rekonstruieren müssen.
+
+## 7.3 Zentrale Statusübergänge
+
+Für E-Mail-Aufträge gelten kontrollierte Zustandsübergänge:
+
+```text
+Draft
+  ↓
+Scheduled
+  ↓
+Queued
+  ↓
+Sending
+  ├── Sent
+  ├── Failed
+  └── Uncertain
+        ↓
+  Reconciliation
+        ↓
+  Bestätigter Status
+```
+
+Abbrechen ist nur möglich, solange der Auftrag noch sicher abgebrochen werden kann. Bereits versendete Nachrichten werden nicht als rückgängig gemacht dargestellt.
+
+## 7.4 Idempotenz und Wiederaufnahme
+
+Jede Verarbeitung erhält eine stabile Aufgaben- oder Datensatz-ID. Bereits erfolgreich abgeschlossene lokale Schritte können so erkannt werden.
+
+Externe Aktionen wie Gmail-Versand benötigen zusätzlich eine Prüfung des tatsächlichen Ergebnisses. Eine stabile ID allein garantiert nicht, dass ein externer Anbieter einen Auftrag exakt einmal verarbeitet.
+
+Bei unklaren Ergebnissen wird der Auftrag zur Klärung markiert, statt ihn blind erneut zu senden.
+
+# 8. Zeitplanung
+
+Die Zeitplanung wird als eigenständiges Modul implementiert.
+
+Sie berücksichtigt:
+
+- Lokale Zeitzone
+- Eindeutig gespeicherte Zeitpunkte
+- Persistente geplante Aufgaben
+- Überfällige Aufgaben
+- Neustartverhalten
+- Benutzerbestätigung für nachzuholende Aufgaben
+- Wiederaufnahme nach Fehlern
+
+Die Kalenderansicht, die Warteschlange und die Versandhistorie greifen auf dieselben gespeicherten Aufträge zu. Es sollen keine voneinander unabhängigen Kopien derselben Versandplanung entstehen.
+
+Eine spätere Serverausführung kann denselben Aufgabenvertrag verwenden. Sie erfordert aber zusätzliche technische Maßnahmen für verteilte Ausführung, Berechtigungen, Überwachung und Zugangsdaten.
+
+# 9. Sicherheit und Zugangsdaten
+
+## 9.1 OAuth
+
+OAuth-Zugangsdaten werden nicht in `project.json`, der SQLite-Datenbank oder normalen Protokollen gespeichert.
+
+Die Anwendung verwendet den Windows Credential Manager, soweit die gewählte OAuth-Implementierung dies unterstützt.
+
+## 9.2 Projektdateien
+
+Projektdateien können personenbezogene Informationen enthalten. Die Anwendung muss klar zwischen Projektdaten, Zugangsdaten und Diagnoseinformationen unterscheiden.
+
+Backups und Projektarchive müssen als potenziell sensible Daten behandelt werden.
+
+## 9.3 Diagnose
+
+Protokolle enthalten technische Statusinformationen, Fehlercodes und geeignete Korrelations-IDs.
+
+Nachrichtentexte, Tokens und unnötige personenbezogene Inhalte gehören nicht standardmäßig in Logs.
+
+Ein exportiertes Diagnosepaket muss vor der Weitergabe überprüfbar sein.
+
+# 10. Konfiguration und Internationalisierung
+
+## 10.1 Konfigurationsebenen
+
+Die Anwendung verwendet drei Ebenen:
+
+1. Globale Anwendungseinstellungen
+2. Projektbezogene Überschreibungen
+3. Vorlagen- oder workflowbezogene Einstellungen
+
+Es muss eine dokumentierte Prioritätsregel geben, damit klar ist, welche Einstellung im Konfliktfall gilt.
+
+## 10.2 Sprache
+
+Alle UI-Texte werden über ein Lokalisierungssystem verwaltet.
+
+Deutsch und Englisch sind die ersten unterstützten Sprachen. Datums-, Zahlen- und Formatierungsregeln werden von der UI-Sprache getrennt behandelt, soweit das fachlich sinnvoll ist.
+
+Gespeicherte Daten dürfen nicht von übersetzten Anzeigenamen abhängig sein. Statuswerte und interne Schlüssel bleiben sprachunabhängig.
+
+# 11. Erweiterbarkeit
+
+Die Architektur ist modular, aber zunächst nicht plugin-first.
+
+Neue Modi sollen vorhandene Dienste und Datenmodelle wiederverwenden. Erweiterungen müssen klar definierte Schnittstellen einhalten.
+
+Ein späteres Plugin-System ist möglich, erfordert jedoch zusätzliche Sicherheits- und Versionsregeln. Insbesondere dürfen beliebige Plugins nicht ungeprüft Zugriff auf OAuth-Tokens, lokale Dateien oder Versandfunktionen erhalten.
+
+Die spätere Serverfähigkeit wird durch unabhängige Anwendungskomponenten vorbereitet. Ein tatsächlicher Serverbetrieb ist damit noch nicht implementiert.
+
+# 12. Testarchitektur
+
+## 12.1 Unit-Tests
+
+Prüfen isolierte Fachlogik, etwa:
+
+- Platzhalterregeln
+- Statusübergänge
+- Importzuordnung
+- Dateinamen
+- Validierung
+- Zeitberechnungen
+- Workflow-Regeln
+
+## 12.2 Integrationstests
+
+Prüfen das Zusammenspiel von:
+
+- Datenbank und Repositorys
+- Dateisystem und Datenbank
+- DOCX-Verarbeitung
+- PDF-Konvertierung
+- OAuth und Gmail-Adapter
+- Scheduler und persistenter Warteschlange
+- Backup und Migration
+
+Externe Dienste sollten, wo sinnvoll, durch kontrollierte Testadapter ersetzt werden.
+
+## 12.3 UI-Tests
+
+Prüfen wichtige Benutzerabläufe, Fehlerdialoge, Navigation, Speichern, Vorschau und Fortschrittsanzeigen.
+
+## 12.4 End-to-End-Tests
+
+Ein vollständiger Testlauf bildet den Bewerbungsprozess einschließlich Dokumenterzeugung, Testversand, Statusprüfung und Wiederherstellung ab.
+
+# 13. Technische Entscheidungen: Status
+
+| Thema | Aktuelle Entscheidung |
+|---|---|
+| UI | PySide6 / Qt |
+| Architektur | Modulare Schichtenarchitektur |
+| Datenbank | SQLite |
+| Konfiguration | JSON |
+| Dokumente | DOCX-Verarbeitung plus LibreOffice für PDF |
+| Gmail | Gmail API und OAuth 2.0 |
+| Zugangsdaten | Windows Credential Manager |
+| Hintergrundverarbeitung | UI-unabhängige Aufgabenverarbeitung |
+| Projektformat | Selbstständiger Projektordner |
+| Erweiterungen | Stabile interne Schnittstellen |
+| Tests | Unit-, Integrations-, UI- und End-to-End-Tests |
+| Serverbetrieb | Später möglich, noch nicht Teil der ersten Version |
+
+# 14. Vor der Implementierung zu klären
+
+Die Architektur ist ausreichend konkret, um daraus die nächsten technischen Entwürfe abzuleiten. Vor der eigentlichen Implementierung müssen insbesondere folgende Punkte detailliert werden:
+
+1. Exakte Datenbankschemata und Beziehungen
+2. Verbindliche Projektformat-Versionierung
+3. Konkrete Python- und Abhängigkeitsversionen
+4. Unterstützungsmatrix für komplexe DOCX-Elemente
+5. Gmail-OAuth-Konfiguration und zulässige Scopes
+6. Regeln für sichere Wiederaufnahme und unklare Versandresultate
+7. Messbare Performanceziele
+8. Backup-Verschlüsselung und Wiederherstellungsverfahren
+9. Paketierung und Verteilung unter Windows
+
+Diese Punkte sind technische Ausarbeitungen, keine erneute allgemeine Anforderungserhebung.
+
+---
+
+## Ergebnis
+
+Das technische Konzept trennt Oberfläche, Geschäftslogik, Datenhaltung und externe Dienste. Die gemeinsame Workflow- und Aufgabenverarbeitung bildet das Fundament für die erste Anwendung und spätere Erweiterungen.
+
+Die Architektur ist bewusst modular, ohne bereits eine unnötig komplexe verteilte Infrastruktur einzuführen. Sie berücksichtigt insbesondere die schwierigen Bereiche des Projekts: komplexe Word-Dateien, große Datenimporte, persistente Zeitplanung, sichere Wiederaufnahme und die Vermeidung unkontrollierter Doppelversendungen.

@@ -1,0 +1,71 @@
+EMAILCENTER — WORD REPLACE
+Stand: 12.10.2026 | Sprint 4-Ausbau / 7
+
+ABLAUF
+1. Projekt öffnen. Word Replace in Navigation oder im Arbeitsbereich wählen.
+2. DOCX-Original auswählen. Platzhalter erkennen ergänzt Regeln für {{NAME}}.
+   Weitere Regeln können beliebige Wörter oder Textstellen suchen.
+3. Je Regel direkten Ersatztext eingeben oder ein Datenfeld auswählen/eintippen.
+   Ein leerer direkter Ersatztext entfernt die gefundene Textstelle.
+4. Optional Excel-/CSV-Zeilen aus einem vorbereiteten Importlauf oder eine
+   gespeicherte/manuelle Datenliste wählen. Dieselben Quellwerte sind auch im
+   Bulk-Editor nutzbar. Ohne Quelle entsteht eine Einzeldatei mit direkten Werten.
+5. Groß-/Kleinschreibung, ganze Wörter und Umgang mit fehlenden Daten wählen.
+   Fehlende/blanke Feldwerte sperren standardmäßig die Ausgabe; alternativ bleibt
+   die gefundene Stelle unverändert und wird in der Vorschau gemeldet.
+6. Vorschau aller Zeilen erzeugt temporäre Kopien. Original-/Ergebnistext,
+   Fundstellen, fehlende Werte und verbleibende Platzhalter ansehen. Datenzeile
+   oben umschalten und alle Ergebnisse prüfen. Vorschau erzeugt keine dauerhafte Datei.
+7. Zielordner, Dateinamen-Präfix und DOCX/PDF wählen. Ergebnisse bestätigen,
+   Ausgabekopien erstellen und bewusst Überschreiben erlauben oder nur neue Dateien wählen.
+   Mehrere Zeilen erhalten nummerierte persönliche Dateinamen. Frei wählbare
+   Muster wie {prefix}-{number:03d}-{company.name} sind möglich. Fehlende Felder,
+   ungültige Pfade und doppelte Ziele blockieren die Laufanlage.
+8. Der bestätigte Lauf speichert Originalkopie, Regeln und Zeilenwerte. Eine Ausgabe
+   wird je Schritt verarbeitet; Fortschritt und Pause/Abbruch sind erreichbar.
+   Unter Gespeicherte Läufe laden und nach Neustart ausdrücklich fortsetzen.
+   Fertige Ergebnisse bleiben erhalten; spätere Quelländerungen ändern den Lauf nicht.
+   Geänderte fertige Ausgaben oder ein aktiver Besitzer in anderem Fenster sperren ihn.
+9. Ergebnis nennt Anzahl und Pfade; Ausgabeordner öffnen zeigt die Dateien.
+   Unter exports im Projekt gespeicherte Ausgaben erscheinen auch unter Dokumente.
+
+EINSTELLUNGEN UND BEDIENUNG
+- Eigener Word-Replace-Tab unter Einstellungen: Suchoptionen, fehlende Werte,
+  Ersatzformatierung, Dateinamensmuster, Standardformat/Ordner, LibreOffice-Pfad und 10–600 Sekunden.
+- Leeres Ausgabeordnerfeld verwendet exports/word_replace im aktuellen Projekt.
+- PDF benötigt eine lokale LibreOffice-Installation. Ein leerer Programmpfad
+  sucht übliche Installationspfade/PATH; ein anderer Pfad kann gewählt werden.
+- Regeln, Quellen und Suchoptionen invalidieren die Vorschau. Ein reiner
+  Themewechsel erhält Regeln, Prüfhaken und Vorschau.
+- Lange Inhalte scrollen; Vorschau, Bestätigung und Abbruch bleiben unten erreichbar.
+  Schmale Fenster ordnen Aktionen und Textvergleich untereinander an.
+- Bis zu 100 Regeln / 100 Datenzeilen. Textvorschau bis 50000 Zeichen und
+  Fundstellen bis 1000; die vollständige Ausgabe bleibt davon unabhängig.
+
+ERSETZUNG UND DATEISCHUTZ
+- Suchtexte werden wörtlich verarbeitet, ohne reguläre Ausdrücke. Regeln werden
+  einmal auf den Originaltext angewendet; Ersatztexte lösen keine weiteren Regeln aus.
+- Bei überlappenden Suchtexten gewinnt an derselben Stelle der längere Suchtext.
+- Wörter/Platzhalter können über mehrere Text-Runs verteilt sein. Absatzgrenzen,
+  vorhandene Zeilenumbrüche und Tabs werden nicht überbrückt. Kopf-/Fußzeilen,
+  Tabellen, Fuß-/Endnoten und Kommentare werden wie im DOCX-Kern verarbeitet.
+- Ersatztext übernimmt den ersten Text-Run oder erhält Absatzstandard/Fett/Kursiv.
+  Text außerhalb der Ersetzung behält seine Formatierung. Mehrzeiliger Text
+  und Tabs werden als Word-Umbrüche/Tabs geschrieben. Komplexe Layouts prüfen.
+- Originale und schon registrierte Dokumentausgaben werden nicht überschrieben.
+  Andere vorhandene Ausgaben können nach Bestätigung ersetzt werden.
+- Die Laufanlage prüft die aktuelle Vorschau und hält Original/Regeln/Werte fest.
+  Wiederaufnahme arbeitet mit diesen Kopien, keine neue Excel-/Originalauflösung.
+- Jede Datei wird temporär vorbereitet. Ein Veröffentlichungsbeleg wird vor der
+  atomaren Veröffentlichung gespeichert; Wiederaufnahme registriert eine bereits
+  veröffentlichte Datei einmal. Pause/Fehler erhalten fertige Teilergebnisse.
+- Laufkopien und alte Zielkopien liegen unter exports/word_replace_runs. Vorhandene
+  Ziele dürfen nur ersetzt werden, wenn sie noch dem bestätigten Stand entsprechen.
+- Die separate ältere Servicefunktion für atomare Gesamtausgabe bleibt erhalten;
+  die Oberfläche nutzt die neuen gespeicherten Läufe (Migration 011).
+
+OFFEN
+Echter LibreOffice-/Layoutlauf sowie praktische Mehrfenster-/Neustartabnahme.
+Builder-Anbindung, gespeicherte Läufe, Formatierungsregeln und Muster sind implementiert.
+Neue Anleitung: docs/29_Sprint_7_Expansion.md; Sammelabnahme Paket I.
+Screenshot: docs/word_replace_preview.png. Sammelabnahme: docs/25_Bundled_Acceptance.md.

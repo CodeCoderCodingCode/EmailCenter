@@ -1,0 +1,322 @@
+EMAILCENTER — UMSETZUNGSPLAN (KEINE TERMINZUSAGEN)
+Version 1.6 | 2026-10-13
+
+AKTUELLE ABSCHLUSSREIHENFOLGE — BENUTZERAUFTRAG 12.10.2026
+Verbindlich: docs/34_Final_TODO.md, A1–A7 bis zum funktionalen Abschluss.
+Danach B1–B5: fertige Vorlagen, Dokumentation/Tooltips/Settings, geführte
+Projektmodi, Anmeldung über Neustarts, Installer und Nutzeranleitung.
+Installer/Paketierung wird in die Anschlussphase verschoben. Frühere
+Sprint-/Paketlisten sind Detailnachweise und keine zusätzlichen Abschlussaufgaben.
+
+AKTUELL — A1/A2/A3 IMPLEMENTIERT, SAMMELABNAHME OFFEN
+Dokumente: echte PDF-Konvertierung und Layoutprüfung; Builder: Gruppen,
+Inline-Bilder, Anhangnamen/Reihenfolge und Seitenlayout; Verwaltung:
+Felder/Status/Signaturen/Historien/Dokumentensätze/Exporthistorie/Archiv.
+Zusätzlich Sprint 8: echte Dateisperren/Bereinigung, Backup/Restore,
+Aufbewahrung und Diagnoseexport geprüft. Windows-Projektpublikation behandelt
+kurzzeitige Sperren begrenzt; Versions-/Lizenzinventar und Codesicherung in A7.
+Details und Abnahme: docs/35_Completion_A1_A3.md.
+
+AKTUELLER AUFTRAG 13.10.2026 — BIS ZUR BENUTZERABNAHME FERTIGSTELLEN
+Eigene Dateien, tatsächliche Windows-Bedienung und persönliches Endurteil werden
+vom Benutzer am Ende selbst geprüft. Keine Zwischenfreigaben dafür verlangen.
+A1–A7 technisch abnahmebereit: 644 Tests / 643 bestanden / ein optionaler Skip,
+540 UI-Prüfungen und geprüftes Codearchiv.
+Technischer Abschluss: docs/40_Technical_Completion.md; Restliste: docs/34_Final_TODO.md.
+Builder-Widgetbesitz/DE-EN-Menüs und Windows-Restore-Stagingpfade korrigiert.
+Durchgehende echte Excel-/DOCX-/PDF-/Export-/Restore-Kette lokal geprüft;
+Versandsteuerung darin ausschließlich mit Testprovider. Vier frühere echte
+Gmail-Testmails samt zwei PDFs sind erfolgreich und als angekommen bestätigt.
+Die folgenden Sprintdetails dokumentieren auch historische Zwischenstände;
+der aktuelle technische/praktische Gesamtstand steht in der finalen TODO.
+
+SPRINT 0 — Planung/Setup abschließen
+- Dokumente, Scope, Versionen und Testbefehle sichern.
+- Python-/SQLite-Versionen und Abhängigkeiten prüfen.
+Abnahme: Tests reproduzierbar; Entscheidungen und offene Punkte dokumentiert.
+Status: teilweise erledigt.
+
+SPRINT 1 — Database Foundation
+- SQLite-Verbindungsmanager; Fremdschlüssel bei jeder Verbindung.
+- Migration Runner und Schema-Versionsprüfung.
+- Transaktions-/Fehlerbehandlung.
+- Repositories für erste Kernentitäten.
+- Tests für Migration, doppelte Migration, Fremdschlüssel und Rollback.
+Abnahme: leere DB kann kontrolliert erstellt und migriert werden.
+Status: abgeschlossen am 2026-10-11. Verbindung, Migration Runner, Repositories
+für Unternehmen/Kontakte sowie Wiederholungs-, Fremdschlüssel- und Rollbacktests
+sind umgesetzt.
+
+SPRINT 2 — Projekt- und Dateiverwaltung
+- Projekt erstellen/öffnen/schließen; Projektordner.
+- Dateipfade, temporäre Dateien, Backups und Recovery-Grundlage.
+Abnahme: Projekt erneut öffnen; beschädigte/unvollständige Dateien erkennen.
+Status: abgeschlossen am 2026-10-11. Projektordner, Manifest, Datenbank, sichere
+Projektpfade, Wiederöffnen, Unvollständigkeits-/Integritätsprüfung und verifiziertes
+Projektarchiv sind umgesetzt.
+
+SPRINT 3 — Bewerbungsdomain
+- Unternehmen, Kontakte, Stellenausschreibungen, Bewerbungen.
+- Status-Initialdaten, Statusregeln, Repositories.
+Abnahme: Beziehungen und Regeln getestet.
+Status: abgeschlossen am 2026-10-11. Standard- und benutzerdefinierte Status,
+Bewerbungs-/Stellen-/Kontaktverknüpfungen, Statushistorie und Terminalregeln
+sind umgesetzt.
+
+SPRINT 4 — Dokumente
+- Vorlagenversionen, Platzhalteranalyse und Mapping.
+- DOCX-Erzeugung, LibreOffice-PDF, Dokumentensätze und Vorschau.
+Abnahme: Original bleibt unverändert; fehlende Pflichtwerte werden gemeldet.
+Status: in Arbeit. Neue Vorlagenversionen mit SHA-256-Änderungserkennung,
+gespeichertes Feldmapping/Pflichtwerte, OOXML-Platzhalteranalyse/-Ersetzung,
+Dokumentensätze und temporärer Vorschau-Service sind umgesetzt und getestet.
+PDF-Anbindung erkennt PATH/übliche Windows-Installationspfade und verwendet
+ein getrenntes LibreOffice-Profil je Lauf. Fehler, Zeitüberschreitungen,
+Dateiaufräumen und transaktionale Dokumentensätze sind getestet.
+Abnahme noch offen: echter LibreOffice-Lauf/Layoutprüfung (lokal nicht installiert).
+GUI-Anbindung ist umgesetzt: Textvergleich und PDF-Anzeige. Workflow: docs/06_Document_Workflow.txt.
+Beauftragter Ausbau: gemeinsame Vorlagenübersicht für DOCX und E-Mail,
+Vorlagen suchen/duplizieren, Version auswählen, personalisierte Vorschau
+und wiederverwendbare E-Mail-Vorlagen. DOCX-Basis bleibt bereits vorhanden.
+
+SPRINT 5 — XLSX/CSV
+- Importprofile, Mapping, Vorschau, Validierung, Duplikate, Zeilenprotokolle.
+Abnahme: fehlerhafte Zeilen nachvollziehbar und sichere Wiederaufnahme.
+Status: abgeschlossen am 2026-10-11. CSV-/XLSX-Import für Unternehmen, Kontakte
+und Bewerbungen mit Blatt-/Zeichensatzauswahl, gespeicherten Profilen und
+Feldzuordnung ist in der GUI bedienbar. Jede Zeile besitzt ursprüngliche Werte,
+zugeordnete Werte, Fehler und gegebenenfalls eine Datensatzreferenz.
+Quelldateikopie, SHA-256 und feste Laufkonfiguration sichern die Wiederaufnahme.
+Duplikate erfordern Korrektur, Überspringen oder ausdrückliche Neuanlage.
+Zeilenweise Transaktionen koppeln Datensatz und Importbeleg; auch ein Neustart
+legt bereits importierte Zeilen nicht erneut an. Pause erfolgt zwischen Zeilen.
+20 Importtests, 6 zusätzliche GUI-Tests und eine Migrationserweiterung prüfen
+Fehler, Rollback, Profile, Duplikate, Blattwechsel und Wiederaufnahme.
+Anleitung und Grenzen: docs/08_Import_Workflow.txt.
+Ausbau umgesetzt: CSV-/XLSX-Datenexport für Auswahl/gefilterte Treffer,
+Spalten-/Zielauswahl und Gruppenberichte. Quellprofile/Standardwerte und
+projektweit gespeicherte Listen verbinden Bulk und Word Replace (Migration 008).
+Offen: Exporthistorie, Dokumentpakete und strukturierte DOCX-/PDF-Tabellen.
+Dokumentausgabe als DOCX/PDF und Projektbackup sind bereits vorhanden.
+
+SPRINT 6 — E-Mail/Gmail
+- OAuth, Provider-Schnittstelle, Entwürfe, Anhänge, Scheduler, Freigabe.
+- Versandversuche und Reconciliation für unklare Ergebnisse.
+Abnahme: keine blinden Wiederholungen; kontrollierter Testversand.
+Status: in Arbeit am 2026-10-11. Gmail-Provider, OAuth mit PKCE/Loopback und
+Windows Credential Manager, lokale/Gmail-Entwürfe, Signaturen, feste MIME-
+Nachrichten und Anhänge, explizite Freigabe, UTC-Zeitplanung und Versandhistorie
+sind umgesetzt. Scheduler ist pro Sitzung einzuschalten; manuelle Aufträge
+werden nur über Jetzt senden ausgeführt. Neustart/Standby sperrt überfällige
+Aufträge bis zur ausdrücklichen erneuten Freigabe. Unklare Resultate werden
+anhand Message-ID und SENT-Label geprüft und niemals automatisch wiederholt.
+43 automatische E-Mail-Tests bestehen; ein zusätzlicher nativer Windows-
+Vault-Test wurde separat erfolgreich ausgeführt. Vier neue GUI-Tests prüfen
+Editor, Freigabe, Versandhistorie, Sperren und Scheduler. Migration 004 ist
+einschließlich Erhalt bestehender E-Mail-Daten geprüft.
+Abnahme offen: echte OAuth-Anmeldung und ausdrücklich freigegebener Testversand
+mit Gmail; Google-Clientdatei/Konto benötigt. Anleitung: docs/09_Gmail_Workflow.txt.
+Fix vom 12.10.: Vor Anmeldung gespeicherte Entwürfe können ihr Absenderkonto
+beim Vorbereiten auswählen; Zuordnung und Auftrag werden atomar gespeichert.
+Geplante Aufträge dürfen nach expliziter Bestätigung sofort gesendet werden;
+der Scheduler bleibt termingebunden. Freigeben & jetzt senden ist integriert.
+Fehler in der Vorprüfung lassen keinen geplanten Auftrag freigegeben zurück.
+Noch offen: responsive OAuth-Abschlussseite im App-Design mit Tab-schließen-Button
+und klarer Rückmeldung, falls der Browser das Schließen blockiert (Sprint 7B).
+Beauftragter Ausbau: einzelne und Bulk-E-Mail-Aufträge im Arbeitsbereich;
+Empfänger aus Kontakten/Import auswählen, individuelle Vorlagen/Anhänge,
+Vorschau pro Empfänger, ausdrückliche Freigabe, Batch-Fortschritt/Pause/Abbruch
+und nachvollziehbare Einzelergebnisse. Unklare Sendungen nicht automatisch wiederholen.
+
+SPRINT 7 — GUI MVP
+- Hauptfenster, Navigation, Kernansichten und Hintergrundaufgaben.
+Abnahme: zentrale Abläufe ohne direkte SQL-Manipulation durch UI.
+Status: vorgezogen und in Arbeit am 2026-10-11. Erweiterbares Hauptfenster,
+Navigation, Hell-/Dunkel-Umschaltung, Projektverwaltung/Backup, Suche/Seitenwechsel,
+Unternehmen/Kontakte/Bewerberprofil/Bewerbungen anlegen, Statuswechsel,
+Vorlagenimport und neue Versionen mit Mapping, DOCX-Erzeugung, Textvergleich
+und PDF-Ansicht sind vorhanden. Qt-Worker hält SQLite-Verbindung und lange
+Dateioperationen außerhalb des GUI-Hauptthreads; Fehlermeldungen und
+kontrolliertes Schließen sind geprüft. Datenimport und E-Mail sind integriert;
+165 GUI-Tests bestehen. Unternehmen, Kontakte, Bewerberprofile, Stellen und
+Bewerbungen lassen sich anlegen und bearbeiten. Stellen besitzen eigene
+Such-/Listenansicht und können Bewerbungen zugeordnet werden. Kontaktrollen
+und ein Hauptkontakt pro Unternehmen sowie Bewerbungs-Kontaktzuordnungen
+sind bedienbar. Bearbeitung erkennt zwischenzeitliche Änderungen, bewahrt
+nicht angezeigte Felder und protokolliert Änderungen atomar.
+Zehn zusätzliche Datenverwaltungstests prüfen Konsistenz, Rollback, Konflikte,
+Archivbezüge, Zuordnungen und Datumsfelder. Anleitung: docs/10_Record_Management.txt.
+Nachfassübersicht für Bewerbungen und eigene Erinnerungen mit Kalender, Zeitzonen,
+Sommerzeitprüfung, Suche/Filtern, Verschieben, Abschluss und Historie ist umgesetzt.
+Zwölf Servicetests und fünf zusätzliche Qt-Tests prüfen Termine und Bedienung.
+Die offene App aktualisiert Fälligkeit jede Minute; keine Systembenachrichtigungen.
+Anleitung: docs/11_Reminders.txt. Vollständiger Feature-/UI-Stand: docs/12_Feature_Status.md.
+Zentrale Einstellungsseite mit dauerhaftem Design, Akzentfarbe und Anzeigezeitzone
+ist umgesetzt. Atomare Einstellungsdatei, Validierung und Fehlererholung sind
+durch neun Tests und sieben zusätzliche Qt-Tests geprüft. Zeitzonenwechsel
+ändert keine gespeicherten Zeitpunkte. Anleitung: docs/13_Settings.txt.
+Aktueller Ausbau 7A — Projekte, Arbeitsbereich und Toasts:
+[x] Bevorzugtes Konto/Format, konkrete DOCX-Vorlage, Profil-/Listenübernahme und spätere Projektvorgaben.
+[x] Kontaktgruppen/Filter, DOCX je Zeile und optionale Domain-Bewerbungen mit Versandbelegen.
+[x] Lokales Kontotagesbudget, Versandfenster/Quotensperren und Hintergrundsteuerung in offener App.
+[x] Ohne Projekt zuerst Übersicht / Projekte; Projektseiten ausgeblendet.
+[x] Nach Erstellen/Öffnen automatisch Arbeitsbereich als Hauptbereich.
+[x] Projektanlage fragt Modus (Bewerbungen/E-Mail-Aufträge) und optionales Ziel ab.
+[x] Modus im Projekt speichern, wechseln und beim Wiederöffnen übernehmen.
+[x] Direkte Profil-/Unternehmens-/Bewerbungs-/Erinnerungsdialoge im Arbeitsbereich.
+[x] E-Mail-Entwurf öffnen, bestehende Aufträge prüfen und Vorlagen direkt verwenden.
+[x] Aktuelle Vorgänge, Kennzahlen und fehlende Bewerbungsvoraussetzungen zeigen.
+[x] Scrollbarer Arbeitsbereich: Karten wechseln zwischen einer und zwei Spalten.
+[x] Lokale animierte Toasts für Speichern/Backup/Versandstatus/zunehmende Fälligkeit.
+[x] Projektassistent: drei Schritte, optional Profil/Standardsignatur, Zusammenfassung.
+[x] Zurück/Abbruch, Validierung, atomare Anlage und Fehlererholung mit erhaltenen Eingaben.
+[x] Neue Entwürfe schlagen die initiale Standardsignatur vor; bestehende behalten ihre Wahl.
+[x] Standardkonto/Format, Dokumentvorlage, Profil-/Empfängerlistenübernahme und spätere Projektvorgabenverwaltung.
+[x] Einzelauftrag im Arbeitsbereich bearbeiten, vorbereiten, prüfen, freigeben und senden.
+[x] Entwurfs-/Auftragsauswahl mit 25 Einträgen/Seite, Auswahl nach Aktualisierung erhalten.
+[x] Kalender/Zeitzone, Vorprüfung mit erhaltenen Eingaben, Bestätigung vor Versand/Storno.
+[x] Nächste nötige Aktion am Vorgang; unklare Ergebnisse nur abgleichen.
+[x] Gmail-Kontostatus, direkte Anmeldung und Scheduler im Arbeitsbereich.
+[x] Absenderwahl für alte Entwürfe und Freigeben & jetzt senden (auch vor Termin).
+[x] Ohne Termin Senden, mit Termin Versand planen; Auswahl Senden / planen.
+[x] Bewerbung/Kontakt im Arbeitsbereich oder in Listen für E-Mail auswählen.
+[x] Empfänger/Betreff/Texteinstieg übernehmen; Mehrfachwahl und fehlende Adressen erklären.
+[x] Zugehörige Bewerbungsdokumente ausdrücklich anhängen; vorhandene Inhalte erst nach Bestätigung ersetzen.
+[x] E-Mail-Vorlagenbibliothek: Name/Betreff/Text/Format, Versionen, Duplikate und Namenssuche.
+[x] Vorschau mit Projekt-/eigenen Werten; fehlende Werte sperren Übernahme.
+[x] Konkrete Version in Einzelentwurf übernehmen; bestehende Inhalte/Aufträge erhalten.
+[x] Bulk-Auswahl: Kontakte/Importkontakte suchen, mehrere Seiten auswählen, Duplikate/Fehler markieren.
+[x] Persönliche Vorlagenwerte, Bewerbungszuordnung und ausdrücklich gewählte Anhänge je Empfänger prüfen.
+[x] Vorschau inklusive Signatur; geänderte Daten erkennen, Pflichtwerte sperren die Gruppe.
+[x] Lokale Entwurfsgruppen atomar speichern, wieder öffnen und Einzelentwürfe bearbeiten.
+[x] Direkte Excel-/CSV-Importzeilen mit sämtlichen Quellspalten, Korrekturen und Herkunft verwenden.
+[x] Manuelle Liste, mehrzeiliges Excel-Einfügen und gezielte DOCX-Textübernahme.
+[x] Anrede/Ansprechpartner/E-Mail/Firma/Stelle/Anschreiben einmal zuordnen; Datenquelle/verwendete Werte anzeigen.
+[x] Individuelle Dateien und persönliche DOCX-Anschreiben aus denselben Zeilenwerten erzeugen/anhängen.
+[x] E-Mail, Anschreibentext und Dateien prüfen; Dokumente/Entwürfe gemeinsam speichern oder zurücknehmen.
+[x] Excel-Bewerbungen mit passenden Anhängen durch bestehenden Einzelversand mit Testprovider prüfen.
+[x] Wiederverwendbare Quellprofile/Standardwerte/Leerwertregeln und eigene Datenlisten.
+[x] Strukturierte DOCX-/PDF-Tabellen als gemeinsame Datenquelle.
+[ ] Echte PDF-/Layout-Abnahme.
+[x] Optional Domain-Bewerbungen je Zeile anlegen und bestätigten Mailstatus zurückführen.
+[x] Feste Gruppenaufträge schrittweise vorbereiten, atomar gemeinsam prüfen/freigeben.
+[x] Gruppenversand direkt oder geplant, Abstand, Einzelstatus und Fortschritt.
+[x] Pause/Fortsetzen/Abbruch auch während Versand bedienen; Wirkung nach laufendem Auftrag.
+[x] Unklare Ergebnisse abgleichen, eindeutige Fehler ausdrücklich erneut freigeben, erledigte Aufträge überspringen.
+[x] Nach Neustart/Unterbrechung prüfen; Einzel-Scheduler umgeht die Gruppensteuerung nicht.
+[x] Tagesbudgets, Versandfenster/Anbietersperren und Hintergrundausführung in offener App.
+[ ] Echte Gmail-Bulk-Abnahme mit persönlichem Anhang und Planung.
+[x] Datenexport mit Auswahl/Filter, Spalten, CSV/XLSX und Versandgruppenbericht.
+[x] Gemeinsame Vorlagensuche (Sprint 4/5/6-Ausbau).
+
+Ausbau 7B — UI und Einstellungen:
+[x] Datensatzaktionsleisten umbrechen; E-Mail-Editor scrollbar mit erreichbaren Abschlussaktionen.
+[x] Kern-Listen/Dialoge/Aktionsleisten responsiv und scrollbar.
+[ ] Native Größen/DPI und Tastatur praktisch prüfen.
+[x] Kurze Theme-/Seitenübergänge und reduzierte Bewegung als Einstellung.
+[x] Exportziel/Format/Trennzeichen/Zeichensatz als dauerhafte Einstellungen.
+[x] Toastdauer/Kategorien und projektbezogene Konto-/Formatvorgaben.
+[x] Globaler Startmodus, E-Mail-/Listen-/Backup-Optionen.
+[x] Dauerhafte DE/EN-Sprachwahl und Kernnavigation.
+[ ] Vollständige englische Fach-/Fehlertexte.
+[x] OAuth-Abschlussseite mit Logo und Tab-schließen-Button/Fallback.
+[ ] Echten Browserablauf gesammelt abnehmen.
+[ ] Weitere Status-/Signatur-/Adress-/Zusatzfeldverwaltung und Aktivitätshistorie.
+[x] Hotkey-Hilfe, konfigurierbare Belegungen, Konfliktprüfung und eigener Einstellungs-Tab.
+[x] Speichern/Suchen und Navigation per Hotkey; Versandaktionen bleiben separat.
+[x] Builder-Kürzel für Speichern, Löschen/Duplizieren, Undo/Redo und Zoom; vollständige praktische Tastaturabnahme offen.
+[x] Visueller Drag-&-Drop-E-Mail-Builder mit typisierten Ein-/Ausgängen und eigener Navigation.
+[x] Bild-/Video-Anhänge, E-Mail/Text/DOCX/PDF/Word Replace verbinden, prüfen, versionieren und wiederverwenden.
+[x] Gemeinsame Excel-/Listenwerte und persönliche Dateipfade; DOCX→Word Replace→PDF→E-Mail.
+[x] Zeilenvorschau, lokale Entwurfsgruppe und Übergabe in vorhandene Freigabe/Versandplanung.
+[x] Eigene Bausteine für Betreff, Beschreibung, Absatz, Überschrift, HTML, Anrede, Gruß und Trennlinie.
+[x] Live-Text-/HTML-Vorschau, Bilder/Video/PDF im Editor und persönliche DOCX-Textvorschau.
+[x] Bulk-Aufträge direkt aus dem Builder vorbereiten/planen; Zeitpunkt, Zeitzone, Abstand und Prüfungsdialog.
+[x] Mittlere Maustaste verschiebt die Ansicht; Suchpalette, Verbindungsvorschau und schnellere Kantenaktualisierung.
+[x] Acht dauerhafte Themes samt Hell-/Dunkel-Paaren und eigener Akzentfarbe.
+[x] Builder-Arbeitsstand im Hintergrund sichern, vor Wechsel/Backup/Schließen nachsichern und nach Neustart wiederherstellen; Konflikte pausieren (Migration 010).
+[x] Links/Buttons und Listen mit persönlichen Daten; automatische Anordnung, freie Standardplatzierung und direkte Bausteinauswahl.
+[x] Fertiger Mailrenderer direkt im E-Mail-Baustein/Mail-Tab: Empfänger, Betreff, Signatur und Anhänge; HTML als Standard und markierter ungeprüfter Live-Entwurf.
+[x] Mail-/HTML-/Bild-Miniaturen, persönliche Beschriftungen und Autoload im Eigenschaftenbereich; gemeinsame Zeilenauswahl, begrenzter Hintergrundcache und Verwerfen alter Antworten.
+[x] OAuth-Abschlussseite, gemeinsame Vorlagen/DOCX-Duplikate/HTML-Vorschau, DOCX-/PDF-Tabellen, Dokumentpakete und Canvas-Belegungen fertig implementiert.
+[x] Graphtransfer: portable JSON-Vorlagen prüfen/importieren/exportieren; Quellen neu zuordnen und Versandplanung zurücksetzen.
+[x] assets/Logo256.png als App-/Fenstericon und scharf skalierte Marke in App/Browser nutzen.
+[ ] Sammelabnahme der neuen Funktionen und tatsächliche Browser-/Windows-/Gmail-/LibreOffice-Prüfung.
+[x] Builder-Textbedingungen und Zusammenführen sowie flexible Panels/kompakte Tools.
+[ ] Inline-Medien, Bausteingruppen und DOCX-Seitenlayout.
+[x] Word Replace als eigener Bereich: DOCX-Eingang, Regeln, Fundstellen, Vorschau und persönliche DOCX-/PDF-Kopien bis 100 Zeilen.
+[x] Vorschauänderungen erkennen, Abbruch bedienen, atomare Ausgabe und Wiederherstellung bei Dateisperren.
+[x] Dauerhafte Word-Replace-Läufe mit festen Originalen/Regeln/Werten, Fortsetzen und Sperre paralleler Verarbeitung.
+[x] Word-Replace-Einstellungs-Tab: Suchoptionen, fehlende Werte, Format/Ziel, LibreOffice-Pfad und Zeitlimit.
+[x] Eigene Builder-Einstellungen für Raster, Einrasten, Standardzoom und Autosicherung/Eingabepause.
+[ ] Umfassende manuelle Windows-Abnahme.
+[x] Umbrechende Aktionsleisten, Fortschritt/Abbruch, reduzierte Bewegung/Übergänge und Toastkategorien/Dauer.
+[ ] Paket I gesammelt praktisch abnehmen: docs/25_Bundled_Acceptance.md.
+Anleitung und Ansichten: docs/29_Sprint_7_Expansion.md.
+Priorisierte Gesamtliste: docs/14_Workspace_TODO.md.
+Neue Anleitungen: docs/22_Data_Source_Library.txt, docs/23_Data_Export.txt,
+docs/24_Word_Replace.txt. Gebündelte manuelle Abnahme: docs/25_Bundled_Acceptance.md.
+Visueller Builder (Migration 009/010): docs/27_Email_Builder.txt.
+Einzelauftragsablauf: docs/15_Mail_Workspace.txt. Reale Gmail-Abnahme weiter offen.
+Projektassistent: docs/16_Project_Wizard.txt. Anmeldung/Sofortversand laut
+Nutzerrückmeldung am 12.10. erfolgreich; vollständige kontrollierte Abnahme bleibt offen.
+Kontextübernahme und Dokumentauswahl: docs/17_Mail_Context.txt.
+E-Mail-Vorlagen, Versionen und Vorschau: docs/18_Mail_Templates.txt.
+Bulk-Entwurfsgruppen (Migration 005): docs/19_Bulk_Drafts.txt.
+Gemeinsame Excel-/Listenquellen und Bewerbungsanhänge (Migration 006): docs/20_Bulk_Data_Sources.txt.
+Gruppenversand mit Freigabe/Planung/Pause (Migration 007): docs/21_Bulk_Delivery.txt.
+530 Tests: 529 erfolgreich, ein optionaler nativer Vault-Test übersprungen.
+33 neue Paketprüfungen, davon zehn Qt; Anleitung: docs/28_Completion_Package.md.
+
+SPRINT 8 — Hardening/Release
+- Backups/Wiederherstellung, Übersetzungen, Themes, Installer/portable Build.
+- Lizenz-, Datenschutz-, Sicherheits- und End-to-End-Tests.
+Abnahme: Installation, Migration und Wiederherstellung praktisch getestet.
+
+REGELN
+Ein Sprint ist erst nach Tests und dokumentierter Abnahme fertig.
+Auf Benutzerwunsch werden manuelle Zwischenabnahmen jetzt gebündelt:
+docs/25_Bundled_Acceptance.md. Weiterentwicklung trotz offener manueller
+Punkte ist autorisiert; diese Punkte werden nicht als abgenommen markiert. Keine Sprintdauer wird zugesagt, bevor Aufwand und verfügbare Zeit klar sind.
+Die Erweiterungen vom 11.10.2026 sind ausdrücklich vom Benutzer beauftragt.
+Bereits abgeschlossene Sprintkerne bleiben als erledigt markiert; deren neue
+Ausbaupunkte werden separat verfolgt. Keine weiteren Funktionen stillschweigend hinzufügen.
+Hotkeys: docs/26_Hotkeys.txt. Acht Backend- und fünf zusätzliche Qt-Tests.
+
+Neues Sprint-7-Paket: 48 zusätzliche Tests, davon 17 Qt; insgesamt 530 Tests / 529 bestanden / 1 optional übersprungen.
+Anleitung: docs/29_Sprint_7_Expansion.md; Abnahme Paket I.
+
+ENDSPURT — SPRINT 7B / 8
+[x] Neue Vorgaben, geordnete Standardbausteine und dauerhafte Undo-/Redo-Historie.
+[x] Backup-Ziel/Aufbewahrung, Prüfsummenarchive und sichere Wiederherstellung.
+[x] Wiederherstellung deaktiviert Konten/Hintergrund und verlangt neue Prüfung.
+[x] Lokaler Diagnoseexport ohne Nachrichten/Adressen/Pfade/Tokens.
+[x] 561 Tests: 560 bestanden, ein optionaler Vault-Test übersprungen.
+[x] DE/EN-App-Fachtexte, Fehler und Dialoge ergänzt; dynamische Anzeigen und Inhaltsschutz geprüft (A5).
+[ ] Praktische PDF-/Gmail-/Windows-Abnahme und finalen Programmstand freigeben; Installer folgt in B5.
+Anleitung: docs/31_Endspurt.md; Abnahme Paket J.
+
+A5 — SPRACHE / UI AM 13.10.2026
+[x] Englischer Neustart und Rückwechsel; Eingaben, Auswahl-IDs und Mailinhalte erhalten.
+[x] Projektassistent/Zusammenfassung, dynamische Listen/Status/Fortschritt und OAuth-Seite DE/EN.
+[x] Qt 100/125/150/200 %, 492 verwendete Beschriftungsquellen geprüft.
+[x] Aktueller Gesamtlauf 638 / 637 bestanden / 1 optionaler Skip, Quellen unverändert; 144 UI-Wiederholungsprüfungen bestanden.
+[ ] Tatsächliche Windows-DPI/Tastatur, Browser-Abschluss und nativer Langlauf.
+Anleitung und aktueller Prüfbericht: docs/38_Localization_UI_Completion.md.
+
+GMAIL-ENDABNAHME AM 12.10.2026
+[x] Reale Anmeldung und exakt zwei freigegebene Testmails ohne Anhänge.
+[x] Geschlossenes Versandfenster: null Versuche; Hintergrundlauf: Completed.
+[x] Tagesbudget nach zwei Nachrichten erreicht; keine dritte Nachricht gesendet.
+[x] Postfachempfang beider Nachrichten vom Benutzer am 13.10.2026 bestätigt.
+[x] Terminlauf mit persönlichen Anhängen: zusätzlicher freigegebener TEST 4 am 13.10.2026 bestätigt; Nachweis unten.
+[ ] Native Versandsteuerung im UI.
+Nachweis: docs/abnahme/gmail_live_result.json.
+
+GMAIL-ANHÄNGE / TERMIN AM 13.10.2026
+[x] TEST 3/4 zusätzlich konkret freigegeben: Gmail-Draft, sofortiger und geplanter Versand mit zwei persönlichen PDFs.
+[x] Genau zwei neue Versuche / beide Sent; TEST 4 nicht vor Fälligkeit.
+[x] Pause/Projekt-Neuöffnung/erneute Service-Freigabe; Gmail-Rückvergleich von Inhalt und PDF-Hash.
+[x] Empfang beider neuen Nachrichten und korrekte Anzeige beider PDFs vom Benutzer bestätigt.
+[ ] Native UI-/App-Neustart-Abnahme.
+Nachweis/Sammelprüfung: docs/39_Gmail_Attachment_Review.md.

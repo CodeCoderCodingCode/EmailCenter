@@ -1,0 +1,904 @@
+# Anforderungsdokument
+## Universal Email & Document Automation
+**Projektname:** Vorläufig offen  
+**Dokumentversion:** 1.0  
+**Status:** Anforderungsbasis erstellt – technische Detailentscheidungen teilweise offen  
+**Zielplattform:** Windows Desktop  
+**Primäre Sprache:** Deutsch, zusätzlich Englisch  
+**Geplante Programmiersprache:** Python  
+**Produktstrategie:** Zuerst ein voll nutzbarer Bewerbungsassistent, anschließend schrittweise Erweiterung zu einer universellen Automatisierungsanwendung.
+
+---
+
+# 1. Projektziel
+
+Entwickelt werden soll eine moderne Desktop-Anwendung zur Automatisierung von Dokumenten, E-Mails und wiederkehrenden Büroabläufen.
+
+Die Anwendung soll Dokumentvorlagen bearbeiten, Platzhalter mit individuellen Daten befüllen, PDF-Dateien erstellen, E-Mails personalisieren und deren Versand über Gmail planen. Durch den Import von Excel- oder CSV-Dateien sollen auch große Mengen unterschiedlicher Empfänger und Dokumente effizient verarbeitet werden können.
+
+Das System soll zunächst den persönlichen Bewerbungsprozess vereinfachen. Die zugrunde liegende Architektur muss jedoch so gestaltet sein, dass weitere Anwendungsbereiche später ergänzt werden können, ohne den technischen Kern neu schreiben zu müssen.
+
+## 1.1 Grundprinzipien
+
+- **Automatisierung:** Wiederkehrende Arbeitsschritte sollen möglichst wenig manuelle Eingriffe benötigen.
+- **Datenqualität:** Fehlende, ungültige oder widersprüchliche Angaben werden vor der Verarbeitung erkannt.
+- **Dokumenttreue:** Vorhandene Word-Dokumente und ihre Formatierung sollen so weit wie technisch möglich erhalten bleiben.
+- **Kontrolle:** Kritische Aktionen wie Massenversand oder das Überspringen von Fehlern müssen nachvollziehbar und konfigurierbar sein.
+- **Datenschutz:** Personenbezogene Daten werden nur gespeichert, soweit sie für den jeweiligen Arbeitsablauf benötigt werden.
+- **Erweiterbarkeit:** Neue Modi und Funktionen sollen auf gemeinsamen, wiederverwendbaren Komponenten aufbauen.
+- **Bedienbarkeit:** Die Oberfläche muss modern, übersichtlich, reaktionsschnell und auch bei umfangreichen Aufgaben bedienbar bleiben.
+- **Wiederherstellbarkeit:** Fehler, Abstürze und unterbrochene Vorgänge dürfen nicht unkontrolliert zu Datenverlust oder doppelten E-Mails führen.
+
+# 2. Produktumfang und Entwicklungsgrenzen
+
+## 2.1 Geplante Anwendungsmodi
+
+Die Anwendung ist langfristig für folgende Bereiche vorgesehen:
+
+1. Bewerbungsassistent
+2. Serien-E-Mails
+3. Dokumentenbearbeitung
+4. Rechnungen und Angebote
+5. Newsletter
+6. Freier Workflow und eigene Vorlagen
+7. Kontaktverwaltung
+
+Diese Modi verwenden nach Möglichkeit gemeinsame Funktionen für Vorlagen, Datenzuordnung, Dokumentgenerierung, E-Mail-Erstellung, Zeitplanung, Protokollierung und Fehlerbehandlung.
+
+## 2.2 Erste vollständig nutzbare Version
+
+Die erste Version konzentriert sich auf den **Bewerbungsassistenten**.
+
+Der erste Anwendungsumfang beinhaltet:
+
+- Zentrale Verwaltung des Bewerberprofils
+- Verwaltung von Unternehmen, Ansprechpartnern, Stellen und Bewerbungen
+- DOCX-Vorlagen mit Platzhaltern
+- Personalisierte Anschreiben und weitere Bewerbungsunterlagen
+- PDF-Export und Erhalt bearbeitbarer DOCX-Dateien
+- Personalisierte Gmail-Nachrichten
+- Anhänge und Versandvorschau
+- Import von XLSX- und CSV-Dateien
+- Lokale Planung und Verwaltung von E-Mails
+- Bewerbungsstatus, Wiedervorlagen und Historie
+- Lokale Projektverwaltung, automatische Speicherung und Backups
+- Tests und nachvollziehbare Fehlerbehandlung
+
+Die anderen Modi sind Teil des langfristigen Produktziels. Sie müssen bei der Architektur berücksichtigt werden, müssen aber nicht alle bereits in der ersten Version vollständig umgesetzt sein.
+
+## 2.3 Nicht-Ziele der ersten Version
+
+Folgende Funktionen werden zunächst nicht vorausgesetzt:
+
+- Vollständiger Ersatz für Microsoft Word
+- Perfekte Darstellungsgarantie für jedes beliebige DOCX-Dokument
+- Eigener Cloudserver für geplante E-Mails
+- Vollständige Unterstützung beliebig vieler E-Mail-Anbieter
+- Vollständiges Newsletter-Marketing-System
+- Uneingeschränkte, programmierbare Automatisierungsplattform
+- Automatische Rücknahme bereits versendeter E-Mails
+- Telemetrie oder verpflichtende Cloud-Speicherung
+
+# 3. Zielplattform und technische Grundlagen
+
+## 3.1 Desktop-Anwendung
+
+Die Anwendung soll unter Windows nutzbar sein und sowohl als installierbare Anwendung als auch als portable Version bereitgestellt werden.
+
+Die Benutzeroberfläche muss unabhängig von der eigentlichen Verarbeitungslogik entwickelt werden. Dokumentverarbeitung, Datenvalidierung, Workflow-Ausführung, Gmail-Anbindung und Zeitplanung dürfen nicht ausschließlich an die Oberfläche gekoppelt sein.
+
+## 3.2 Vorgesehener Technologie-Stack
+
+| Bereich | Vorgesehene Technologie |
+|---|---|
+| Programmiersprache | Python |
+| Desktop-Oberfläche | PySide6 / Qt |
+| Lokale Datenbank | SQLite |
+| Projektkonfiguration | JSON |
+| Word-Dokumente | python-docx plus gezielte OOXML-Verarbeitung |
+| Excel | openpyxl |
+| CSV | Python-Standardbibliothek |
+| PDF-Konvertierung | LibreOffice im Headless-Modus |
+| Gmail | Gmail API und OAuth 2.0 |
+| Zugangsdaten | Windows Credential Manager |
+| Tests | pytest plus manuelle UI- und End-to-End-Tests |
+| Windows-Paketierung | PyInstaller als vorgesehener Ansatz |
+
+Diese Auswahl ist eine technische Ausgangsbasis, keine Garantie, dass jede Komponente ohne weitere Prüfung eingesetzt werden kann. Insbesondere Lizenzbedingungen, Gmail-Richtlinien, Paketierung, Sicherheitsanforderungen und die Kompatibilität der PDF-Konvertierung müssen vor der Veröffentlichung geprüft werden.
+
+## 3.3 Erweiterbare Architektur
+
+Die Anwendung soll modular aufgebaut sein. Vorgesehene logische Bereiche:
+
+- Benutzeroberfläche
+- Projekt- und Einstellungsverwaltung
+- Datenbank und Migrationen
+- Vorlagenverwaltung
+- Dokumentverarbeitung
+- Datenimport und Validierung
+- E-Mail-Erstellung und Gmail-Integration
+- Versandwarteschlange und Zeitplanung
+- Workflow-Engine
+- Kontakt- und Bewerbungsverwaltung
+- Protokollierung und Diagnose
+- Backup und Wiederherstellung
+
+Die Module kommunizieren über klar definierte Schnittstellen. Spätere Erweiterungen sollen möglichst bestehende Kernfunktionen nutzen, statt eigene parallele Systeme für dieselben Aufgaben einzuführen.
+
+# 4. Benutzeroberfläche und Bedienung
+
+## 4.1 Grundlayout
+
+Die Anwendung startet mit einem Dashboard.
+
+Vorgesehen sind:
+
+- Linke, einklappbare Sidebar
+- Dashboard als Startansicht
+- Mehrere gleichzeitig geöffnete Tabs
+- Kontextabhängige Arbeitsbereiche
+- Kopfmenü für übergreifende Funktionen
+- Kontextabhängige Fuß- und Statusbereiche
+- Ausgewogenes Verhältnis zwischen Informationsdichte und Übersichtlichkeit
+
+Die Sidebar enthält mindestens:
+
+- Projekte
+- Favoriten
+- Zuletzt geöffnet
+- Geplante Aufgaben
+- Warteschlange
+- Kontakte
+- Vorlagen
+
+## 4.2 Darstellung
+
+Die Anwendung bietet:
+
+- Dark Mode und Light Mode
+- Anpassbare Akzentfarbe
+- Umschaltbare deutsche und englische Benutzeroberfläche
+- Responsive beziehungsweise adaptive Fensterlayouts
+- Dezente Animationen
+- Drag-and-drop
+- Kontextbezogene Fortschrittsanzeigen
+- Toast-Nachrichten
+- Aktivitätsprotokoll
+- Rückgängig-Funktion für geeignete lokale Aktionen
+- Übliche Tastenkürzel
+
+Die Spracheinstellung beeinflusst die Benutzeroberfläche. Datums-, Zahlen- und andere regionale Formate sollen zusätzlich projektbezogen konfigurierbar sein.
+
+## 4.3 Verhalten bei Änderungen
+
+Änderungen sollen automatisch gespeichert werden, soweit dies für den jeweiligen Inhalt sinnvoll ist. Ein zusätzlicher manueller Speichervorgang muss möglich bleiben.
+
+Der aktuelle Speicherstatus muss erkennbar sein. Vor dem Verlassen eines Arbeitsbereichs soll nicht unnötig nachgefragt werden, wenn alle Änderungen bereits sicher gespeichert wurden.
+
+Kritische Aktionen wie Massenversand, umfangreiche Löschungen oder Wiederherstellungen erfordern dagegen eine angemessene Bestätigung.
+
+## 4.4 Reaktionsfähigkeit
+
+Zeitintensive Vorgänge dürfen die Benutzeroberfläche nicht blockieren.
+
+Das betrifft insbesondere:
+
+- Excel- und CSV-Import
+- Große Datenvalidierungen
+- DOCX-Verarbeitung
+- PDF-Export
+- Vorschauerstellung
+- Umfangreiche Exporte
+- Gmail-Synchronisierung
+- Massenversand
+- Backup und Wiederherstellung
+
+Lange Vorgänge benötigen Fortschrittsanzeigen, Fehlerstatus und eine nachvollziehbare Möglichkeit, den Prozess zu kontrollieren.
+
+# 5. Projektverwaltung und Speicherung
+
+## 5.1 Projektmodell
+
+Ein Projekt wird in einem eigenständigen Projektordner gespeichert.
+
+Der Ordner soll die für das Projekt notwendigen Daten enthalten, beispielsweise:
+
+- Projektkonfiguration
+- Lokale Datenbank
+- Importierte Quelldateien
+- Dokumentvorlagen und Vorlagenversionen
+- Generierte Dokumente
+- Projektbezogene E-Mail-Entwürfe und Aufgaben
+- Exportierte Ergebnisse
+- Projektbezogene Protokolle
+- Backup- und Migrationsinformationen, soweit erforderlich
+
+Die konkrete Ordnerstruktur wird bei der technischen Ausarbeitung festgelegt und versioniert.
+
+## 5.2 Hybridmodell
+
+Die Daten werden nach ihrem Zweck getrennt:
+
+- SQLite für strukturierte Datensätze und Beziehungen
+- Dateien für Dokumente, Anhänge und andere Binärdaten
+- JSON für geeignete Konfigurationen und Metadaten
+
+Die Datenbank bleibt die maßgebliche Quelle für strukturierte Datensätze und deren Status. Dateiverweise müssen auf gültige Dateien geprüft werden können.
+
+## 5.3 Unabhängigkeit und Wiederverwendung
+
+Projekte müssen eigenständig verwaltbar und auf einen anderen Speicherort übertragbar sein.
+
+Die Anwendung bietet:
+
+- Projekt öffnen und schließen
+- Projekt duplizieren
+- Projekt importieren und exportieren
+- Projektbezogene Einstellungen
+- Globale Einstellungen mit optionalen Projektüberschreibungen
+- Automatische Speicherung
+- Manuelle Speicherung
+- Automatische Backups
+- Konfigurierbare Backup-Aufbewahrung
+- Wiederherstellung aus einem Backup
+- Papierkorb für geeignete Löschvorgänge
+
+Importierte Quelldateien werden standardmäßig in das Projekt kopiert. Die Anwendung soll nicht stillschweigend auf Dateien außerhalb des Projekts angewiesen sein, wenn diese für die spätere Wiederverwendung benötigt werden.
+
+## 5.4 Wiederherstellung und Migration
+
+Das Projektformat erhält eine Versionskennung. Bei inkompatiblen Änderungen muss die Anwendung Migrationen ausführen können.
+
+Vor einer Migration wird ein konsistenter Wiederherstellungspunkt angelegt. Bei Fehlern muss die Anwendung eine sichere Rückkehr zum vorherigen Zustand ermöglichen.
+
+Eine Datenbank darf nicht unabhängig von den zugehörigen Dateien in einen inkonsistenten Zustand gebracht werden.
+
+Beim Absturz soll die Anwendung erkennen, ob eine Wiederherstellung möglich oder erforderlich ist, und dem Benutzer passende Optionen anbieten.
+
+## 5.5 Verschlüsselung
+
+Backups und Archive sollen optional verschlüsselt werden können. Das Verfahren zur Schlüsselverwaltung muss vor der Implementierung festgelegt werden.
+
+Die Verschlüsselung von Backups ist von der Absicherung des aktiven Projektordners zu unterscheiden. Diese Unterscheidung muss in der Dokumentation klar dargestellt werden.
+
+# 6. Datenmodell
+
+Die Daten sollen als getrennte, miteinander verknüpfbare Datensätze modelliert werden.
+
+## 6.1 Zentrale Entitäten
+
+Vorgesehene Datensatztypen:
+
+- Bewerberprofil
+- Unternehmen
+- Ansprechpartner
+- Stelle beziehungsweise Stellenausschreibung
+- Bewerbung
+- Kontakt
+- Projekt
+- Dokument
+- Dokumentvorlage
+- Vorlagenversion
+- E-Mail-Entwurf
+- Geplanter Versand
+- Workflow
+- Importprofil
+- Aktivität beziehungsweise Protokolleintrag
+- Erinnerung
+- Backup- und Migrationsmetadaten
+
+Die konkreten Tabellen und Beziehungen werden in der Architekturphase festgelegt.
+
+## 6.2 Bewerberprofil
+
+Das Bewerberprofil enthält nur Daten, die für die vorgesehenen Arbeitsabläufe erforderlich sind.
+
+Mögliche Felder sind beispielsweise:
+
+- Name
+- Kontaktdaten
+- Anschrift
+- Beruflicher Hintergrund
+- Kenntnisse und Fähigkeiten
+- Angaben zu Ausbildung und Qualifikationen
+- Verweise auf Bewerbungsunterlagen
+- Eigene benutzerdefinierte Felder
+
+Sensible Angaben dürfen nicht ohne konkreten Zweck standardmäßig erhoben werden. Zusätzliche Felder müssen gezielt konfigurierbar sein.
+
+## 6.3 Beziehungen
+
+Ein Unternehmen kann mehrere Ansprechpartner, Stellen und Bewerbungen besitzen.
+
+Eine Bewerbung ist einer konkreten Stelle beziehungsweise einem entsprechenden Bewerbungsvorgang zugeordnet. E-Mails, Dokumente, Erinnerungen und Aktivitäten können mit der Bewerbung verknüpft werden.
+
+Dadurch bleiben Bewerbungsstatus und E-Mail-Versandstatus voneinander getrennt. Eine erfolgreich versendete E-Mail bedeutet nicht automatisch, dass sich der Status einer Bewerbung geändert hat.
+
+## 6.4 Suche und Filter
+
+Eine globale Suche soll zunächst Metadaten durchsuchen, darunter:
+
+- Unternehmen
+- Ansprechpartner
+- Bewerbungen
+- Betreffzeilen
+- Dokumentnamen
+- Vorlagennamen
+- Statusangaben
+- Projektbezeichnungen
+
+Eine vollständige Volltextsuche über sämtliche Dokumentinhalte ist für die erste Version nicht erforderlich.
+
+Filter, Sortierung und Listenansichten müssen auch bei Tausenden von Datensätzen nutzbar bleiben.
+
+# 7. Dokumentverarbeitung
+
+## 7.1 DOCX-Import
+
+Die Anwendung muss vorhandene Word-Dokumente als Vorlagen importieren können.
+
+Die Verarbeitung soll nach Möglichkeit erhalten:
+
+- Textformatierung und Schriftarten
+- Absätze und Listen
+- Tabellen
+- Kopf- und Fußzeilen
+- Bilder und Logos
+- Hyperlinks
+- Seitenumbrüche
+- Seitenränder und Layoutinformationen
+- Nummerierungen
+- Weitere übliche Word-Strukturelemente
+
+Die Originaldatei bleibt unverändert. Für die Bearbeitung und den Export werden kontrollierte Arbeitskopien verwendet.
+
+## 7.2 Grenzen der Dokumenttreue
+
+DOCX ist ein komplexes Dateiformat. Bestimmte Word-Funktionen, insbesondere Textfelder, verschachtelte Strukturen oder herstellerspezifische Layoutinformationen, können bei automatischer Verarbeitung problematisch sein.
+
+Die Anwendung muss daher zwischen unterstützten und eingeschränkt unterstützten Dokumentelementen unterscheiden können.
+
+Sie darf nicht pauschal garantieren, dass jedes beliebige Dokument pixelgenau erhalten bleibt.
+
+Vor dem endgültigen Export soll der Benutzer die erzeugte Datei überprüfen können.
+
+## 7.3 Platzhaltersystem
+
+Das Standardformat für Platzhalter lautet:
+
+`{{NAME}}`
+
+Weitere Beispiele:
+
+- `{{VORNAME}}`
+- `{{UNTERNEHMEN}}`
+- `{{ANSPRECHPARTNER}}`
+- `{{STELLENBEZEICHNUNG}}`
+- `{{DATUM}}`
+- `{{E_MAIL}}`
+
+Platzhalter werden automatisch erkannt. Anschließend können sie vorhandenen Feldern zugeordnet oder als benutzerdefinierte Felder definiert werden.
+
+Die Ersetzung muss auch dann zuverlässig funktionieren, wenn Word den Text eines Platzhalters intern auf mehrere Formatierungsabschnitte aufgeteilt hat.
+
+Die Verarbeitung muss relevante Dokumentbereiche berücksichtigen, nicht nur einfache Fließtextabsätze.
+
+## 7.4 Fehlende oder unbekannte Platzhalter
+
+Wenn ein erforderlicher Platzhalter nicht befüllt werden kann, muss die Anwendung warnen.
+
+Ein Export mit ungelösten Pflichtplatzhaltern darf nicht unbemerkt als erfolgreich abgeschlossen gelten. Der Benutzer kann den Wert korrigieren oder – sofern die Vorlage dies erlaubt – ausdrücklich entscheiden, wie weiter verfahren wird.
+
+Unbekannte Platzhalter dürfen nicht automatisch mit geratenen Werten befüllt werden.
+
+## 7.5 Interner und externer Editor
+
+Der interne Editor bietet Rich-Text-Bearbeitung für einfache bis mittlere Vorlagen.
+
+Für komplexe DOCX-Dateien kann die Anwendung Word, LibreOffice oder einen konfigurierten externen Editor öffnen.
+
+Externe Änderungen müssen erkannt werden. Wenn die Anwendung gleichzeitig eine eigene geänderte Kopie besitzt, muss ein Konflikt angezeigt werden, statt eine der beiden Fassungen stillschweigend zu überschreiben.
+
+## 7.6 Vorschau und Export
+
+Die Anwendung bietet eine Vorher-/Nachher-Vorschau, möglichst nebeneinander.
+
+Der Benutzer soll prüfen können:
+
+- Ursprüngliche Vorlage
+- Aufgelöste Platzhalter
+- Generiertes Dokument
+- PDF-Ausgabe
+
+PDF-Dateien werden standardmäßig mit LibreOffice erzeugt, sofern die Installation und Kompatibilität geprüft wurden.
+
+Die Anwendung soll LibreOffice erkennen und bei fehlender Installation eine verständliche Installationshilfe anbieten.
+
+## 7.7 Dateinamen und Ausgabe
+
+Dateinamen sind pro Vorlage konfigurierbar und können Platzhalter verwenden.
+
+Bulk-Exporte erzeugen einzelne Dateien in geordneten Unterordnern. Standardmäßig werden Ergebnisse im Projektordner gespeichert; der Ausgabeort kann überschrieben werden.
+
+Für jede generierte Datei müssen Ergebnis und Fehler nachvollziehbar sein.
+
+## 7.8 Anhänge
+
+Ein Projekt kann mehrere Anhänge verwalten.
+
+Der Benutzer kann:
+
+- Anhänge auswählen
+- Reihenfolge festlegen
+- Anhänge pro E-Mail auswählen
+- Vorlagenbezogene Anhangsregeln definieren
+- Automatisch erzeugte Dokumente anhängen lassen
+- Regeln bei Bedarf manuell überschreiben
+
+Vor dem Versand wird angezeigt, welche Anhänge tatsächlich verwendet werden.
+
+# 8. Datenimport und Massenverarbeitung
+
+## 8.1 Unterstützte Formate
+
+- XLSX
+- CSV
+
+Die erste Zeile enthält standardmäßig die Spaltenüberschriften.
+
+## 8.2 Spaltenzuordnung
+
+Die Anwendung analysiert die vorhandenen Spalten und ordnet sie bekannten Feldern automatisch zu.
+
+Eindeutige Zuordnungen können vorgeschlagen werden. Unsichere Zuordnungen müssen vom Benutzer bestätigt oder korrigiert werden.
+
+Importprofile speichern wiederverwendbare Zuordnungen und Einstellungen für bestimmte Vorlagen oder Arbeitsabläufe.
+
+## 8.3 Validierung
+
+Vor der Verarbeitung werden die importierten Daten normalisiert und geprüft.
+
+Die Prüfung umfasst unter anderem:
+
+- Pflichtfelder
+- Fehlende Werte
+- Ungültige E-Mail-Adressen
+- Datums- und Zeitformate
+- Doppelte Datensätze
+- Unbekannte Platzhalter
+- Fehlende Vorlagen oder Anhänge
+- Ungültige Dateinamen
+- Konflikte mit bestehenden Datensätzen
+
+Leere Zellen werden markiert und bei relevanten Feldern mit einer Warnung versehen.
+
+Doppelte Datensätze werden angezeigt und müssen nach den konfigurierten Regeln behandelt werden. Sie dürfen nicht unbemerkt zu doppelten Bewerbungen oder E-Mails führen.
+
+## 8.4 Vorschau und Fehlerbehandlung
+
+Vor einer Massenverarbeitung wird eine Übersicht aller Zeilen mit Status angezeigt.
+
+Mögliche Statuswerte sind beispielsweise:
+
+- Bereit
+- Warnung
+- Ungültig
+- Übersprungen
+- Erfolgreich verarbeitet
+- Fehlgeschlagen
+- Prüfung erforderlich
+
+Ungültige Zeilen können übersprungen und protokolliert werden, während gültige Zeilen verarbeitet werden.
+
+Die Anwendung muss später sicher fortsetzen können, ohne bereits erfolgreich erledigte lokale Verarbeitungsschritte unnötig zu wiederholen.
+
+## 8.5 Zusätzliche Spalten
+
+Importe können unter anderem folgende Werte enthalten:
+
+- Name und Anrede
+- Ansprechpartner
+- Unternehmen
+- Betreff
+- Versandzeit
+- Dateiname
+- Anhangsauswahl
+- Benutzerdefinierte Felder
+
+Die konkreten verfügbaren Felder hängen vom jeweiligen Workflow ab.
+
+# 9. E-Mail-Verarbeitung und Gmail
+
+## 9.1 Integration
+
+Die erste Version verwendet Gmail über die offizielle Gmail API mit OAuth 2.0.
+
+Der Benutzer autorisiert sein Konto über einen lokalen Desktop-Anmeldeablauf. Passwörter werden nicht selbst verwaltet oder in Projektdateien gespeichert.
+
+OAuth-Tokens sollen über den Windows Credential Manager geschützt werden.
+
+Die Architektur muss mehrere Gmail-Konten zu einem späteren Zeitpunkt unterstützen können. Die erste Version benötigt jedoch nur ein Konto.
+
+## 9.2 E-Mail-Editor
+
+Der E-Mail-Editor unterstützt Rich Text.
+
+Er bietet:
+
+- Betreff und Nachrichtentext
+- Platzhalter
+- Personalisierte Inhalte
+- Signaturen
+- Mehrere Anhänge
+- Automatisch erzeugte Dokumentanhänge
+- Vorschau der fertigen Nachricht
+- Testversand an den Benutzer selbst
+
+Es gibt eine globale Standardsignatur und optional projektspezifische Signaturen.
+
+## 9.3 Entwürfe
+
+E-Mail-Entwürfe werden lokal gespeichert. Eine optionale Synchronisierung mit Gmail kann ergänzt werden.
+
+Die Anwendung muss klar darstellen, ob eine Nachricht nur lokal existiert, mit Gmail synchronisiert wurde oder bereits versendet ist.
+
+## 9.4 Versandplanung
+
+Die Anwendung unterstützt:
+
+- Sofortversand
+- Geplanten Versand
+- Warteschlange
+- Kalenderansicht
+- Verschieben geplanter Nachrichten
+- Pausieren und Fortsetzen
+- Abbrechen noch nicht versendeter Nachrichten
+- Versandhistorie
+- Erfassung erfolgreicher und fehlgeschlagener Versuche
+- Konfigurierbare Versandgeschwindigkeit
+- Testmodus und echten Testversand
+
+Die Zeitplanung erfolgt zunächst lokal.
+
+Die Zeitzone des Systems und die jeweilige Projektkonfiguration müssen berücksichtigt werden. Intern gespeicherte Zeitpunkte sollen eindeutig und für spätere Serververarbeitung geeignet sein.
+
+## 9.5 Verhalten bei ausgeschaltetem PC
+
+Ein lokal ausgeführter Scheduler kann keine Nachrichten versenden, während der PC ausgeschaltet ist.
+
+Nach dem Neustart erkennt die Anwendung überfällige Aufgaben und zeigt sie an. Der Benutzer entscheidet ausdrücklich, ob und wann diese nachgeholt werden sollen.
+
+Ein automatischer Versand aller überfälligen Nachrichten ohne Rückfrage ist nicht vorgesehen.
+
+## 9.6 Versandzustände
+
+Der Versandstatus muss eindeutig und dauerhaft gespeichert werden.
+
+Vorgesehene Zustände:
+
+- Draft
+- Scheduled
+- Queued
+- Sending
+- Sent
+- Failed
+- Cancelled
+- Uncertain / Reconciliation Required
+
+Ein Status wie „Uncertain“ ist notwendig, wenn beispielsweise eine Gmail-Anfrage abgebrochen wurde und nicht sicher bekannt ist, ob Gmail die Nachricht bereits angenommen hat.
+
+In diesem Fall darf die Anwendung nicht automatisch blind erneut senden. Sie muss den Zustand soweit möglich abgleichen und bei Bedarf eine manuelle Klärung verlangen.
+
+Eine absolute Garantie für exakt einmaligen Versand kann aufgrund externer Netzwerk- und API-Fehler nicht zugesichert werden.
+
+## 9.7 Versandbestätigung und Batch-Verarbeitung
+
+Der Benutzer kann festlegen, ob vor einem Auftrag eine vollständige Übersicht bestätigt werden muss oder ob die Freigabe pro Batch erfolgt.
+
+Bulk-Vorgänge müssen pausierbar und kontrolliert fortsetzbar sein.
+
+Nach einem Fehler soll die Anwendung bereits erfolgreich erledigte Empfänger nicht erneut verarbeiten. Unsichere Versandzustände werden separat behandelt.
+
+## 9.8 Gmail-Abgleich
+
+Die Anwendung soll gesendete Nachrichten und relevante Statusinformationen mit Gmail abgleichen können.
+
+Die lokale Historie bleibt die zentrale Darstellung des Anwendungsprozesses. Gmail dient als zusätzliche Quelle für die Überprüfung tatsächlich gesendeter Nachrichten.
+
+Der Abgleich darf nicht allein aufgrund unvollständiger Übereinstimmungen ungeprüft neue Nachrichten auslösen.
+
+# 10. Bewerbungsverwaltung
+
+## 10.1 Bewerbungsprozess
+
+Die Anwendung bietet eine Standardpipeline mit anpassbaren Erweiterungen.
+
+Die konkreten Standardstatus werden bei der fachlichen Ausarbeitung festgelegt. Sie müssen für den Benutzer verständlich, konfigurierbar und dauerhaft speicherbar sein.
+
+Benutzerdefinierte Status dürfen keine fest eingebauten technischen Zustände der E-Mail-Verarbeitung überschreiben.
+
+## 10.2 Bewerbungsdaten
+
+Eine Bewerbung verknüpft mindestens die relevanten Informationen zu:
+
+- Unternehmen
+- Stelle
+- Ansprechpartner
+- Bewerberprofil
+- Bewerbungsunterlagen
+- Zugehörigen E-Mails
+- Status
+- Erinnerungen
+- Aktivitäten
+
+Mehrere Bewerbungen bei einem Unternehmen müssen unterstützt werden.
+
+## 10.3 Erinnerungen und Kalender
+
+Die Anwendung bietet lokale Erinnerungen und eine interne Kalenderansicht.
+
+Erinnerungen können beispielsweise auf Bewerbungsfristen, geplante Nachfass-E-Mails oder ausstehende Aufgaben hinweisen.
+
+Benachrichtigungen erfolgen ausschließlich innerhalb der Anwendung. Windows-Benachrichtigungen sind nicht Bestandteil der festgelegten Anforderungen.
+
+## 10.4 Historie
+
+Die Historie soll nachvollziehbar darstellen, welche relevanten Aktionen ausgeführt wurden.
+
+Der Detailgrad und die Aufbewahrungsdauer müssen konfigurierbar sein, soweit dies fachlich und technisch sinnvoll ist.
+
+Protokolle sollen keine unnötigen personenbezogenen Daten oder geheimen Zugangsinformationen enthalten.
+
+# 11. Vorlagenverwaltung und Workflows
+
+## 11.1 Zentrale Vorlagenbibliothek
+
+Dokument- und E-Mail-Vorlagen werden zentral verwaltet.
+
+Vorlagen können:
+
+- Erstellt
+- Importiert
+- Bearbeitet
+- Dupliziert
+- Archiviert
+- Versioniert
+- Projekten oder Workflows zugeordnet werden
+
+Änderungen an einer Vorlage dürfen bereits erzeugte Dokumente oder historische Vorgänge nicht stillschweigend verändern.
+
+## 11.2 Versionierung
+
+Die Anwendung speichert Vorlagenversionen und macht nachvollziehbar, welche Version für einen Vorgang verwendet wurde.
+
+Die Wiederverwendung einer älteren Version soll möglich sein, sofern keine technischen oder fachlichen Gründe dagegensprechen.
+
+## 11.3 Visueller Workflow-Editor
+
+Der Workflow-Editor verwendet definierte visuelle Bausteine statt beliebiger Programmierung.
+
+Mögliche Bausteine:
+
+- Datenquelle laden
+- Daten validieren
+- Datensätze zuordnen
+- Vorlage auswählen
+- Platzhalter befüllen
+- Dokument erzeugen
+- PDF exportieren
+- E-Mail erstellen
+- Anhänge hinzufügen
+- Freigabe anfordern
+- Versand planen
+- Ergebnis protokollieren
+
+Jeder Workflow muss konfigurierbar, überprüfbar und nachvollziehbar sein.
+
+Die interne Workflow-Engine soll unabhängig von der visuellen Oberfläche funktionieren, damit sie später auch von anderen Modulen oder einem Serverprozess genutzt werden kann.
+
+# 12. Datenschutz und Sicherheit
+
+## 12.1 Grundsätze
+
+- Lokale Datenspeicherung als Standard
+- Keine Telemetrie
+- Minimierung personenbezogener Daten
+- Keine unnötige Erfassung sensibler Angaben
+- Geschützte Speicherung von OAuth-Tokens
+- Kontrollierbare Exporte
+- Transparente Backup- und Wiederherstellungsprozesse
+- Lokale Protokollierung
+
+## 12.2 Diagnosepakete
+
+Ein Diagnosepaket kann manuell erstellt und exportiert werden.
+
+Es enthält nur die für die Fehlersuche notwendigen Informationen. Personenbezogene Daten, Nachrichtentexte, Zugangsdaten und Tokens sollen standardmäßig ausgeschlossen oder anonymisiert werden.
+
+Vor dem Export muss der Benutzer die enthaltenen Informationen überprüfen können.
+
+## 12.3 Löschen und Aufbewahrung
+
+Geeignete Löschvorgänge verwenden zunächst einen Papierkorb.
+
+Dauerhafte Löschung und Backup-Aufbewahrung müssen klar voneinander unterschieden werden. Ein Datensatz kann sonst in älteren Sicherungen weiterhin vorhanden sein.
+
+Für sensible Daten müssen Lösch- und Exportfunktionen verständlich dokumentiert werden.
+
+## 12.4 Gmail und Veröffentlichung
+
+Vor der Veröffentlichung sind die aktuellen Anforderungen der Gmail API, die erforderlichen OAuth-Scopes, mögliche Google-Verifizierungsverfahren und die Datenschutzpflichten zu prüfen.
+
+Die Verwendung eines lokalen Desktop-OAuth-Ablaufs bedeutet nicht automatisch, dass keine Verifizierung oder zusätzliche Sicherheitsmaßnahmen erforderlich sind.
+
+Eine spätere kommerzielle Nutzung erfordert zusätzlich eine Prüfung der Lizenzen aller eingesetzten Abhängigkeiten.
+
+# 13. Fehlerbehandlung und Zuverlässigkeit
+
+## 13.1 Allgemeine Fehlerbehandlung
+
+Fehler müssen verständlich dargestellt und technisch nachvollziehbar protokolliert werden.
+
+Die Anwendung soll unterscheiden zwischen:
+
+- Benutzerfehlern
+- Ungültigen Importdaten
+- Fehlenden Dateien
+- Dokumentverarbeitungsfehlern
+- Gmail-API-Fehlern
+- Netzwerkproblemen
+- Berechtigungsproblemen
+- Datenbankfehlern
+- Fehlern während einer Migration
+- Unsicheren Versandzuständen
+
+## 13.2 Wiederaufnahme
+
+Lang laufende Vorgänge müssen ihren Fortschritt dauerhaft speichern.
+
+Nach einem Neustart soll die Anwendung erkennen können, welche Schritte erfolgreich abgeschlossen wurden und welche noch ausstehen.
+
+Die Wiederaufnahme darf nicht unkontrolliert doppelte Dokumente, Datensätze oder E-Mails erzeugen.
+
+Für externe Aktionen, deren Ergebnis nicht sicher bekannt ist, muss ein gesonderter Prüfprozess vorgesehen werden.
+
+## 13.3 Rückgängig-Funktion
+
+Lokale Änderungen und geeignete geplante Aktionen können über eine Undo-Funktion rückgängig gemacht werden.
+
+Bereits versendete E-Mails können nicht zuverlässig zurückgerufen werden. Die Oberfläche muss diese Grenze klar kommunizieren.
+
+## 13.4 Aktivitätsprotokoll
+
+Das Aktivitätsprotokoll dokumentiert wichtige Vorgänge wie Importe, Exporte, Versandversuche, Fehler, Statusänderungen, Backups und Migrationen.
+
+Es soll dem Benutzer helfen, den Zustand der Anwendung und den Ablauf eines Prozesses nachzuvollziehen.
+
+# 14. Leistungsanforderungen
+
+Die Anwendung muss für große Listen und Tausende von Datensätzen ausgelegt sein.
+
+Konkrete maximale Datenmengen und messbare Antwortzeitziele werden anhand repräsentativer Tests festgelegt.
+
+Die Architektur soll insbesondere berücksichtigen:
+
+- Effiziente Datenbankabfragen
+- Pagination oder geeignete virtuelle Listen
+- Vermeidung unnötiger vollständiger Neuberechnungen
+- Hintergrundverarbeitung
+- Begrenzung gleichzeitiger Aufgaben
+- Speicherbewusste Verarbeitung großer Dateien
+- Fortschritts- und Statusanzeigen
+- Sichere Warteschlangenverarbeitung
+
+Eine große Warteschlange darf nicht bedeuten, dass sämtliche Dokumente, Nachrichten und Anhänge gleichzeitig vollständig im Arbeitsspeicher gehalten werden müssen.
+
+# 15. Tests und Qualitätssicherung
+
+## 15.1 Automatisierte Tests
+
+Vorgesehen sind Tests für:
+
+- Platzhaltererkennung und -ersetzung
+- DOCX-Struktur und Dokumentverarbeitung
+- Datenimport und Spaltenzuordnung
+- Pflichtfeldvalidierung
+- Dublettenprüfung
+- Dateinamensgenerierung
+- Statusübergänge
+- Workflow-Ausführung
+- Zeitplanung
+- Datenbankoperationen
+- Migrationen
+- Backup und Wiederherstellung
+- Fehlerbehandlung und Wiederaufnahme
+
+## 15.2 Manuelle Tests
+
+Manuelle Tests prüfen insbesondere:
+
+- Bedienbarkeit der Oberfläche
+- Light Mode und Dark Mode
+- Tab- und Sidebar-Verhalten
+- Vorschau komplexer Dokumente
+- Erkennung externer Dateiänderungen
+- Fehler- und Bestätigungsdialoge
+- Barrierearme Standardbedienung
+- Installer und portable Version
+- Verhalten bei Neustart und Absturz
+
+## 15.3 End-to-End-Test
+
+Der zentrale End-to-End-Test bildet einen realistischen Bewerbungsprozess ab:
+
+1. Bewerberprofil einrichten.
+2. Unternehmen, Ansprechpartner und Stelle anlegen oder importieren.
+3. XLSX- oder CSV-Datei einlesen.
+4. Spaltenzuordnung und Validierung prüfen.
+5. Dokumentvorlage auswählen und Platzhalter zuordnen.
+6. DOCX-Arbeitskopie erstellen.
+7. PDF generieren und Vorschau kontrollieren.
+8. Personalisierte E-Mail erstellen.
+9. Anhänge überprüfen.
+10. Testversand durchführen.
+11. Versand planen und den Status kontrollieren.
+12. Einen Batch pausieren und sicher fortsetzen.
+13. Ergebnisse und Historie prüfen.
+14. Backup erstellen und Wiederherstellung testen.
+
+Zusätzliche Tests müssen Fehlerfälle abdecken, beispielsweise fehlende Platzhalter, ungültige Empfänger, fehlende Dateien, Gmail-Ausfälle und unklare Versandresultate.
+
+# 16. Abnahmekriterien
+
+Die erste Version gilt fachlich als abnahmefähig, wenn mindestens folgende Bedingungen erfüllt sind:
+
+1. Ein Projekt kann erstellt, gespeichert, geschlossen und erneut geöffnet werden.
+2. Daten und benötigte Dateien bleiben nach einem Neustart erhalten.
+3. DOCX-Vorlagen können importiert und unter Beachtung ihrer unterstützten Strukturen verarbeitet werden.
+4. Platzhalter werden zuverlässig erkannt und befüllt, einschließlich relevanter Word-Strukturen mit aufgeteiltem Text.
+5. Fehlende Pflichtwerte verhindern einen unbemerkten fehlerhaften Export.
+6. PDF-Dateien können über die vorgesehene Konvertierung erstellt und überprüft werden.
+7. Importierte Excel- und CSV-Daten können zugeordnet, validiert und in einer Ergebnisübersicht dargestellt werden.
+8. Fehlerhafte Zeilen werden nachvollziehbar markiert und protokolliert.
+9. Bewerbungen, Unternehmen, Ansprechpartner, Stellen, Dokumente und E-Mails können miteinander verknüpft werden.
+10. Gmail kann über den vorgesehenen OAuth-Prozess angebunden werden.
+11. Test-E-Mails und personalisierte Nachrichten können versendet werden.
+12. Geplante E-Mails werden gespeichert, überwacht und nach einem Neustart korrekt behandelt.
+13. Unklare Versandresultate lösen keine unkontrollierte automatische Wiederholung aus.
+14. Bulk-Verarbeitung kann pausiert und sicher fortgesetzt werden.
+15. Backups, Wiederherstellung und Migrationen können getestet und nachvollziehbar ausgeführt werden.
+16. Die Benutzeroberfläche bleibt während zeitintensiver Vorgänge bedienbar.
+17. Die Anwendung kann als Windows-Anwendung paketiert und installiert beziehungsweise portabel ausgeführt werden.
+18. Die automatisierten Tests und der zentrale End-to-End-Test bestehen.
+19. Dokumentation und Fehlermeldungen erklären relevante Grenzen und erforderliche Benutzereingriffe.
+
+Die konkreten messbaren Performanceziele sowie die verbindliche Liste unterstützter komplexer DOCX-Elemente müssen vor der abschließenden technischen Abnahme festgelegt werden.
+
+# 17. Risiken und offene Entscheidungen
+
+Folgende Punkte sind bewusst noch nicht abschließend entschieden:
+
+- Exakte Projektordnerstruktur und Datenbankschemata
+- Konkrete Standardstatus der Bewerbungspipeline
+- Endgültige Liste unterstützter Word-Elemente
+- Umgang mit besonderen DOCX-Funktionen und nicht unterstützten Strukturen
+- Verbindliche Performanceziele und Testdatengrößen
+- Gmail-OAuth-Scopes und Veröffentlichungsanforderungen
+- Backup-Verschlüsselung und Schlüsselverwaltung
+- Regeln zur Aufbewahrung und endgültigen Löschung von Daten
+- Konkrete Installer- und Updateverfahren
+- Details des internen Rich-Text-Editors
+- Umfang und technische Schnittstelle zukünftiger Erweiterungen
+- Lizenzprüfung für eine mögliche kommerzielle Veröffentlichung
+
+Diese Entscheidungen werden anhand der technischen Machbarkeit, Sicherheit, Wartbarkeit und tatsächlichen Anforderungen getroffen. Sie dürfen nicht durch unbegründete Annahmen ersetzt werden.
+
+# 18. Zusammenfassung
+
+Das Produkt ist eine lokal nutzbare, modulare Windows-Anwendung für die automatisierte Bearbeitung von Dokumenten und E-Mails. Der erste Schwerpunkt liegt auf einem zuverlässigen Bewerbungsassistenten mit DOCX-Vorlagen, PDF-Export, Gmail-Integration, Datenimport, Kontaktverwaltung, Bewerbungsstatus und sicherer Versandplanung.
+
+Die Architektur soll die späteren Anwendungsmodi vorbereiten, ohne die erste Version durch unnötige Komplexität zu überladen.
+
+Besonders wichtig sind die Erhaltung von Dokumenten, eine nachvollziehbare Verarbeitung großer Datenmengen, der Schutz personenbezogener Daten, zuverlässige Wiederherstellung und die Vermeidung unkontrollierter Doppelversendungen.
+
+Dieses Dokument bildet die fachliche Ausgangsbasis für die spätere technische Gesamtplanung. Es legt fest, was das Produkt leisten soll und welche Qualitätsanforderungen gelten. Die konkrete Umsetzung, Priorisierung und Aufteilung in Entwicklungsphasen bleiben Gegenstand eines späteren, gesonderten Schrittes.

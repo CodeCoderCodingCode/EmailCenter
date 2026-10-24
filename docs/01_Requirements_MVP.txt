@@ -1,0 +1,36 @@
+EMAILCENTER — ANFORDERUNGEN UND MVP
+Version 1.0 | 2026-10-10
+
+ZIEL
+Windows-Desktop-Anwendung für Dokument- und E-Mail-Automatisierung. Erster Schwerpunkt: Bewerbungsassistent; später Serien-E-Mails, Rechnungen/Angebote, Newsletter und visuelle Workflows.
+
+TECHNOLOGIE
+Python, PySide6/Qt, SQLite, python-docx/OOXML, openpyxl, Gmail API/OAuth 2.0, Windows Credential Manager, LibreOffice headless für PDF. Versionsnummern vor Implementierung prüfen.
+
+MVP-FUNKTIONEN
+- Projekte anlegen, öffnen, schließen und sichern.
+- Bewerberprofil, Unternehmen, zentrale Kontakte, Stellenausschreibungen und Bewerbungen.
+- Konfigurierbare Bewerbungsstatuswerte und Erinnerungen.
+- DOCX-Vorlagen mit {{PLATZHALTER}}, Mapping und Warnungen bei fehlenden Pflichtwerten.
+- DOCX-Erzeugung und PDF-Konvertierung; Originalvorlagen bleiben unverändert.
+- XLSX/CSV-Import mit Spaltenmapping, Vorschau, Importprofilen und Zeilenfehlern.
+- Gmail OAuth, Entwürfe, Signaturen, Anhänge, Zeitplanung, Freigabe und Versandhistorie.
+- Deutsch/Englisch, Hell/Dunkel und einstellbare Akzentfarbe.
+- Lokale Logs, Backups und Wiederherstellungsgrundlage.
+
+ZUVERLÄSSIGKEIT
+- UI nicht durch lange Datei-/Netzwerkoperationen blockieren.
+- E-Mail-Aufträge speichern Empfänger, Betreff und Inhalt als Snapshot.
+- Bei unklarem Versandresultat nicht blind erneut senden; erst abgleichen.
+- Überfällige E-Mails nach PC-Ausfall beim Neustart anzeigen und vor Nachversand fragen.
+- Projektvorlagen bleiben an konkrete Versionen gebunden.
+- Keine Telemetrie; Diagnoseexport manuell.
+
+NICHT-ZIELE FÜR MVP
+- Kein erforderliches Cloud-Backend.
+- Keine frei programmierbaren Skripte in Workflows.
+- Keine Garantie, bereits versendete E-Mails zurückzurufen.
+- Keine Garantie pixelgenauer DOCX-Konvertierung für jedes komplexe Dokument.
+
+SPÄTER
+Weitere Provider, Workflow-Editor, portable Version/Installer, manuelle Updates, erweiterte Vorlagenbibliothek und weitere Geschäftsprozesse.

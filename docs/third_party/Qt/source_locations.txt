@@ -1,0 +1,23 @@
+Qt / PySide6 – source and replacement information
+
+Runtime versions are recorded in Runtime_Inventory.json. The distributed Qt and
+PySide6 libraries are unmodified and dynamically loaded from _internal/PySide6.
+The LGPLv3 and incorporated GPLv3 texts are included in this directory.
+
+Corresponding upstream source locations and build instructions:
+https://download.qt.io/official_releases/qt/
+https://code.qt.io/cgit/qt/qtbase.git/
+https://code.qt.io/cgit/qt/qtwebengine.git/
+https://code.qt.io/cgit/pyside/pyside-setup.git/
+https://doc.qt.io/qtforpython-6/building_from_source/index.html
+https://download.documentfoundation.org/libreoffice/src/
+
+Users may replace LGPL libraries with compatible builds, and may reverse engineer
+or debug EmailCenter as necessary to modify or replace those libraries. This
+package imposes no restriction on those rights. Qt's DLLs are distributed
+separately; rebuilding or replacing a library does not require modifying the
+installer. Use the recorded versions and upstream build instructions.
+
+Python's own LICENSE.txt and LibreOffice's full licensing/third-party notices
+are included with their respective runtimes. EmailCenter source/build scripts
+are provided separately with the release; no user tokens or projects are included.

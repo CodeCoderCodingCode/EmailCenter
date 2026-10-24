@@ -1,0 +1,50 @@
+EMAILCENTER — PROJEKTASSISTENT
+Stand: 2026-10-12 | Sprint 7A
+
+ABLAUF
+1. Neues Projekt: Projektname, einfacher neuer Ordnername und übergeordneten
+   Speicherort wählen. Bestehende Ordner werden nicht überschrieben.
+2. Arbeitsmodus Bewerbungen oder E-Mail-Aufträge und optionales Projektziel.
+   Im Bewerbungsmodus optional ein Profil mit Name, E-Mail und Telefon anlegen.
+   In beiden Modi optional eine Standardsignatur mit Bezeichnung und Text anlegen.
+   Ohne Häkchen werden diese optionalen Datensätze nicht angelegt.
+   Optional vorhandenes Profil, konkrete DOCX-Version und gespeicherte Liste aus
+   dem geöffneten Projekt als eigene Kopien übernehmen; eine externe DOCX ist möglich.
+   Bevorzugte Gmail-Adresse und Text/HTML als Nachrichtenformat wählen.
+3. Zusammenfassung prüfen. Zurück behält Eingaben; Projekt erstellen legt das
+   Projekt im Worker an und öffnet den Arbeitsbereich erst nach erfolgreicher Anlage.
+
+VERHALTEN
+- Abbrechen erzeugt keine Projektdateien. Während der Anlage ist der Assistent
+  gesperrt; bei Fehlern bleiben die Angaben erhalten und lassen sich korrigieren.
+- Profil, Signatur, Modus und Ziel werden vor Veröffentlichung des Projektordners
+  angelegt. Ein Fehler entfernt nur den temporären Anlageordner.
+- Eine fehlgeschlagene Anlage behält das bisher geöffnete Projekt bei.
+- Name/E-Mail/Signatur werden vor der Anlage geprüft. Angaben bleiben beim
+  Wiederöffnen erhalten und stehen in der Profilverwaltung bzw. im E-Mail-Editor bereit.
+- Eine einzelne Standardsignatur wird bei neuen Entwürfen vorgeschlagen. Sie
+  lässt sich im Editor abwählen; bestehende Entwürfe behalten ihre Auswahl.
+- Gmail nach der Anlage im Arbeitsbereich verbinden. Konten und Zugangsdaten
+  werden nicht aus anderen Projekten übernommen. Projektanlage sendet keine E-Mail.
+
+VORGABEN SPÄTER BEARBEITEN
+- Arbeitsbereich → Projektziel / Vorgaben bearbeiten: Ziel, Modus, Profil, DOCX,
+  gespeicherte Liste, Adresse und Nachrichtenformat ändern oder nachholen.
+- Vorgaben gelten für neue Vorgänge. Bestehende Entwürfe/Aufträge bleiben unverändert.
+- Eine Adresse verbindet kein Konto; nur passende verbundene Konten vorschlagen.
+- Löschen von Vorlagen/Profilen stoppt ihre Verwendung als Vorschlag; gleichzeitige
+  Änderungen verhindern das Überschreiben.
+
+NOCH OFFEN
+- Signaturbearbeitung sowie reale Projekt-/Windows-/DPI-Abnahme.
+- Die optionale Übernahme vorhandener Angaben braucht das geöffnete Quellprojekt;
+  Kontozugänge werden dabei nicht kopiert.
+Anleitung und Ansicht: docs/29_Sprint_7_Expansion.md.
+
+PRÜFUNG
+- Qt: Modus/Ziel, Zusammenfassung und Zurück, Abbruch, Validierung,
+  Fehlererholung mit bestehendem Projekt, Profil/Signatur und neue/bestehende Entwürfe.
+- Projekt: Speicherung/Wiederöffnung, ungültige Angaben ohne Dateien,
+  Fehler nach Profilanlage vor Signaturanlage ohne veröffentlichtes Projekt.
+- Workspace: fehlerhafte Anfangsdaten behalten das bisherige Projekt bedienbar.
+- Vorschau mit Testdaten: docs/project_wizard_preview.png.

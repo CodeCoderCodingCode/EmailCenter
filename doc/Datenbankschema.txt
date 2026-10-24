@@ -1,0 +1,224 @@
+PROJEKT: EmailCenter
+DOKUMENT: Datenbankschema und Integritätsregeln
+VERSION: 1.0
+STATUS: Technischer Entwurf
+DATEI: 03_Datenbankschema.txt
+
+==================================================
+1. ZWECK
+==================================================
+
+Dieses Dokument definiert die Datenbankstruktur für EmailCenter, eine modulare Windows-Desktop-Anwendung zur Dokumenten- und E-Mail-Automatisierung.
+
+Die Datenbank muss Bewerbungen, Unternehmen, Kontakte, Dokumente, Vorlagen, E-Mail-Aufträge, Importe, Workflows, Erinnerungen und Aktivitätsprotokolle zuverlässig verwalten können.
+
+Das Schema bildet die Grundlage für die spätere SQLite-Migration und die zugehörigen automatisierten Tests.
+
+==================================================
+2. GRUNDSÄTZLICHE ENTSCHEIDUNGEN
+==================================================
+
+- Datenbank: SQLite
+- Datenbankdatei: projektbezogen
+- Primärschlüssel: UUID als TEXT
+- Zeitstempel: UTC im einheitlichen ISO-8601-Format
+- Fremdschlüssel: konsequent verwenden
+- Soft Delete: für ausgewählte fachliche Datensätze
+- Custom Fields: Kombination aus festen Spalten und JSON
+- Kontakte: zentral verwaltet und mehrfach verknüpfbar
+- Dokumente: DOCX und PDF sind eigenständige Datensätze
+- Dokumentversionen: über versionierte Vorlagen und Dokumentreferenzen nachvollziehbar
+- E-Mail-Aufträge: Empfänger, Betreff und Inhalt werden bei Planung als unveränderlicher Snapshot gespeichert
+- OAuth-Zugangsdaten: niemals in der Projektdatenbank speichern
+- Datenbankänderungen: ausschließlich über versionierte Migrationen
+- SQLite-Fremdschlüssel: PRAGMA foreign_keys = ON muss für jede Datenbankverbindung gesetzt werden
+
+==================================================
+3. DATENBANKMODULE
+==================================================
+
+Die Datenbank wird logisch in folgende Bereiche aufgeteilt:
+
+A. Projekt und Profil
+- project_metadata
+- applicant_profiles
+
+B. Unternehmen und Bewerbungen
+- companies
+- contacts
+- company_contacts
+- job_postings
+- application_statuses
+- applications
+- application_contacts
+
+C. Dokumente und Vorlagen
+- document_sets
+- documents
+- templates
+- template_versions
+- email_signatures
+
+D. E-Mail-System
+- email_provider_accounts
+- email_drafts
+- email_jobs
+- email_attempts
+- email_attachments
+
+E. Importe und Workflows
+- import_profiles
+- import_runs
+- import_rows
+- workflow_definitions
+- workflow_runs
+- workflow_steps
+
+F. Organisation und Wartung
+- reminders
+- activity_log
+- backup_metadata
+
+==================================================
+4. BEZIEHUNGEN UND INTEGRITÄT
+==================================================
+
+- Ein Unternehmen kann mehrere Kontakte besitzen.
+- Ein Kontakt kann mehreren Unternehmen zugeordnet sein.
+- Ein Unternehmen kann mehrere Stellenausschreibungen haben.
+- Eine Bewerbung gehört optional zu einem Unternehmen und einer Stellenausschreibung.
+- Eine Bewerbung kann mehrere Kontakte referenzieren.
+- Eine Bewerbung kann mehrere Dokumente besitzen.
+- Ein Dokument kann zu einem Dokumentensatz gehören.
+- Ein Dokument kann auf eine bestimmte Vorlagenversion verweisen.
+- Eine Vorlage besitzt mehrere unveränderliche Versionen.
+- Ein E-Mail-Entwurf kann mehrere geplante E-Mail-Aufträge erzeugen.
+- Jeder E-Mail-Auftrag speichert seinen eigenen Empfänger-, Betreff- und Inhalts-Snapshot.
+- Ein E-Mail-Auftrag kann mehrere Sendeversuche besitzen.
+- Ein E-Mail-Auftrag kann mehrere Anhänge referenzieren.
+- Importläufe enthalten einzelne Importzeilen mit nachvollziehbaren Ergebnissen.
+- Workflow-Ausführungen enthalten einzelne Schritte und deren Status.
+
+==================================================
+5. REGELN FÜR LÖSCHEN UND ARCHIVIEREN
+==================================================
+
+Fachliche Datensätze dürfen nicht unkontrolliert gelöscht werden.
+
+- Für geeignete Datensätze wird deleted_at für Soft Delete verwendet.
+- Verknüpfungstabellen dürfen beim Löschen eines übergeordneten Datensatzes bereinigt werden.
+- Historische E-Mail-Aufträge, Sendeversuche und Aktivitätsprotokolle müssen nachvollziehbar bleiben.
+- Dokumentdateien werden nicht automatisch gelöscht, nur weil ein Datenbankeintrag entfernt oder archiviert wird.
+- Dauerhaftes Löschen erfolgt kontrolliert über eine spätere Papierkorb- und Bereinigungsfunktion.
+- Fremdschlüsselregeln müssen verhindern, dass historische Datensätze unbemerkt ihre Referenzen verlieren.
+
+==================================================
+6. E-MAIL-ZUVERLÄSSIGKEIT
+==================================================
+
+E-Mail-Aufträge besitzen einen eigenen Status unabhängig vom Bewerbungsstatus.
+
+Vorgesehene Statuswerte:
+
+Draft
+Scheduled
+Queued
+Sending
+Sent
+Failed
+Cancelled
+Uncertain
+ReconciliationRequired
+
+Ein unklarer Versandstatus darf nicht automatisch zu einem erneuten Versand führen.
+
+Wenn beispielsweise die Verbindung während einer Gmail-Anfrage abbricht, kann die Nachricht bereits versendet worden sein. In diesem Fall muss der Auftrag zunächst abgeglichen werden.
+
+Empfänger, Betreff, Nachrichtentext und relevante Versandparameter werden zum Planungszeitpunkt gespeichert. Änderungen am ursprünglichen Entwurf dürfen einen bereits geplanten Auftrag nicht unbemerkt verändern.
+
+Bei einer bewussten Aktualisierung des Auftrags ist gegebenenfalls eine erneute Freigabe erforderlich.
+
+==================================================
+7. VORLAGEN UND VERSIONIERUNG
+==================================================
+
+Globale Vorlagenbibliothek und projektbezogene Vorlagen müssen klar getrennt werden.
+
+Da die SQLite-Datenbank projektbezogen ist, enthält sie primär die im Projekt verwendeten Vorlagen und deren Versionen.
+
+Die globale Vorlagenbibliothek wird außerhalb der einzelnen Projektdatenbanken verwaltet.
+
+Wird eine globale Vorlage in ein Projekt übernommen, wird eine konkrete Version referenziert oder als Projektkopie gespeichert. Spätere Änderungen an der globalen Vorlage dürfen bestehende Projektvorlagen nicht stillschweigend verändern.
+
+Jede erzeugte Datei referenziert nach Möglichkeit die verwendete Vorlagenversion.
+
+DOCX und PDF werden als separate Dokumentdatensätze gespeichert. Beide können zu einem gemeinsamen document_set gehören.
+
+==================================================
+8. DATEISYSTEM UND TRANSAKTIONEN
+==================================================
+
+SQLite-Transaktionen schützen nur Datenbankoperationen. Sie umfassen keine Dateioperationen im Projektordner.
+
+Dokumentgenerierung, Dateiänderungen und Datenbankeinträge benötigen deshalb einen abgestimmten Ablauf:
+
+1. Datei in einem temporären Bereich erzeugen.
+2. Ergebnis auf Lesbarkeit und erwartetes Format prüfen.
+3. Datei an den endgültigen Speicherort verschieben.
+4. Datenbankeintrag in einer Transaktion anlegen oder aktualisieren.
+5. Bei Fehlern einen nachvollziehbaren Wiederherstellungszustand hinterlassen.
+
+Der konkrete Ablauf wird je nach Vorgang festgelegt. Unvollständige Dateien und verwaiste Datenbankeinträge müssen erkannt und später bereinigt werden können.
+
+==================================================
+9. MIGRATIONEN
+==================================================
+
+Alle strukturellen Datenbankänderungen werden versioniert.
+
+Eine Migration muss:
+
+- eine eindeutige Versionsnummer besitzen,
+- wiederholbar abgesichert sein,
+- bei Fehlern kontrolliert abbrechen,
+- den bisherigen Datenbestand erhalten,
+- nach erfolgreicher Anwendung als abgeschlossen markiert werden.
+
+Die konkrete Migration v1 wird erst nach Prüfung des vollständigen SQL-Schemas festgelegt.
+
+==================================================
+10. TESTANFORDERUNGEN
+==================================================
+
+Automatisierte Tests müssen mindestens prüfen:
+
+- alle Fremdschlüsselbeziehungen,
+- ungültige Referenzen,
+- zulässige und unzulässige Statuswerte,
+- eindeutige IDs und Idempotency Keys,
+- Verknüpfungen zwischen Unternehmen und Kontakten,
+- mehrere Dokumentformate innerhalb eines Dokumentensatzes,
+- unveränderte E-Mail-Snapshots,
+- nachvollziehbare Sendeversuche,
+- Verhalten beim Soft Delete,
+- Rollback fehlgeschlagener Datenbanktransaktionen,
+- Migration auf eine neue Schema-Version,
+- Wiederherstellung nach unterbrochenen Dateioperationen.
+
+==================================================
+11. NOCH NICHT ENDGÜLTIG FESTGELEGT
+==================================================
+
+Vor der endgültigen Migration müssen folgende Punkte geklärt oder technisch überprüft werden:
+
+- vollständige SQL-Definition aller Tabellen und Fremdschlüssel,
+- genaue Löschregeln je Beziehung,
+- zulässige Statuswerte und deren Übergänge,
+- JSON-Feldvalidierung,
+- Speicherort und Versionierung der globalen Vorlagenbibliothek,
+- Strategie für Datei- und Datenbankwiederherstellung,
+- Verschlüsselung von Backups,
+- Umgang mit mehreren Gmail-Konten,
+- Datenschutz- und Aufbewahrungsregeln.
+
+ENDE DES DOKUMENTS

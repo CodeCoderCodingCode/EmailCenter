@@ -1,0 +1,9 @@
+Failed to find real location of C:\Users\timon\AppData\Local\Programs\Python\Python313\python.exe
+test_bulk_search_pagination_preserves_checkbox_selection (test_ui.DesktopTests.test_bulk_search_pagination_preserves_checkbox_selection) ... ok
+test_bulk_search_pagination_preserves_checkbox_selection (test_ui.DesktopTests.test_bulk_search_pagination_preserves_checkbox_selection) ... ok
+test_bulk_search_pagination_preserves_checkbox_selection (test_ui.DesktopTests.test_bulk_search_pagination_preserves_checkbox_selection) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 16.313s
+
+OK

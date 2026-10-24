@@ -1,0 +1,21 @@
+Failed to find real location of C:\Users\timon\AppData\Local\Programs\Python\Python313\python.exe
+test_destination_created_during_retry_is_preserved (test_project_publication.ProjectPublicationTests.test_destination_created_during_retry_is_preserved) ... ok
+test_other_permission_errors_are_not_retried (test_project_publication.ProjectPublicationTests.test_other_permission_errors_are_not_retried) ... ok
+test_permanent_windows_error_stops_after_five_attempts (test_project_publication.ProjectPublicationTests.test_permanent_windows_error_stops_after_five_attempts) ... ok
+test_transient_windows_errors_retry_then_open_valid_project (test_project_publication.ProjectPublicationTests.test_transient_windows_errors_retry_then_open_valid_project) ... ok
+test_create_close_and_reopen_project (test_project.ProjectTests.test_create_close_and_reopen_project) ... ok
+test_existing_project_is_not_overwritten (test_project.ProjectTests.test_existing_project_is_not_overwritten) ... ok
+test_initial_profile_and_signature_persist_on_reopen (test_project.ProjectTests.test_initial_profile_and_signature_persist_on_reopen) ... ok
+test_initial_record_failure_cleans_staging_without_publishing_project (test_project.ProjectTests.test_initial_record_failure_cleans_staging_without_publishing_project) ... ok
+test_invalid_initial_records_create_no_files (test_project.ProjectTests.test_invalid_initial_records_create_no_files) ... ok
+test_open_detects_missing_project_parts_and_corrupt_database (test_project.ProjectTests.test_open_detects_missing_project_parts_and_corrupt_database) ... ok
+test_project_backup_is_verified_and_recorded (test_project.ProjectTests.test_project_backup_is_verified_and_recorded) ... ok
+test_project_context_manager_closes_connection (test_project.ProjectTests.test_project_context_manager_closes_connection) ... ok
+test_project_paths_cannot_escape_project_root (test_project.ProjectTests.test_project_paths_cannot_escape_project_root) ... ok
+test_profile_roundtrip_edit_and_stale_update (test_workflow_expansion.SourceLibraryTests.test_profile_roundtrip_edit_and_stale_update) ... ok
+test_failed_operation_cancels_close_and_keeps_app_usable (test_completion_ui.CompletionDesktopTests.test_failed_operation_cancels_close_and_keeps_app_usable) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 5.261s
+
+OK

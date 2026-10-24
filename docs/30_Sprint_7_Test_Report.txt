@@ -1,0 +1,24 @@
+EMAILCENTER – SPRINT-7-PRÜFBERICHT
+Stand: 12.10.2026
+
+Vollständige Suite: 530 Tests in 305.167 Sekunden.
+529 bestanden; 1 optionaler nativer Windows-Credential-Vault-Test übersprungen.
+48 zusätzliche Paketprüfungen (31 Kern/Migration, 17 Qt).
+Nach abschließender UI-Beschriftung: 36 betroffene Kern-/UI-Tests bestanden.
+
+Ausführung: .venv\Scripts\python.exe -m unittest discover -s tests -v
+Qt: QT_QPA_PLATFORM=offscreen; isolierte temporäre Projekte/Einstellungen.
+Gmail: ausschließlich Testprovider, kein echter Versand.
+LibreOffice: Konverter-Doubles; echte Konvertierungs-/Layout-Abnahme offen.
+Sechs Qt-Ansichten mit Demonstrationsdaten erstellt und visuell angesehen.
+
+Migration 011: Bestandsaufträge/Freigaben erhalten; Gruppenregeln, Mailbelege,
+Empfängersammlungen und fortsetzbare Word-Läufe geprüft.
+Weitere Kernprüfungen: CAS/Konflikte, persönliche DOCX-Versionen/Domain-Bewerbungen,
+Budget/Fenster/Quoten, Hintergrund/Pause, gespeicherte Ausgaben, Laufbesitz,
+Veröffentlichungswiederaufnahme, Abbruch, Formatierung/Muster und Textbedingungen.
+UI: Projektassistent/-vorgaben, Bulk, Word-Läufe, Panels, Einstellungen,
+kleine Fenster, Fokus/Themewechsel, verschachtelte Dialoge und Fehler-Toasts.
+
+Offene reale Abnahmen: docs/25_Bundled_Acceptance.md, Pakete H/I.
+Anleitung: docs/29_Sprint_7_Expansion.md.

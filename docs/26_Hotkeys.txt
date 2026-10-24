@@ -1,0 +1,78 @@
+EMAILCENTER — HOTKEYS UND TASTATURHILFE
+Stand: 12.10.2026 | Sprint 7B
+
+STANDARDBELEGUNG
+Ctrl+N        Neues Projekt
+Ctrl+O        Projekt öffnen
+F5            Aktualisieren
+Ctrl+1        Arbeitsbereich
+Ctrl+2        Word Replace
+Ctrl+Alt+S    Einstellungen
+Ctrl+Shift+E  Datenexport
+Ctrl+F        Suchfeld fokussieren und Inhalt markieren
+Ctrl+S        Aktives Formular speichern
+F1            Tastaturhilfe
+
+EINSTELLUNGEN
+1. Einstellungen / Hotkeys öffnen. Die Tastaturhilfe zeigt die gerade aktiven
+   Belegungen; sie ist auch über die obere Projektleiste erreichbar.
+2. Einzelkombinationen aus Ctrl/Strg, Alt, Shift und Buchstabe/Ziffer oder F1–F12
+   eingeben. Ein leeres Feld deaktiviert die Aktion.
+3. Konflikte werden direkt unter dem Formular erklärt. Doppelte Belegungen,
+   reine Eingabezeichen und reservierte Bearbeitungs-/Windows-Kombinationen
+   lassen sich nicht speichern. Mehrteilige Sequenzen sind noch nicht unterstützt.
+4. Speichern und anwenden übernimmt alle Belegungen sofort und für den nächsten Start.
+5. Nur Hotkeys auf Standards setzen ändert zunächst das Formular. Speichern
+   übernimmt die Vorgabe; Änderungen verwerfen stellt den gespeicherten Stand wieder her.
+6. Ein Toolbar-Themewechsel erhält noch nicht gespeicherte Belegungen im Formular.
+   Ältere Einstellungsdateien ohne Hotkeys erhalten die Standardbelegung.
+
+KONTEXT
+- Projektbezogene Navigation/Aktionen sind erst bei geöffnetem Projekt nutzbar.
+  Während eines laufenden Workers werden Aktionen gesperrt.
+- Ctrl+F wirkt auf angebotene Suchfelder in Listen und unterstützten Dialogen.
+- Ctrl+S speichert Einstellungen, Datensatzeditoren, Kontaktzuordnungen,
+  E-Mail-Entwürfe und E-Mail-Vorlagen. Es löst denselben Speicherbutton aus.
+- Bei Word Replace erstellt Ctrl+S nur nach geprüfter Vorschau und gesetzter
+  Bestätigung Ausgabekopien; die zusätzliche Ausgabe-/Überschreibfrage bleibt bestehen.
+- Freigabe, Versand, Retry und Gruppenstart sind keine Hotkey-Aktionen.
+  In deren Dialogen löst Ctrl+S keine Freigabe oder Sendung aus.
+- Im Builder speichert Ctrl+S eine Graphversion. In der fokussierten Zeichenfläche:
+  Entf löscht, Ctrl+D dupliziert, Ctrl+Z/Y macht rückgängig/wiederholt.
+  Ctrl+Mausrad zoomt. Texteditoren behalten ihre eigenen Bearbeitungskürzel.
+- Mittlere Maustaste halten/ziehen verschiebt die Zeichenfläche ohne Graphänderung.
+- „Anordnen“ lässt sich mit Canvas-Undo zurücknehmen. Die Bausteinauswahl oberhalb
+  der Eigenschaften springt zum gewählten Baustein. Autosicherung ist unabhängig
+  von Ctrl+S; das Kürzel speichert weiterhin eine benannte Version.
+- Canvas-Belegungen sind unter Hotkeys getrennt einstellbar; nur bei Fokus auf
+  der Zeichenfläche aktiv. Textfelder behalten ihre Bearbeitungsfunktionen.
+
+CANVAS-STANDARDS / VERBINDEN OHNE MAUS
+Alt+Right/Left    Nächster/voriger Baustein
+Alt+Down/Up       Nächster/voriger Stecker am gewählten Baustein
+Return           Ausgang aktivieren oder mit gewähltem Eingang verbinden
+Escape           Verbindung und Auswahl abbrechen
+Alt+E            Nächste Verbindung auswählen (anschließend Entf)
+Delete           Auswahl löschen
+Ctrl+D           Baustein duplizieren
+Ctrl+Z/Y         Rückgängig / Wiederholen
+Ctrl+Up/Down     Vergrößern / Verkleinern
+Ctrl+0           Graph einpassen
+
+1. Mit Tab zur Zeichenfläche wechseln und Baustein wählen (Alt+Right/Left).
+2. Ausgang wählen (Alt+Down/Up); sichtbare Umrandung und Status nennen den Stecker.
+3. Return: Ausgang merken. Zielbaustein und passenden Eingang wählen, erneut Return.
+4. Unpassende Typen, Kreise und bereits belegte Eingänge ändern den Graphen nicht.
+   Escape bricht ab; Alt+E/Entf entfernt Verbindungen; Ctrl+Z nimmt Änderungen zurück.
+5. Eigene Canvas-Tasten einschließlich Pfeilen/Return/Delete unter Hotkeys eingeben.
+   Leer deaktiviert. App-/Canvas-Doppelbelegungen und Windows-Tasten werden erklärt.
+   Alt+F4/Space, Ctrl+Escape und Ctrl+Alt+Delete bleiben für Windows reserviert.
+6. Alte App-Belegungen behalten Vorrang; kollidierende neue Canvas-Standards werden
+   beim Laden deaktiviert und mit Hinweis gemeldet. Beide Belegungen sind dauerhaft.
+
+PRÜFUNG
+Acht Backendtests prüfen Syntax, Normalisierung, Konflikte, reservierte Tasten,
+Deaktivierung, alte Einstellungsdateien und Speicherung. Fünf zusätzliche
+Qt-Tests prüfen Anwendung, Hilfe, Fehlererhalt sowie tatsächliche Tastaturereignisse
+für Navigation, Suchen und Speichern. Windows-Fokus/Tab-Reihenfolge und Skalierung
+stehen in der Sammelabnahme: docs/25_Bundled_Acceptance.md.

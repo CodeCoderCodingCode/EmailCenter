@@ -1,0 +1,100 @@
+EMAILCENTER — PRÜFBERICHT A1 / A2 / A3
+Stand: 12.10.2026; lokaler Abschlussstand mit Schema 13.
+
+GESAMTSUITE
+python -m unittest discover -s tests -v
+601 Tests in 454,168 Sekunden: 600 bestanden, ein optionaler nativer
+Windows-Tresor-Test übersprungen; keine Fehler.
+Vollständige Ausgabe: 36_Completion_Full_Test_Output.txt.
+Der abschließende Lauf enthält sämtliche Backend-, Migrations-, Builder-,
+Verwaltungs- und UI-Änderungen, die Backup-Hinweise, die Korrektur für Schließen
+während einer Worker-Aufgabe und die begrenzte Windows-Projektpublikation.
+Zwischenläufe zeigten einmal WinError 5 beim Testprojekt-Umbenennen und
+einmal einen Qt-MemoryError mit Worker-Timeout beim Kontakt-Anlegen.
+Der betroffene Schließen-Test bestand beim erneuten Lauf; der Kontakt-/
+Paginationstest bestand anschließend einzeln sowie dreimal hintereinander.
+WinError 5 wiederholte sich später beim Projekt-Anlegen im 597er-Lauf;
+alle übrigen Fälle ohne Fehler (ein optionaler Test übersprungen).
+Projektpublikation wiederholt nun nur Windows-Fehler 5/32 begrenzt: maximal
+fünf Versuche mit insgesamt 0,75 Sekunden Wartezeit; inzwischen bestehende
+Ziele bleiben erhalten. Dauerhafte/andere Fehler werden nicht verschluckt.
+Native Windows-Ordnersperre zusätzlich real geprüft: nach Freigabe Publikation
+in 0,357 Sekunden; dauerhafte Sperre nach 0,754 Sekunden weiterhin sichtbar,
+Staging-Inhalt erhalten. Nachweis: abnahme/A6_Recovery/Publication_Ergebnis.json.
+15 gezielte Projekt-/UI-Prüfungen bestanden (5,261 Sekunden), einschließlich
+vorher betroffenem Profiltest. Nachweis: 36_Completion_Publication_Output.txt.
+Die Ursache des sporadischen Qt-MemoryError ist nicht abschließend belegt.
+Eine separat gefundene Löschung des aktiven Checkbox-Listenelements wurde
+behoben und mit eigenem Regressionstest geprüft. Native Langlaufabnahme bleibt
+offen. Der abschließende 601er-Lauf bestand ohne Fehler; Zwischenbefunde
+bleiben für die native Langlaufabnahme protokolliert. Zwischenlauf-Ausgaben:
+36_Completion_Intermediate_UI_Output.txt und
+36_Completion_Intermediate_Publication_Output.txt.
+
+GEZIELTE REGRESSIONEN
+69 Tests für Migration, Verwaltung, Gruppen, UI und Schließen: bestanden.
+Upgrade einer bestehenden Schema-11-Datenbank auf Schema 13: Daten erhalten.
+Neue Testfälle: 23 Verwaltungs-/Builder-Backendtests, vier Projektpublikations-
+Tests, 12 Qt/UI und eine Migration; insgesamt 40.
+Bulk-Checkbox: aktives Listenelement bleibt während Qt itemChanged erhalten;
+20 Wechsel und Suche/Seitenwechsel separat geprüft.
+Kontakt-/Paginationstest dreimal hintereinander: bestanden (16,313 Sekunden).
+Optionaler nativer Windows-Tresorcheck separat aktiviert: ein Test bestanden
+in 0,448 Sekunden; ausschließlich zufällige synthetische Identität verwendet
+und danach gelöscht. Ausgabe: 36_Completion_Native_Vault_Output.txt.
+Schließen während laufender Aufgabe: Aufgabe endet, Scheduler stoppen.
+Fehler während angefordertem Schließen: App bleibt bedienbar und geöffnet.
+Typisierte Zusatzfelder, Status-/Signaturkonflikte, Standardsignatur,
+Referenzschutz, veränderte Dateien und nachholbare Bereinigung geprüft.
+
+ECHTE DOKUMENTE — A1
+LibreOffice 26.2.6.3; zwei persönliche PDFs mit je zwei Seiten.
+Alle vier Seiten visuell geprüft: Namen, Firma, E-Mail-Werte, Logo, Tabelle,
+Kopf-/Fußzeile und fester Seitenumbruch. Original-DOCX unverändert.
+Echter XLSX-Import: persönliche DOCX-Hashes entsprechen der manuellen Liste.
+Pause/Fortsetzen, Abbruch und Schutz eines geänderten Ausgabeziels geprüft.
+Nachweis: abnahme/A1_Layout/Ergebnis.json und zugehörige PDF-/PNG-Dateien.
+Ein Windows-Pfadproblem beim tief verschachtelten LibreOffice-Profil wurde
+durch kurze isolierte Arbeitsverzeichnisse behoben; Ausgabe atomar am Ziel.
+
+ECHTE BUILDER-KETTE — A2
+Datenquelle -> Word Replace -> echte PDF -> persönlicher Anhangname und
+Inline-Logo -> zwei lokale Entwürfe. Layoutvorschau vor Entwurfsgruppenanlage.
+MIME-Dateien ausgelesen: persönliche PDF-Werte, Seiten, Anhangnamen und
+HTML-/Content-ID-Zuordnung stimmen überein. Null Versandversuche.
+Echtes MJPEG-AVI im Qt-Editor dekodiert; Bildsignal, kein Autoplay und
+Freigabe des Mediums beim Leeren geprüft. Andere Codecs bleiben Abnahme.
+Nachweis: abnahme/A2_Builder/Ergebnis.json und Mail-1.eml / Mail-2.eml.
+
+ECHTES BACKUP — ZUSÄTZLICH A6
+Builder-Testprojekt gesichert, Archivindex geprüft, in neuen Ordner restauriert.
+SQLite-Integrität okay; zwei Entwürfe, zwei persönliche PDF-Dokumente und
+Anhangbytes nach Wiederherstellung identisch. Null aktive Konten/Versuche.
+Nachweis: abnahme/A2_Builder/Backup_Ergebnis.json.
+Unverschlüsselte ZIP-Backups sind in Settings und Wiederherstellung erklärt.
+Echte Windows-Dateisperre: Bereinigung als Blocked gespeichert, nach Neuöffnung
+und Freigabe per Retry gelöscht. Beschädigter PDF-Hash und Abbruch blockieren
+Restore ohne veröffentlichtes Ziel; geänderte/unbekannte Backups erhalten.
+Nachweis: abnahme/A6_Recovery/Ergebnis.json.
+Echter Workspace-Diagnoseexport auf Positivliste und Abwesenheit persönlicher
+Testwerte/Nachrichten/Pfade/Zugangsdaten geprüft.
+Nachweis: abnahme/A2_Builder/Diagnose_Ergebnis.json.
+
+LAUFZEIT / HINWEISE — ZUSÄTZLICH A7
+Windows 11 Build 26200 x64; Python 3.13.3; SQLite 3.49.1;
+Qt/PySide6 6.12.0; LibreOffice 26.2.6.3.
+34 installierte Laufzeitpakete gegen Anforderungen geprüft; 56 vorhandene
+Lizenz-/Notice-Dateien plus LibreOffice-Hinweise unverändert gesammelt.
+Nachweise: 37_Runtime_Dependencies.md, Runtime_Inventory.json, third_party/.
+Lokaler Codeprüfstand wird über tools/create_code_snapshot.py gesichert: jede
+enthaltene Datei mit SHA-256 und CRC geprüft; separate Archivprüfsumme.
+Nachweis: abnahme/Code_Snapshot.json; CODE_MANIFEST.json innerhalb des ZIP.
+Sie ist kein Installer und enthält keine Projekte, Zugangsdaten oder Laufzeiten.
+
+OFFENE PRAKTISCHE ABNAHMEN
+Eigene Dokumente/Medien und Mailclient; native Windows-Skalierung/Tastatur.
+Vollständige EN-Fachtexte; weitere konkret freigegebene Gmail-Abläufe.
+Eigenes produktives Backup, verbleibende Recovery-/Diagnoseprüfung,
+Gesamtabnahme und Abschlussfreigabe. Verbindlich: 34_Final_TODO.md.
+In diesem Paket wurden keine realen E-Mails versendet oder erneut versendet.
+Anschlussphase B1–B5 startet nach Abschluss der offenen A-Aufgaben.

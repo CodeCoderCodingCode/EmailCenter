@@ -1,0 +1,93 @@
+EXCEL-/LISTENDATEN FÜR E-MAILS UND BEWERBUNGSANHÄNGE
+Stand: 2026-10-12. Sprint 5-/4-Ausbau und 7A/6.
+
+EXCEL / CSV
+1. Unter Datenimport Datei und bei Excel das gewünschte Blatt einlesen.
+   Zeilenvorschau anlegen. Die eigentliche Übernahme als Kontakte ist optional:
+   sowohl gültige Vorschauzeilen (Valid) als auch importierte Zeilen sind nutzbar.
+2. Arbeitsbereich → Bulk-E-Mails öffnen. E-Mail-Vorlage auswählen.
+3. Optional zuvor eine DOCX-Anschreibenvorlage wählen und deren Platzhalter
+   auf Datenfelder zuordnen; gleiche Datenfelder werden im nächsten Schritt angeboten.
+4. Excel-/CSV-Importzeilen öffnen, gespeicherten Lauf/Blatt wählen und Spalten
+   zuordnen. Pflicht: Ansprechpartner und E-Mail. Weitere Felder sind Anrede,
+   Firmenname, Stelle, Anschreiben sowie Platzhalter der gewählten Vorlagen.
+   Eine Spalte darf mehrere Zielwerte versorgen. Zuordnungsvorschläge immer prüfen.
+5. Zeilen auf mehreren Seiten auswählen; maximal 100 pro Entwurfsgruppe.
+   Ungültige/fehlgeschlagene/übersprungene/ungeprüfte Duplikatzeilen sind gesperrt.
+   Diese zunächst im Datenimport korrigieren bzw. über Duplikate entscheiden.
+6. Zeilen übernehmen. Alle Quellspalten bleiben verfügbar, auch wenn beim
+   Kontaktimport nur Name und E-Mail zugeordnet waren. Importkorrekturen gelten
+   an Stelle des alten Spaltenwerts; die externe Excel-Datei wird nicht verändert.
+
+MANUELLE LISTE / DOCX-TEXT
+- Manuelle Liste / DOCX-Text öffnen. Werte in die beschrifteten Spalten eintragen.
+- Excel-Zellen ohne Kopfzeile kopieren, Startzelle wählen und Strg+V drücken.
+  Reihenfolge: Ansprechpartner, E-Mail, Anrede, Firmenname, Stelle, Anschreiben,
+  danach zusätzliche Felder der aktuell gewählten Vorlagen. Mehrzeilige Zellen bleiben erhalten.
+- Zeilen hinzufügen/entfernen. Ungültige Adressen sperren später die Vorschau;
+  persönliche Werte können dort korrigiert werden. Es werden keine Kontakte geraten/angelegt.
+- DOCX-Text in gewählte Zelle lädt beschrifteten Dokumenttext einschließlich
+  Tabellen/Kopf-/Fußzeilen. Zielzelle bewusst wählen, z. B. Anschreiben.
+  Dies ist eine Textübernahme; Namen/Firmen werden nicht automatisch herausgelesen.
+- DOCX-/PDF-Tabelle laden öffnet eine separate Prüfung: Tabelle, Kopfzeile und
+  bis zu 100 Zeilen wählen, Spalten bewusst zuordnen und Übernahme bestätigen.
+  Bei PDF Zelllinien oder Textspalten auswählen; Erkennung bleibt als unsicher markiert.
+  Alle Originalspalten, Kopfzeilen und Datei-/SHA256-/Tabellen-/Seiten-/Zeilenherkunft
+  bleiben als zusätzliche Felder erhalten. Danach Werte in der Liste korrigieren,
+  speichern und in Bulk, Word Replace oder Builder wiederverwenden.
+  Eigene Zielfelder wie custom.person sind möglich; jede Zielspalte nur einmal.
+  Quellenfelder source.* und document.* sind für die Herkunft reserviert.
+  Grenzen: 20 MiB, 50 PDF-Seiten/Tabellen, 1000 Vorschauzeilen je Tabelle,
+  30 Spalten und insgesamt 100 übernommene Listenzeilen. Keine OCR; Scans vorher umwandeln.
+  Anleitung/Ansicht: docs/28_Completion_Package.md, docs/document_table_preview.png.
+
+PERSONALISIERUNG UND ANHÄNGE
+- Beispiel E-Mail: Betreff "Bewerbung bei {{company.name}}"; Text
+  "{{contact.salutation}} {{contact.display_name}}, {{application.cover_letter}}".
+- Pro Empfänger eigene Werte überschreiben, eine Bewerbung ausdrücklich zuordnen
+  und deren Dokumente auswählen. Datenquelle/verwendeter Wert ist daneben sichtbar.
+- Gemeinsame Dateien gelten für alle; Eigene Dateien nur für den gewählten Empfänger.
+- Optional eine konkrete DOCX-Vorlagenversion und Ausgabe DOCX/PDF wählen.
+  Je Zeile Gruppenvorlage, andere konkrete Version oder kein Anschreiben auswählen.
+  Optional unabhängige Domain-Bewerbungen mit Profil/Firma/Stelle aus Zeilenwerten
+  anlegen; Vorschau erzeugt sie noch nicht. Mailstatus wird über Versandbelege zurückgeführt.
+  Beispiel: {{ANREDE}} → contact.salutation, {{FIRMA}} → company.name,
+  {{TEXT}} → application.cover_letter. Werte und E-Mail stammen aus derselben Zeile.
+- Alle Dokumentplatzhalter müssen aufgelöst sein. Vorschau zeigt Anschreibentext
+  und persönlichen Dateinamen. Sie ist eine Textvorschau, keine Layout-Abnahme.
+- PDF benötigt LibreOffice. Fehlt es, DOCX wählen oder LibreOffice installieren.
+  Die echte Konvertierung und Layout-Abnahme bleiben separat offen.
+- Beim lokalen Speichern wird je Zeile ein persönliches Dokument erzeugt, unter
+  Dokumente registriert und in den jeweiligen Entwurf aufgenommen. Original bleibt erhalten.
+- Maximal 20 Anhänge und 20 MiB je Nachricht inklusive erzeugtem Anschreiben.
+  Die endgültige Größe wird beim Erzeugen geprüft; Fehler nehmen die ganze Gruppe zurück.
+- Eingaben bleiben bei Fehlern erhalten; manuelle Überschreibungen bleiben auch
+  bei erneutem Zuordnen derselben Importzeilen bestehen.
+
+HERKUNFT / VERSAND
+- Migration 006 erhält alte Kontaktgruppen und ergänzt Zeilenidentität und
+  Herkunftssnapshot. Datei, Blatt, Lauf/Zeile, Spaltenzuordnung und Werte bleiben
+  beim Wiederöffnen nachvollziehbar. Spätere Importänderungen ändern keine gespeicherten Entwürfe.
+- Änderungen seit der Vorschau erfordern eine neue Vorschau; Gruppen/Dokumente/
+  Entwürfe werden gemeinsam gespeichert, kopierte Dateien bei Fehlern entfernt.
+- Gespeicherte Gruppen → Gruppenversand öffnen → feste Versandkopien vorbereiten →
+  gemeinsam prüfen/freigeben → direkt/geplant starten. Fortschritt, Abstand,
+  Pause/Fortsetzen/Abbruch und Einzelabgleich: docs/21_Bulk_Delivery.txt.
+  Dieser Ablauf übernimmt dieselben persönlichen Texte und Bewerbungsanhänge.
+  Einzelentwürfe sind weiterhin bearbeitbar. Bereits vorbereitete Versandkopien
+  behalten ihre festen Inhalte. Lokale Gruppenspeicherung versendet nichts.
+- Domain-Bewerbungen automatisch je Datenzeile anlegen und Status zurückführen:
+  noch offen; vorhandene Bewerbungen können ausdrücklich zugeordnet werden.
+- Eigenständiges Word Replace und Builder verwenden dieselbe gespeicherte Listen-
+  oder Importquelle; je Zeile dieselben persönlichen Werte für Mail und Dokument.
+
+PRÜFUNG
+10 neue Servicetests: echte XLSX-Dateien, zusätzliche Spalten, Korrekturen,
+Herkunft, persönliche DOCX-Dateien/Formatierung, Rücknahme, PDF-Fehler,
+HTML-Escaping und zwei freigegebene Bewerbungen über einen Testprovider.
+6 neue Qt-Tests: Zuordnung, Seitenauswahl, manuelle Tabelle/Excel-Einfügen,
+DOCX-Text, eigene Anhänge, Anschreiben und Erhalt manueller Werte.
+Migrationstest erhält bestehende Kontaktgruppen. Kein echter Gmail-Versand.
+Screenshot mit Testdaten: docs/bulk_sources_preview.png.
+
+Neue Projekt-/Bulk-Vorgaben und Abnahme: docs/29_Sprint_7_Expansion.md.

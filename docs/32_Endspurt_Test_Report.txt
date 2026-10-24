@@ -1,0 +1,55 @@
+EMAILCENTER — ENDSPURT-PRÜFBERICHT
+Stand: 2026-10-12
+
+Automatischer Gesamtlauf:
+  .venv\Scripts\python.exe -m unittest discover -s tests -v
+  PYTHONPATH=src;tests, QT_QPA_PLATFORM=offscreen
+  Ran 561 tests in 417.567s
+  OK (skipped=1)
+  560 bestanden; optionaler nativer Windows-Vault-Test übersprungen.
+
+Neue Endspurt-Prüfungen:
+  tests/test_endspurt.py: 20 Kernprüfungen.
+  tests/test_endspurt_ui.py: 11 Qt-Prüfungen.
+  Separater neuer Paketlauf: 31 bestanden in 35.284s.
+
+Abgedeckt: Einstellungen/Altformat/Validierung, Standardgraphen, dauerhafte
+Undo/Redo-Historie, Archivindex/Prüfsummen, Legacy-Archive, Pfad- und Symlink-
+Ablehnung, unveränderte Aufbewahrung, neues Wiederherstellungsziel, Abbruch,
+deaktivierte Konten und Hintergrundläufe, erneute Versandprüfung, unklare
+Versandversuche, gesperrte alte Word-Replace-Ziele, lokale Diagnose ohne Inhalte,
+DE/EN-Navigation, Startansicht, Listen, Konto-/Signatur-/Planungsvorgaben,
+Builder-Blockreihenfolge und erreichbare Abbruchaktionen.
+
+Zusätzliche Darstellung:
+  Qt-Offscreen bei Faktoren 1 / 1.25 / 1.5 / 2 geprüft (vier Fälle bestanden).
+  Simulierte Tastaturereignisse für Einstellungen/Arbeitsbereich geprüft.
+  docs/endspurt_settings_100.png und docs/endspurt_settings_200.png angesehen.
+  Keine echte Änderung der Windows-DPI-Einstellung, keine physische Tastaturabnahme.
+
+Reale externe Abnahmen:
+  Gmail: genau zwei konkrete Nachrichten/Adressen vom Benutzer freigegeben.
+  Maßgeblicher aktueller Status: docs/abnahme/gmail_live_result.json.
+  Nach zunächst verpassten Browser-Zeitfenstern erfolgreiche reale Anmeldung.
+  Der Prüfablauf stoppte zunächst vor Versand wegen vertauschter Testnummern
+  beim erneuten Erzeugen der Entwürfe. Zuordnung im Prüfskript korrigiert;
+  freigegebene Empfänger und Texte unverändert und erneut exakt verglichen.
+  Realer Lauf am 12.10.2026: Completed, 2 Versandversuche, 2 Sent-Aufträge,
+  für beide Nachrichten Gmail-Nachrichtenkennungen gespeichert.
+  Geschlossenes Versandfenster: 0 Versandversuche, Probe danach storniert.
+  Hintergrundablauf abgeschlossen; Tagesbudget nach zwei Nachrichten erreicht.
+  Budgetprüfung ohne dritten Versandversuch. Kein automatischer Wiederholversand.
+  Empfang im Postfach, Terminlauf/persönliche Anhänge und native Gruppenbedienung offen.
+  Keine automatische Wiederholung nach einem tatsächlichen Versandversuch.
+  LibreOffice: nicht im PATH oder an den üblichen Installationsorten gefunden.
+  Echte PDF-Konvertierung/Layout/Seitenumbrüche noch nicht abgenommen.
+  Native Computer Use: Initialisierung scheiterte wegen fehlender Kernel-Dateien.
+
+Grenzen:
+  Englische Fach-/Fehlertexte sind noch nicht vollständig.
+  Hintergrundversand benötigt eine geöffnete Anwendung.
+  Tagesbudget gilt je Konto und Projekt.
+  Keine Installer-/Portable-Build- oder Installationsabnahme durchgeführt.
+
+Anleitung: docs/31_Endspurt.md. Gebündelte praktische Prüfung: Paket J in
+docs/25_Bundled_Acceptance.md. Gesamtplanung: docs/14_Workspace_TODO.md.

@@ -1,0 +1,45 @@
+EMAILCENTER — ARCHITEKTUR
+Version 1.0 | 2026-10-10
+
+SCHICHTEN
+1. Presentation: PySide6-UI; keine direkten SQL-Abfragen in Widgets.
+2. Application: Use Cases und Services koordinieren Abläufe und Transaktionen.
+3. Domain: fachliche Modelle, Regeln und Statusübergänge.
+4. Infrastructure: SQLite, Dateisystem, DOCX/PDF, XLSX/CSV, Gmail, OAuth, Backups.
+
+ORDNERZIEL
+src/emailcenter/
+  main.py
+  application/
+  domain/
+  infrastructure/
+  database/
+  ui/
+  resources/
+tests/
+migrations/
+docs/
+
+DATEN
+- Eine SQLite-Datenbank pro Projekt.
+- Dateien im Projektordner.
+- UUIDs als TEXT; Zeitstempel konsistent in UTC/ISO-8601.
+- Flexible Felder als JSON, in Python validieren.
+- Globale Vorlagenbibliothek getrennt von Projektvorlagen.
+- OAuth-Zugangsdaten nicht in SQLite oder Projektdateien speichern.
+
+SQLITE
+- PRAGMA foreign_keys=ON bei jeder Verbindung.
+- Nummerierte Migrationen, protokolliert in schema_migrations.
+- Migrationen und Transaktionen kontrolliert behandeln.
+- Datei- und DB-Operationen sind nicht gemeinsam atomar; temporäre Dateien und Recovery vorsehen.
+
+EMAIL
+Status: Draft, Scheduled, Queued, Sending, Sent, Failed, Cancelled, Uncertain, ReconciliationRequired.
+Jeder Versandversuch wird protokolliert. Ein lokaler Idempotency Key garantiert keine Exactly-once-Zustellung beim Provider.
+
+HINTERGRUNDARBEITEN
+Imports, PDF-Konvertierung, Dateigenerierung und Gmail-Aufrufe laufen außerhalb des GUI-Hauptthreads.
+
+TESTS
+Unit-, Integration-, End-to-End- und manuelle Windows-UI-Tests. Reale Gmail-Tests kontrolliert und niemals unbeabsichtigte Massenmails.

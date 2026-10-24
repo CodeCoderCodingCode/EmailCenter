@@ -1,0 +1,23 @@
+EMAILCENTER — TECHNISCHER ABSCHLUSS A1–A7
+Stand: 13.10.2026, Schema 13. Eigene/native Benutzerabnahme am Ende offen.
+Gesamtsuite: 644 Tests, 643 bestanden, ein optionaler nativer Windows-Vault-Skip.
+Dauer 514,935 Sekunden. Keine Codeänderung während des Laufs.
+UI: 540 Prüfungen, sechs Runden im selben Qt-Prozess, 518,345 Sekunden.
+Alle Runden bestanden; jeweils null Widgets/Fenster nach Bereinigung.
+Keine Codeänderung und kein realer Gmail-Aufruf.
+Workflow: neun Schritte bestanden, 75,368 Sekunden; echte XLSX/DOCX/PDF,
+zwei Bewerbungen, Testprovider-Pause/Neuöffnung/Fortsetzen, CSV/XLSX/History,
+Backup/Restore, 17 gleiche Dateihashes, Originalschutz und Diagnose.
+Zusätzlich: 43 gezielte Regressionen und 90 vollständige UI-Diagnoseprüfungen.
+Vier Qt-Skalierungen, je 502 Beschriftungsquellen, keine fehlenden Katalogeinträge.
+Alle 136 geprüften Code-/Test-/Migrations-/Requirements-Dateien unverändert.
+Korrekturen: Hidden-Builder-Widgetbesitz, DE/EN-Menüaktionen,
+Windows-Extended-Paths für validiertes Restore-Staging samt Abbruch.
+Prüfgrenzen: offscreen, keine physische DPI-/Tastatur-/Browserabnahme,
+kein eigener produktiver Projektordner. Native Abnahme erfolgt am Ende selbst.
+Vorherige vier echte Testmails bleiben separat freigegeben/geprüft;
+keine weiteren realen Mails wurden in diesen lokalen Prüfungen gesendet.
+Aktueller Bericht: docs/40_Technical_Completion.md.
+Verbindliche Restliste: docs/34_Final_TODO.md.
+Codesicherung: docs/abnahme/Code_Snapshot.json.
+Anschlussaufträge: B1–B5 weiterhin offen/beauftragt.

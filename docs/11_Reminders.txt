@@ -1,0 +1,59 @@
+EMAILCENTER — NACHFASSEN UND ERINNERUNGEN
+Stand: 2026-10-11
+
+NACHFASSÜBERSICHT
+- Nachfassen in der Seitenleiste oder Nachfassen & Erinnerungen öffnen auf
+  der Übersicht wählen. Die Kennzahl zeigt fällige bzw. zu prüfende Termine.
+- Die Liste vereint next_follow_up_at der Bewerbungen mit eigenen Erinnerungen.
+  Für einen Bewerbungstermin wird keine zusätzliche Reminder-Zeile erzeugt.
+- Filter: Fällig/überfällig, Heute, Zukünftig, Alle offenen und Abgeschlossene.
+  Suche behandelt %/_ wörtlich; weitere Treffer über Zurück/Weiter laden.
+- Automatische Nachfasstermine archivierter oder terminaler Bewerbungen werden
+  ausgeblendet. Manuell angelegte Erinnerungen bleiben unabhängig davon bestehen.
+- Ungültige alte Terminwerte erscheinen zur Korrektur in Fällig/überfällig.
+
+ERINNERUNG ANLEGEN
+1. Erinnerung anlegen anklicken; Titel, optionalen Bewerbungsbezug und
+   Beschreibung eingeben.
+2. Datum im Kalender, Uhrzeit und Zeitzone wählen (z. B. Europe/Berlin oder UTC).
+3. Nicht existierende Uhrzeiten beim Sommerzeitwechsel werden abgewiesen.
+   Für doppelte Uhrzeiten bei der Rückstellung das erste oder zweite Vorkommen wählen.
+4. Speichern schließt den Dialog erst nach erfolgreicher Speicherung.
+   Fehler behalten die Eingaben bei; während der Speicherung ist Schließen gesperrt.
+
+TERMINE BEARBEITEN UND ABSCHLIESSEN
+- Zeile auswählen, Termin bearbeiten: Datum/Uhrzeit verschieben. Bei einer
+  Bewerbung bleiben Titel/Notizen in diesem Dialog unverändert. Für deren
+  Bearbeitung Bewerbung öffnen oder die Bewerbungsseite verwenden.
+- Erledigt: eigene Erinnerung erhält Completed und einen Abschlusszeitpunkt.
+  Bei einem Bewerbungstermin wird next_follow_up_at geleert; das Ereignis
+  mit dem vorherigen Termin wird im Aktivitätslog protokolliert.
+- Verwerfen: eigene Erinnerung erhält Dismissed; Bewerbungstermin wird geleert.
+- Abgeschlossene zeigt die gespeicherten eigenen Erinnerungen. Erledigte
+  Bewerbungstermine liegen im Aktivitätslog, nicht als doppelte Reminder-Datensätze.
+- Zwischenzeitliche Änderungen verhindern eine veraltete Speicherung oder
+  einen veralteten Abschluss. Aktualisieren und erneut öffnen.
+- Erinnerung, Terminänderung und Aktivitätsprotokoll werden atomar gespeichert.
+
+AKTUALISIERUNG UND GRENZEN
+- Die laufende App prüft jede Minute; außerdem beim Öffnen, Aktualisieren und
+  Speichern. Während anderer Aufgaben oder modaler Dialoge wird die Prüfung ausgelassen.
+- Termine werden als UTC gespeichert, eigene Erinnerungen in ihrer Zeitzone
+  angezeigt. Bewerbungstermine und Heute verwenden die in Einstellungen
+  gewählte Anzeigezeitzone (Vorgabe Europe/Berlin).
+- Fällig bedeutet Zeitpunkt <= jetzt. Heute ist der lokale Kalendertag; dieser
+  kann bei einer Zeitumstellung 23 oder 25 Stunden haben.
+- Bei steigender Zahl fälliger Vorgänge zeigt die laufende App einen lokalen Toast.
+  Gleiche Fälligkeitszahlen bei der nächsten Prüfung lösen keinen erneuten Hinweis aus.
+- Es gibt keine nativen Systembenachrichtigungen, Wiederholungsregeln oder Ausführung
+  bei geschlossener App. Dafür wäre eine spätere Erweiterung nötig.
+- Die Funktion löst keinen E-Mail-Versand aus.
+- Die vorhandene reminders-Tabelle wird verwendet; keine neue Migration nötig.
+
+PRÜFUNG
+- 13 Servicetests: UTC/Offsets, Wiederöffnen, Status, Konflikte, Rollback,
+  Zeitzonen, Sommerzeit, Filter, Suchzeichen, Archiv-/Terminalregeln und Altdaten.
+- 5 zusätzliche Qt-Tests: Kalender, Bedienabläufe, Historie, Timer-Sperren,
+  Projektaustausch, Suche, Seitenwechsel und Auswahl nach Aktualisierung.
+- docs/followup_preview.png zeigt die tatsächliche Oberfläche mit Testdaten.
+- Aktuelle Gesamtsuite: siehe README_START_HERE.txt.

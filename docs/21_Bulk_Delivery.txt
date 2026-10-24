@@ -1,0 +1,83 @@
+EMAILCENTER – GEMEINSAMER GRUPPENVERSAND
+Stand: 12.10.2026 · Sprint 6-Ausbau / aktueller Sprint 7A
+
+BEDIENUNG
+1. Arbeitsbereich → Bulk → persönliche Entwurfsgruppe erstellen.
+   Excel-/CSV-Zeilen, manuelle Listen und persönliche Anschreiben bleiben nutzbar.
+2. Gespeicherte Gruppen → Gruppe wählen → Gruppenversand öffnen.
+3. Gmail-Absender und Versandabstand wählen (1 bis 3600 Sekunden, Vorgabe 2).
+   Kontotagesbudget (1–10000 Versuche, Standard 100) und lokales Fenster wählen;
+   gleiche Start-/Endzeit erlaubt den ganzen Tag, Fenster über Mitternacht sind möglich.
+   Ohne Termin wird nach ausdrücklichem Gruppenstart gesendet. Für Planung
+   geplanten Start, Datum/Uhrzeit und Europe/Berlin oder UTC wählen.
+4. Versandkopien vorbereiten. Je Schritt wird genau ein Auftrag mit eigenem
+   Empfänger, Inhalt, Signatur, Message-ID, MIME-Datei und Anhangkopien gespeichert.
+   Vorbereitung und Versand sind getrennt. Bei Fehlern sind fertige Kopien erhalten;
+   nach Korrektur lässt sich die Vorbereitung mit demselben Gruppenversand fortsetzen.
+5. Jede Zeile wählen und den festen Text, Empfänger, Absender, Termin und Anhänge
+   prüfen. Die Checkbox bestätigt alle offenen Nachrichten. Gruppe freigeben
+   erfordert zusätzlich eine Rückfrage. Noch kein Versand.
+6. Gruppe senden / Geplant starten / Versand fortsetzen bestätigen.
+   Jeder Empfänger erhält seine eigene Nachricht; kein Bcc-Sammelversand.
+   Geplanter Start und Abstand werden vor jeder weiteren Nachricht geprüft.
+7. Fortschritt und Einzelstatus beobachten. Pause bleibt während des laufenden
+   Netzaufrufs bedienbar und wirkt nach diesem Auftrag. Fortsetzen überspringt
+   gesendete und stornierte Aufträge und hält den verbleibenden Abstand ein.
+8. Offene abbrechen storniert ungesendete Aufträge nach dem laufenden Netzaufruf.
+   Bereits gesendete Nachrichten können dadurch nicht zurückgerufen werden.
+   Versandbelege und unklare Ergebnisse bleiben gespeichert.
+
+FEHLER UND WIEDERAUFNAHME
+- Eindeutig fehlgeschlagener Versand pausiert die Gruppe. Den betreffenden Auftrag
+  ausdrücklich erneut freigeben oder einzeln stornieren; dann wieder prüfen/starten.
+  Erneute Versuche benutzen dieselbe gespeicherte Nachricht und Message-ID.
+- Unklarer Versand pausiert ebenfalls. Nur Unklaren Versand abgleichen nutzen.
+  Ein eindeutiger Gmail-Versandbeleg bestätigt die Nachricht. Kein Beleg oder mehrere
+  Treffer erlauben keinen automatischen Wiederholungsversand.
+- Fehler vor dem Versand widerrufen die Freigabe dieses Auftrags; kein POST/Versand
+  wird als erfolgt behauptet. Konto/Dateien korrigieren, Gruppe erneut prüfen/freigeben.
+- Normalen aktiven Gruppenversand pausiert das Schließen des Fensters. Vor dem
+  ausdrücklichen Start kann Hintergrundausführung eingeschaltet werden; dann läuft
+  die geprüfte Gruppe auch ohne Dialog, solange die App geöffnet bleibt.
+  Pause/Fortsetzen/Abbruch sind im Arbeitsbereich erreichbar. Kein Dienst bei
+  geschlossener App; Neustart/Standby verlangen erneute Prüfung.
+- Nach Projekt-/App-Neustart läuft nichts automatisch weiter. Unterbrochene
+  Sending-Aufträge erfordern Abgleich. Bereits fällige offene Aufträge erfordern
+  neue Freigabe mit ausdrücklicher Nachversandbestätigung. Dasselbe gilt nach
+  einer erkannten längeren UI-Unterbrechung (über 90 Sekunden).
+- Der normale Einzel-Scheduler verarbeitet keine Gruppenaufträge. Einzel-Senden
+  kann die Gruppenpause oder den Abstand nicht umgehen; Steuerung über die Gruppe.
+
+KONSISTENZ
+- Migration 007 ergänzt Versandgruppen und feste Zuordnungen. Vorhandene Entwürfe,
+  Quellen und Einzelaufträge bleiben erhalten; Migration erzeugt keine Aufträge.
+- Ein Versandauftrag und seine Gruppenzuordnung werden zusammen gespeichert.
+  Datei-/DB-Fehler entfernen nur die fehlgeschlagene Kopie; bereits fertige Aufträge
+  bleiben erhalten. Wiederholte Vorbereitung erzeugt keine weiteren Jobs dafür.
+- Ein Versandlauf pro Entwurfsgruppe. Neue Inhalte oder andere Planung benötigen
+  eine neue Entwurfsgruppe; feste Aufträge werden nicht nachträglich umgeschrieben.
+- Nach Vorbereitung ändern spätere Entwurfs-, Quellen- oder Signaturänderungen
+  die Versandkopien nicht. Die Prüfung zeigt ausdrücklich diese Kopien.
+- Gemeinsame Freigabe prüft alle offenen Payloads/Anhänge in einer Transaktion.
+  Ein veränderter Anhang, geänderte Auftragszustände oder deaktiviertes Konto sperren
+  Freigabe/Start. Eine veraltete Gruppenprüfung muss neu geladen werden.
+- Budget und Fenster werden vor jeder Nachricht geprüft, einschließlich einer
+  erneuten Kontrolle in der Versandtransaktion. Gezählt werden alle Versuche dieses
+  Kontos im aktuellen Projekt und Kalendertag der gewählten Zeitzone.
+- Anbieterquotenfehler speichern eine Sperrzeit; sie garantieren keine freien
+  Gmail-Kapazitäten. Unklare Resultate werden nicht automatisch wiederholt.
+- Mehrere Gruppen teilen den Versuchszähler und die Anbietersperre desselben Kontos;
+  jede Gruppe nutzt ihren Budgetwert. Andere Projekte/Gmail-Nachrichten werden nicht gezählt.
+
+PRÜFUNG
+20 neue Backend-Tests und 9 Qt-Tests prüfen Vorbereitung/Wiederaufnahme,
+Transaktions-/Dateifehler, gemeinsame Freigabe, feste persönliche Inhalte,
+Abstand/Planung, bedienbare Pause/Abbruch während Versand, Wiederöffnen,
+Neustart/Nachversand, Abgleich und ausdrücklichen Retry.
+Ein Migrationstest prüft Erhalt vorhandener Quellen/Entwürfe ohne automatischen Job.
+Ausschließlich Testprovider; keine echte Gmail-Nachricht wurde in diesen Tests gesendet.
+Echte Gmail-/LibreOffice-Abnahme bleibt separat offen.
+Screenshot mit Testdaten: docs/bulk_delivery_preview.png.
+
+Migration 011 ergänzt Richtlinien, Sperren und Bewerbungs-Mailbelege.
+Neue Anleitung/Ansichten: docs/29_Sprint_7_Expansion.md; Sammelabnahme Paket I.

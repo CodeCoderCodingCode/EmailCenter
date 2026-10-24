@@ -1,0 +1,72 @@
+EMAILCENTER — DATENMODELL
+Version 1.0 | 2026-10-11
+
+ENTSCHEIDUNGEN
+- DOCX und PDF sind getrennte Dokumentdatensätze.
+- Custom Fields: Kernspalten plus JSON.
+- Kontakte zentral, M:N zu Unternehmen und Bewerbungen.
+- E-Mail-Inhalte und Empfänger werden beim Planen als Snapshot gespeichert.
+- UUIDs als TEXT; UTC-Zeitstempel.
+- OAuth-Tokens außerhalb der Projektdatenbank.
+- Projektvorlagen referenzieren feste Vorlagenversionen.
+
+TABELLEN IN MIGRATIONEN V1-V4
+schema_migrations, project_metadata, applicant_profiles, companies, contacts,
+company_contacts, job_postings, application_statuses, applications,
+application_contacts, document_sets, templates, template_versions, documents,
+email_signatures, email_provider_accounts, email_drafts, email_jobs,
+email_attachments, email_attempts, import_profiles, import_runs, import_rows,
+workflow_definitions, workflow_runs, workflow_steps, reminders, activity_log,
+backup_metadata.
+
+IMPORTLAUF (V3)
+- import_runs.configuration_json speichert Ziel, Feldzuordnung und Leseoptionen
+  unabhängig von späteren Änderungen des ausgewählten Importprofils.
+- import_runs.source_file_hash speichert SHA-256 der Projektkopie der Quelle.
+- import_rows hält ursprüngliche Werte, korrigierte Zuordnung, Status,
+  Fehler und Typ/ID des erzeugten Datensatzes getrennt fest.
+- Datensatz, Bewerbungsaktivität und Importbeleg werden in einer gemeinsamen
+  Transaktion gespeichert. Imported-Zeilen sind von Wiederholungen ausgeschlossen.
+- processed_rows zählt Imported, Skipped, Invalid und Failed; error_rows zählt
+  Invalid und Failed. DuplicateReview wird gesondert zur Entscheidung angezeigt.
+- Migration 3 bewahrt bestehende Importdaten. Ältere Läufe ohne vollständige
+  Konfiguration werden nicht automatisch interpretiert oder fortgesetzt.
+
+E-MAIL-LAUF (V4)
+- email_jobs speichert Absender, Message-ID, Projektpfad/Hash der festen MIME-
+  Nachricht, Freigabebeleg und requires_overdue_confirmation zusätzlich.
+- Ein Trigger sperrt Änderungen am Versand-Snapshot; Änderungen erfordern
+  einen neuen Auftrag. Anhänge liegen als eigene gehashte Projektkopien vor.
+- email_drafts enthält provider_draft_id und synced_hash zur Gmail-Anbindung.
+- OAuth-Token liegen ausschließlich im Windows Credential Manager, pro
+  Projekt-ID/Konto-ID. Sie sind kein Bestandteil der DB und Projektbackups.
+- Sending und ein Started-Versuch werden vor dem einzelnen Send-Aufruf
+  gemeinsam bestätigt. Erfolgsbeleg, Sent-Status und Aktivität sind atomar.
+- Unterbrochene Sending-Aufträge werden beim Öffnen ReconciliationRequired.
+  Überfällige Scheduled/Queued-Aufträge benötigen eine erneute Freigabe.
+- Alte Aufträge ohne vollständige MIME-Daten werden erhalten und nicht gesendet.
+
+BUILDER-ARBEITSSTAND (V10)
+- email_builder_workspace hält genau einen aktuellen Arbeitsstand je Projekt:
+  Graph/Name, genaue Builder-Basisversion, Konto/Signatur, letzte Gruppe, Planung
+  und Ansicht. Benannte Graphversionen bleiben unveränderlich in V9-Tabellen.
+- Revision und Inhaltshash erkennen konkurrierende Sicherung bzw. beschädigte
+  Daten. Unveränderte Sicherungen erhöhen die Revision nicht. Eingaben dürfen
+  unfertig sein; eine Sicherung erzeugt weder Entwürfe noch Versandaufträge.
+- Arbeitsstand ist Teil des Projektbackups; externe Originaldateien bleiben
+  Verweise. Vorschau/Freigabe/Undo-Historie werden nicht mitgespeichert.
+
+BEWERBUNGSSTATUS
+- Standardwerte: Entwurf, In Vorbereitung, Versendet, Gespräch, Angebot,
+  Angenommen, Abgelehnt und Zurückgezogen.
+- Angenommen, Abgelehnt und Zurückgezogen sind terminal.
+- Statuscodes bleiben stabil; Labels sind anpassbar.
+
+OFFEN
+- Übersetzungen der Statuslabels für die englische Oberfläche.
+- Weitere fachliche Regeln für Statusübergänge.
+- Vollständige Lösch- und Aufbewahrungsregeln.
+- Versionierung der globalen Vorlagenbibliothek.
+- Datei-/Datenbank-Recovery.
+- Validierung aller JSON-Felder.
+- Verschlüsselung und Schlüsselverwaltung für Backups.

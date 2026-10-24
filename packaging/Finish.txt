@@ -1,0 +1,11 @@
+Die nächsten Schritte
+
+1. EmailCenter starten und ein neues Projekt anlegen.
+2. E-Mail öffnen und Gmail verbinden.
+3. Im E-Mail-Builder Excel-Daten, Texte und Anhänge verbinden.
+4. Alle Zeilen vorschauen und Ergebnisse prüfen.
+5. Entwürfe / Planung erstellen, Gruppe freigeben und starten.
+
+Hilfe / Guide oder F1 öffnet die bebilderte Anleitung zur aktuellen Ansicht oder zum ausgewählten Baustein.
+
+Geplanter Hintergrundversand benötigt ein laufendes Programm und einen aktiven Rechner. Google-Anmeldungen können im Testmodus nach sieben Tagen erneut erforderlich sein.

@@ -1,0 +1,17 @@
+EmailCenter – private Verteilung
+
+Dieses Paket enthält EmailCenter und Software Dritter. Die mitgelieferten Lizenztexte gelten für die jeweiligen Bestandteile. Du findest sie nach der Installation im Verzeichnis _internal/licenses und bei den jeweiligen Laufzeitkomponenten.
+
+Qt / PySide6: LGPLv3 / GPLv3 bzw. jeweilige Komponentenlizenz.
+LibreOffice: Mozilla Public License 2.0, mit ergänzenden Komponentenlizenzen.
+Python: Python Software Foundation License.
+Weitere Python-Bibliotheken: siehe mitgelieferte Lizenztexte und Inventar.
+
+Diese Hinweise schränken Rechte aus den jeweiligen freien Softwarelizenzen nicht ein. EmailCenter-Projekte und Nutzeranmeldungen werden nicht mitgeliefert. Eigene Daten bleiben beim Nutzer.
+
+Die LGPL-Bibliotheken werden unverändert und als austauschbare DLLs verteilt. Für ihre Änderung oder ihren Austausch dürfen Nutzer die Anwendung entsprechend analysieren oder debuggen. Die vollständigen LGPL-/GPL-Texte, Quellen-/Buildhinweise und ergänzenden Urheberhinweise liegen unter _internal/licenses/Qt.
+
+Quellen und Informationen:
+https://www.qt.io/licensing/open-source-lgpl-obligations
+https://www.libreoffice.org/about-us/licenses
+https://www.python.org/psf/license/

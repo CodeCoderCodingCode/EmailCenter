@@ -1,0 +1,246 @@
+EMAILCENTER — DESKTOP-OBERFLÄCHE
+Stand: 2026-10-12
+
+START
+- Doppelklick auf Start_EmailCenter.cmd im Repository-Ordner.
+- Terminal: .\.venv\Scripts\python.exe start_emailcenter.py
+- Optional: --project "C:\Pfad\zum\bestehenden\Projekt"
+- Abhängigkeiten: GUI, Excel, Gmail-OAuth, Windows-Vault und Zeitzonen;
+  Versionen in requirements.txt.
+
+ERSTER ABLAUF
+1. Neues Projekt: drei Schritte für Name/Ordner/Speicherort, Modus/Projektziel,
+   optionales Profil/Standardsignatur und Zusammenfassung. Zurück behält Eingaben;
+   Abbrechen legt nichts an. Vorhandene Ordner werden nicht überschrieben.
+   Anleitung: docs/16_Project_Wizard.txt.
+2. Das Projekt öffnet den Arbeitsbereich. Dort Profil, Unternehmen und Bewerbung
+   direkt anlegen; fehlende Voraussetzungen werden angezeigt. Moduswahl im Projekt gespeichert.
+3. Unter Stellen eine Ausschreibung zum Unternehmen erfassen. Unter Bewerbungen
+   Titel, Unternehmen, optionale Stelle, Profil und Status auswählen.
+4. Unter Vorlagen ein DOCX importieren. Erkannte Platzhalter vorhandenen
+   Feldern zuordnen oder zur manuellen Eingabe lassen; Pflichtwerte markieren.
+5. Eine konkrete Vorlagenversion auswählen und Verwenden anklicken.
+   Bewerbung auswählen und Werte übernehmen oder Werte manuell eingeben.
+6. Vorschau zeigt einen Textvergleich. Mit LibreOffice kann ein PDF dazu
+   erzeugt werden. Erst DOCX speichern erzeugt einen Dokument-Datensatz.
+7. Unter Dokumente DOCX extern öffnen bzw. PDFs in der App ansehen.
+   PDF erzeugen benötigt LibreOffice; fehlende Installation wird gemeldet.
+8. Backup in der oberen Leiste erzeugt ein geprüftes Projektarchiv.
+9. Unter Datenimport CSV/XLSX auswählen, Ziel und Felder zuordnen, Vorschau
+   vorbereiten und gültige Zeilen importieren. Fehler korrigieren und Duplikate
+   einzeln entscheiden. Import anhalten und später fortsetzen ist möglich.
+   Einzelheiten: docs/08_Import_Workflow.txt.
+10. Unter E-Mail die Google-Desktop-Clientdatei wählen und Gmail verbinden.
+    Entwurf/Signatur anlegen, Dateien oder Projektdokumente anhängen, Auftrag
+    vorbereiten und prüfen. Erst die separate Freigabe erlaubt den Versand.
+    Einrichtung und Abnahme: docs/09_Gmail_Workflow.txt.
+11. Unter Nachfassen fällige Bewerbungstermine bearbeiten oder eigene Erinnerungen
+    anlegen. Datum, Uhrzeit und Zeitzone wählen; Termine erledigen oder verwerfen.
+    Einzelheiten: docs/11_Reminders.txt.
+12. Einstellungen: Design, Akzentfarbe, Anzeigezeitzone sowie Export- und
+    Word-Replace-Vorgaben in eigenen Tabs speichern. Die
+    Auswahl gilt ohne Neustart und bleibt beim nächsten Start erhalten.
+    Einzelheiten: docs/13_Settings.txt.
+
+BEDIENUNG
+- Ohne Projekt: Übersicht / Projekte und Einstellungen. Nach Öffnen: Arbeitsbereich
+  als Hauptbereich, direkte Dialoge für Bewerbungen, Erinnerungen und E-Mail-Entwürfe.
+- Seitenleiste: Übersicht / Projekte, Arbeitsbereich, Bewerbungen, Unternehmen, Kontakte, Bewerberprofile, Stellen, Vorlagen,
+  Dokumente, Nachfassen, Datenimport, E-Mail (Entwürfe/Versandaufträge), Word Replace und Einstellungen.
+- Listen: 50 Datensätze pro Seite; Suche mit Enter/Suchen. Zurück/Weiter
+  lädt weitere Treffer. Suchzeichen wie % und _ werden wörtlich behandelt.
+- Status ändern ist bei terminalen Bewerbungsstatus deaktiviert.
+- Bearbeiten öffnet den ausgewählten Datensatz. Speichern schließt den Dialog
+  erst nach erfolgreicher Speicherung; Fehler behalten die Eingaben bei.
+- Kontakte zuordnen ist unter Unternehmen und Bewerbungen verfügbar. Rollen
+  ändern, Hauptkontakt festlegen und Zuordnungen entfernen; Kontakte bleiben bestehen.
+  Einzelheiten: docs/10_Record_Management.txt.
+- Hotkeys: Ctrl+N/Ctrl+O/F5, Ctrl+1 Arbeitsbereich, Ctrl+2 Word Replace,
+  Ctrl+F Suchen, Ctrl+S Speichern, Ctrl+Shift+E Export, Ctrl+Alt+S Einstellungen,
+  F1 Hilfe; in Einstellungen / Hotkeys ändern/deaktivieren.
+- Hell/Dunkel kann ohne Neustart umgeschaltet werden. Design, Akzentfarbe
+  und Anzeigezeitzone werden projektunabhängig gespeichert.
+- Projektwechsel und Schließen werden während laufender Aufgaben verhindert.
+  Fehler lassen die Oberfläche bedienbar; ein fehlgeschlagenes Projektöffnen
+  behält das bisherige Projekt bei.
+- Lokale Toasts: Projekt bereit, Speichern, Backup, Versandstatus und steigende
+  Fälligkeit. Sie blenden ein, verschwinden automatisch und lassen sich schließen.
+- Arbeitsbereich: Karten ordnen sich bei schmalen Fenstern in einer Spalte an;
+  der Inhalt bleibt scrollbar. Weitere responsive Seiten und Themeanimationen sind geplant.
+- Bis zu sechs aktuelle Vorgänge per Doppelklick bearbeiten/prüfen; DOCX-Vorlagen
+  direkt importieren/verwenden. E-Mail-Arbeitsbereich: Entwurf auswählen/bearbeiten,
+  Auftrag mit Kalender/Zeitzone vorbereiten, prüfen/freigeben und manuell senden.
+  Absender direkt beim Vorbereiten wählen; Freigeben & jetzt senden kann auch vor
+  geplantem Termin ausführen. Gmail verbinden und Scheduler direkt im Arbeitsbereich.
+  Status/Storno/Abgleich und 25 Einträge pro Seite. Anleitung: docs/15_Mail_Workspace.txt.
+  Kontextkarte: Bewerbung oder Kontakt auswählen, Empfänger/Betreff/Texteinstieg
+  übernehmen, passende Bewerbungsdokumente ausdrücklich auswählen. Auch unter
+  Bewerbungen/Kontakte über E-Mail schreiben. Editor scrollbar, Abschlussaktionen
+  bleiben erreichbar; Datensatzaktionen umbrechen in mehrere Zeilen.
+  Anleitung: docs/17_Mail_Context.txt. Bulk/Export-Ausbau: docs/14_Workspace_TODO.md.
+- E-Mail-Vorlagenbibliothek direkt im Arbeitsbereich/Editor mit Suche, Versionen,
+  Duplikaten und Vorschau. Fehlende Platzhalter ergänzen; Betreff/Text/Format
+  ausdrücklich übernehmen. Empfänger, Konto, Signatur und Anhänge bleiben erhalten.
+  Anleitung: docs/18_Mail_Templates.txt.
+
+ERWEITERUNGSPUNKTE
+- ui/main_window.py: MainWindow.register_page(key, title, widget) registriert
+  neue Seiten. Bestehende Seiten müssen dafür nicht geändert werden.
+- ui/pages.py: RecordPage bietet Suche, Seitenwechsel und Datensatzaktionen;
+  OverviewPage zeigt Kennzahlen. PlannedPage kennzeichnet noch offene Bereiche.
+- ui/dialogs.py: Formulare, Vorlagenmapping, Dokumenteingaben, Text-/PDF-Vorschau.
+- ui/record_dialogs.py: asynchrone Erfassung/Bearbeitung und Kontaktzuordnungen.
+- ui/reminder_page.py: Nachfassliste, Filter und Kalenderdialog.
+- ui/workspace_page.py: modusspezifischer Arbeitsbereich und responsive Karten.
+- ui/mail_workflow.py: eingebettete Entwurfs-/Auftragsauswahl und Vorbereitungsdialog.
+- ui/project_wizard.py und project_setup.py: Projektassistent und Anfangsdatenvalidierung.
+- mail_context.py: reine Vorschläge aus Bewerbung/Kontakt ohne Speicherung oder Versand.
+- mail_templates.py und ui/mail_template_dialogs.py: E-Mail-Vorlagenbibliothek,
+  unveränderliche Versionen, Literal-Platzhalter und bestätigte Vorschauübernahme.
+- ui/toast.py: lokale nichtmodale Hinweise mit Timer und Einblendung.
+- reminder_service.py: UTC-Termine, Abschluss, Konfliktprüfung und Aktivitätsprotokoll.
+- ui/settings_page.py und preferences.py: Einstellungsseite, Validierung,
+  persistente Konfiguration und atomare Dateiersetzung.
+- record_service.py: erlaubte Bearbeitungsfelder, Konsistenzprüfung, Konflikterkennung
+  anhand vollständiger Datensatzwerte und atomare Änderungsprotokolle.
+- ui/import_page.py: asynchrones Importmapping, gespeicherte Profile,
+  Laufhistorie, Zeilenprotokolle, Korrektur und explizite Duplikatentscheidung.
+- ui/mail_page.py: Nachrichteneditor, Account-/Signaturauswahl, Dateien und
+  Projektdokumente anhängen, Snapshot-Freigabe und Versandhistorie.
+- ui/theme.py: gemeinsame Palette und Darstellungsregeln.
+- ui/mail_bulk_dialog.py: Kontaktwahl über Seiten, persönliche Vorschauen und
+  lokale Entwurfsgruppen. Migration 005 und mail_bulk.py speichern atomar;
+  acht Servicetests und sechs Qt-Tests prüfen Fehler, Anlagen und Wiederöffnen.
+  Gemeinsame Versandfreigabe/-ausführung im separaten Gruppenfenster. docs/19_Bulk_Drafts.txt.
+- ui/bulk_source_dialogs.py: Importzeilen/Spaltenmapping, manuelle Tabelle mit
+  Excel-Einfügen und DOCX-Textübernahme. bulk_sources.py ist die gemeinsame
+  Datenquelle; mail_bulk.py erzeugt daraus persönliche Anschreiben und Anhänge.
+  Migration 006 erhält Kontaktgruppen. docs/20_Bulk_Data_Sources.txt.
+- ui/bulk_delivery_dialog.py: feste Versandkopien prüfen, gemeinsam freigeben und
+  Nachricht für Nachricht ausführen; Planung, Abstand, Fortschritt, Pause/Fortsetzen,
+  Abbruch und Einzelabgleich. Pause/Abbruch bleiben beim Worker-Netzaufruf bedienbar.
+  bulk_delivery.py und Migration 007 speichern Fortschritt/Zuordnung dauerhaft.
+  Vorbereitung lässt sich ohne doppelte Jobs fortsetzen. Der Einzel-Scheduler
+  verarbeitet keine Gruppenaufträge. App und Gruppenfenster bleiben für Versand offen.
+  Anleitung: docs/21_Bulk_Delivery.txt; Screenshot: docs/bulk_delivery_preview.png.
+- ui/controller.py: QObject-Worker in einem QThread, Ergebnisse per Signal
+  zurück zum Hauptthread. Nur eine schreibende/lesende Aufgabe gleichzeitig.
+- application/workspace.py: Use Cases und Projektlebenszyklus. Die SQLite-
+  Verbindung wird im Worker erstellt, benutzt und geschlossen; Widgets
+  enthalten kein SQL und übernehmen keine Datenbankverbindung.
+- import_sources.py liest CSV/XLSX mit Grenzen; import_service.py übernimmt
+  Validierung, feste Laufkonfiguration, Zeilentransaktionen und Wiederaufnahme.
+- Importläufe werden in Stapeln von 100 Zeilen ausgeführt. Ein threadfähiges
+  Abbruchsignal pausiert zwischen Zeilen; bereits bestätigte Zeilen bleiben erhalten.
+- Gmail-Aufrufe laufen im selben Worker. Der optional eingeschaltete Scheduler
+  prüft alle 15 Sekunden und verarbeitet höchstens einen geplanten Auftrag je
+  Aufruf. Modale Dialoge/laufende Aktionen unterbrechen die Prüfung. Nach einer
+  Timerlücke über 90 Sekunden benötigen überfällige Aufträge eine neue Freigabe.
+- Vorschau-Kontexte bleiben bis zum Schließen des Vorschaufensters offen.
+  PDF-Dateien werden im Worker eingelesen und in der GUI aus einem Speicher-
+  Puffer angezeigt, damit Windows temporäre Dateien beim Aufräumen nicht sperrt.
+
+PRÜFUNG UND GRENZEN
+- Gesamtsuite: 482 Tests, 481 erfolgreich; nativer Vault-Test opt-in übersprungen
+  und früher separat geprüft. Darunter 148 Qt-Tests ohne sichtbares Fenster
+  und 10 Workspace-Integrationstests. Getestet sind Projekt-/Datensatzabläufe,
+  Such-/Seiteneinstellungen, Eingaben/Pflichtwerte, Statussperre, Thread-Zuordnung,
+  Fehlererholung, Vorschau-Aufräumen und Anzeige eines echten mit Qt erzeugten PDF.
+- Zehn Datenverwaltungstests prüfen Bearbeitung, Konflikte, Stellen-/Unternehmens-
+  konsistenz, Datumsfelder, bestehende Archivbezüge und Kontaktzuordnungen.
+- Importprüfungen decken CSV-Mapping/Profile, Excel-Blattwechsel, Zeilenkorrektur
+  einschließlich langer mehrzeiliger Notizen, Duplikate, Pause und Neustart ab.
+- Die PDF-Anzeigeprüfung ist kein LibreOffice-Konvertierungstest.
+- docs/ui_preview.png zeigt die tatsächliche Oberfläche mit Testdatensätzen;
+  das dafür verwendete Testprojekt wird anschließend entfernt.
+- docs/import_preview.png zeigt die tatsächliche Importansicht mit Zeilenstatus.
+- docs/mail_preview.png zeigt Versandhistorie und Sperre unklarer Ergebnisse;
+  die Testnachrichten wurden ausschließlich über einen Provider-Testdouble verarbeitet.
+- docs/records_preview.png zeigt die tatsächliche neue Stellenansicht.
+- docs/followup_preview.png zeigt die Nachfassübersicht mit Testterminen.
+- Dreizehn Reminder-Tests prüfen UTC/Offsets, Sommerzeit, Filter, Abschluss,
+  Wiederöffnen, Konflikte, Rollback und alte ungültige Termine. Die laufende App
+  aktualisiert Fälligkeit jede Minute; steigende Fälligkeit löst lokale Toasts aus.
+- Offen: erweiterte Profil-/Adressfelder, echte Gmail-Abnahme,
+  DE/EN-Umschaltung, weitere Einstellungsbereiche und vollständige manuelle Abnahme.
+- Weitere Ansichten werden schrittweise an vorhandene Use Cases angeschlossen.
+- Vollständige Feature-/UI-Liste: docs/12_Feature_Status.md.
+- docs/settings_preview.png zeigt die Einstellungsseite im dunklen Design.
+  Dreizehn Einstellungs- und zusätzliche Qt-Tests prüfen die Speicherung.
+- docs/workspace_preview.png zeigt den neuen Arbeitsbereich mit Testdaten.
+  Sieben neue Qt-Tests und zwei Workspace-Tests prüfen Projekteinstieg, Modus,
+  Projektabfrage, direkte Editoren, Auftragsprüfung, responsive Karten und Toasts.
+- docs/mail_workspace_preview.png zeigt den E-Mail-Arbeitsbereich; fünf neue
+  Qt-Tests prüfen Einzelablauf, Fehler/Kalender, Pagination, Storno und Abgleich.
+
+QT-REFERENZEN
+https://doc.qt.io/qtforpython-6/overviews/qtdoc-threads-qobject.html
+https://doc.qt.io/qtforpython-6/PySide6/QtPdf/QPdfDocument.html
+https://doc.qt.io/qtforpython-6/PySide6/QtPdfWidgets/QPdfView.html
+NEUES PAKET — DATEN / EXPORT / WORD REPLACE
+- Migration 008 und data_source_library.py: projektweite Listen/Profile mit
+  Standardwerten, Leerwertregel, stabilen Zeilenkennungen und Konfliktprüfung.
+  In ui/bulk_source_dialogs.py für Bulk und Word Replace auswählen/bearbeiten.
+- export_service.py und ui/export_dialog.py: Filter/Auswahl, Spalten, CSV/XLSX,
+  native Datumswerte, Formelzeichen, Abbruch und atomare Ausgabe. Der
+  Gruppenversand bietet den Bericht seiner eigenen Einzelaufträge.
+- word_replace.py und ui/word_replace_page.py: eigene Projektseite/Aktion,
+  DOCX-Regeln über Text-Runs, gemeinsame Quellen und persönliche Kopien.
+  Reine Excel-Dokumentdaten benötigen keine E-Mail-Spalte. Vorschau/Bestätigung/
+  Abbruch bleiben am unteren Rand; schmale Ansichten ordnen Aktionen/Textvergleich um.
+- Ergebnisdateien unter exports werden in Dokumente registriert. Quellenänderungen,
+  Abbruch, Rücknahme und erhaltene Wiederherstellungskopien sind automatisch geprüft.
+- 36 neue Serviceprüfungen, neun zusätzliche Qt-Prüfungen, vier Einstellungsprüfungen
+  und eine Migrationserweiterung. Keine echte Gmail-Nachricht in diesem Paket.
+- Anleitungen: docs/22_Data_Source_Library.txt, docs/23_Data_Export.txt,
+  docs/24_Word_Replace.txt. Ansichten: docs/export_preview.png, docs/word_replace_preview.png.
+- Gebündelte manuelle Prüfung: docs/25_Bundled_Acceptance.md.
+HOTKEYS
+- shortcuts.py validiert portable Einzelkombinationen ohne Qt-Abhängigkeit.
+- Einstellungen / Hotkeys zeigt Konflikte, deaktiviert Belegungen und setzt sie zurück.
+- MainWindow/unterstützte Dialoge binden Aktionen an den aktuellen Kontext;
+  Worker sperren Aktionen. Freigabe/Versand/Retry besitzen keine Hotkey-Aktion.
+- Acht Backend- und fünf zusätzliche Qt-Tests; Anleitung: docs/26_Hotkeys.txt.
+
+VISUELLER BUILDER
+- Eigene Projektseite und Arbeitsbereich-Aktion. Palette/Drag & Drop, typisierte
+  Stecker, Eigenschaften und Zeilenvorschau. Schmale Fenster verwenden
+  „Baustein +“; festes Bestätigen/Abbrechen bleibt unter dem scrollbaren Editor.
+- Graphversionen in Migration 009. Excel-/Listenquellen/Zuordnungsprofile,
+  Text/HTML, Empfänger, persönliche Dateipfade, Bild-/Video-Dateianhänge,
+  DOCX/Word Replace/DOCX→PDF und lokale Gruppen mit bestehender Versandprüfung.
+- Betreff, Beschreibung/Anschreiben, Absatz, Überschrift, HTML, Anrede, Gruß und
+  Trennlinie ergänzen den universellen Text. Mit Links/Buttons und Listen 22 Bausteinarten.
+- Live-Text und gerenderte HTML-Mail, Bild/PDF/Video und persönliche DOCX-Texte
+  direkt im Editor prüfen; Videos ohne Autoplay, HTML ohne externe Ressourcen.
+- Canvas-Kürzel, mittlere Maustaste, Suchpalette, Verbindungsvorschau,
+  schnellere Kantenaktualisierung, Undo/Redo und eigener Einstellungs-Tab.
+- Bulk-Aufträge aus dem Builder sofort vorbereiten oder Datum/Zone/Abstand planen.
+  Entwürfe/Planung atomar anlegen; feste Kopien im Worker erstellen und Prüfung öffnen.
+- 42 Serviceprüfungen, 35 Qt-Prüfungen und Upgrades von Schema 8 auf 9 auf 10.
+  Kein Live-Versand; echte LibreOffice-/Windows-/Gmail-Prüfung bleibt gesammelt.
+- Anleitung: docs/27_Email_Builder.txt. Ansichten: docs/builder_preview.png
+  und docs/builder_preview_dark.png; Medien: docs/builder_media_preview.png.
+- Arbeitsstand im Hintergrund sichern, unfertige Eingaben und Planung/Ansicht
+  wiederherstellen; vor Projektwechsel/Backup/Schließen nachsichern. Konflikte
+  pausieren. Unter Plan manuell sichern/neu laden, eigene Autosicherungseinstellungen.
+- „Anordnen“, neue Bausteine automatisch frei platzieren und direkt zum Baustein
+  springen. Ansicht: docs/builder_workspace_preview.png.
+- Mailrenderer direkt im E-Mail-Baustein/Mail-Tab mit Empfänger, Betreff, Signatur
+  und Anhängen; HTML standardmäßig, ungeprüfte Live-Skizze markiert. Nach Vorschau
+  persönliche Beschriftungen, Mail-/HTML-/Bild-Miniaturen und lokale Medien am
+  Baustein automatisch laden. Gemeinsame Zeilenauswahl, begrenzter Hintergrundcache,
+  veraltete Antworten verwerfen und geänderte Dateien vor Verwendung melden.
+  Größere Fenster geben dem Editor mehr Höhe. docs/builder_renderer_preview.png.
+  Inline-Medien, Bedingungen/Gruppen und flexible Panels noch offen.
+- Acht Themes mit vier Hell-/Dunkel-Paaren; Toolbar erhält den gewählten Stil.
+
+ABGESCHLOSSENES AUSBAUPAKET
+- OAuth-Hell/Dunkel-Abschlussseite mit Logo, ehrlichem Status und Tab-Schließen/Fallback.
+- Gemeinsame Vorlagenansicht mit Suche/Typfilter, DOCX-Duplikaten und HTML-Mailvorschau.
+- DOCX-/PDF-Tabellen ausdrücklich prüfen/zuordnen und als gemeinsame Liste nutzen.
+- Dokumentensätze als DOCX/PDF-ZIP samt Manifest/Fehlstellenbericht exportieren.
+- Konfigurierbare Canvas-Tastatur für Bausteine/Stecker/Verbindungen und Graphtransfer.
+- Pixelart-Logo ohne Glättung in der Seitenleiste, als Fenster-/Appicon und im Browser.
+- 33 neue Prüfungen (23 Kern/10 Qt); manuelle Abnahme in 25_Bundled_Acceptance.md.
+Anleitung und neue Ansichten: docs/28_Completion_Package.md.

@@ -1,0 +1,2 @@
+"""EmailCenter application package."""
+

@@ -1,0 +1,61 @@
+EMAILCENTER — CSV-/EXCEL-EXPORT UND GRUPPENBERICHT
+Stand: 12.10.2026 | Sprint 5-Ausbau / 7
+
+BEDIENUNG
+1. Im Arbeitsbereich CSV / Excel exportieren wählen. Alternativ in Unternehmen,
+   Kontakte, Bewerberprofile, Stellen oder Bewerbungen die Exportaktion verwenden.
+   Mehrere sichtbare Datensätze lassen sich mit Strg/Shift auswählen.
+2. Datenbereich und Umfang auswählen: aktueller Suchfilter / alle Treffer oder
+   die übergebenen ausgewählten Datensätze. Die gefilterte Ausgabe umfasst alle
+   passenden Seiten, nicht nur die sichtbaren Zeilen.
+3. Vorschau laden. Bis zu 10000 Zeilen; die Vorschau zeigt die ersten 20.
+4. Benötigte Spalten ankreuzen und CSV oder Excel auswählen. CSV bietet
+   Semikolon, Komma oder Tabulator sowie UTF-8 mit/ohne BOM, Windows-1252 oder UTF-16.
+5. Datei exportieren öffnet die Zielauswahl. Vorhandene Dateien erfordern eine
+   ausdrückliche Überschreibbestätigung. Änderungen nach der Vorschau erfordern
+   eine neue Prüfung. Das Ergebnis nennt Anzahl und vollständigen Dateipfad.
+6. Laufenden Export abbrechen erhält eine vorhandene Zieldatei und entfernt
+   die temporäre Ausgabe. Das Schließen ist während der Ausgabe gesperrt.
+
+VERSANDBERICHT
+Im Gruppenversand Status neu laden und Versandbericht dieser Gruppe exportieren
+wählen. Der Bericht enthält nur Aufträge der Gruppe: Betreff, Empfänger, Absender,
+Status, Freigabe, Gruppe, Termine, Versandversuche und letzten Fehler.
+Während eines aktiven Gruppenlaufs ist die Exportaktion gesperrt.
+Die allgemeine Exportauswahl bietet auch einen Bericht über alle Versandaufträge.
+
+DATEIEN UND EINSTELLUNGEN
+- Einstellungen / Export speichert Standardformat, Standardordner und CSV-Optionen.
+- Leeres Ordnerfeld verwendet exports im aktuellen Projekt.
+- Innerhalb eines Projekts ist nur exports als Ziel erlaubt; Datenbank,
+  Vorlagen, Anhangkopien und andere Projektdateien werden nicht ersetzt.
+- CSV schützt führende Formelzeichen durch ein vorangestelltes Apostroph.
+  Excel-Zellen speichern solche Inhalte ausdrücklich als Text.
+- Excel-Datumswerte bleiben echte Datumszellen. Zeitpunkte mit Zeitzone werden
+  als UTC ohne Zeitzoneninformation in der Zelle gespeichert; Überschrift nennt UTC.
+- Zu lange oder ungültige Excel-Zellen werden gemeldet, statt still gekürzt.
+  Nicht im gewählten CSV-Zeichensatz darstellbare Texte sperren die Ausgabe.
+- Veröffentlichung erfolgt über eine temporäre Datei und atomare Ersetzung.
+  Zwischenzeitlich veränderte Zieldateien werden erkannt. Quelldaten bleiben erhalten.
+- OAuth-Tokens, Anmeldekonfigurationen und interne Zugangsdaten werden nicht exportiert.
+
+OFFEN
+Exporthistorie und manuelle Prüfung mit realen Excel-/Dokumentdateien.
+Screenshot: docs/export_preview.png. Sammelabnahme: docs/25_Bundled_Acceptance.md.
+
+DOKUMENTPAKET / ZIP
+1. Unter Dokumente filtern/mehrere Zeilen markieren und Dokumentpaket exportieren
+   wählen. Auch vom allgemeinen CSV-/Excel-Export erreichbar.
+2. Umfang: Filter über Datei/Satz/Bewerbung oder die Sätze der ausgewählten Dokumente.
+   Eine Auswahl schließt die zugehörigen DOCX-/PDF-Varianten des gesamten Satzes ein.
+3. DOCX und PDF oder ein Format wählen. Vorschau listet verwendbare Dateien,
+   fehlende/veränderte Quellen und fehlende PDF-Versionen. Unter Dokumente fehlende
+   PDFs erzeugen oder ein unvollständiges Paket ausdrücklich bestätigen.
+4. ZIP exportieren. Unterordner je Satz, manifest.json mit Dokumentkennungen/
+   Formaten/Prüfsummen und Exportbericht.txt mit allen Fehlstellen sind enthalten.
+   Quelldokumente bleiben erhalten. Der Bericht enthält keine Zugangsdaten.
+5. Dateiinhalte vor und während des Kopierens prüfen; geänderte Vorschauen neu laden.
+   Abbruch/Fehler erhält vorhandenes Ziel. Bestehendes ZIP ausdrücklich ersetzen.
+6. Grenzen: bis 1000 Dokumente, 100 MiB je Datei und 1 GiB Paketinhalt.
+   Einstellungen / Export bestimmt auch den Standardordner für Dokumentpakete.
+Ansicht: docs/document_bundle_preview.png.

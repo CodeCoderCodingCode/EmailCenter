@@ -1,0 +1,149 @@
+EMAILCENTER — OFFENE ENTSCHEIDUNGEN UND ABNAHME
+Stand des historischen Detailbestands: 2026-10-11
+
+AKTUELLER BENUTZERAUFTRAG — 13.10.2026
+Technisch bis zur gebündelten Benutzerabnahme fertigstellen. Eigene Dateien und
+Windows-/Bedienprüfungen nimmt der Benutzer selbst am Ende ab. Keine
+Zwischenfreigaben oder eigenen Dateien jetzt erforderlich.
+A1–A7 technisch abnahmebereit: 644 Tests / 643 bestanden / ein optionaler Skip,
+540 UI-Prüfungen und geprüftes Codearchiv.
+Nachweis: docs/40_Technical_Completion.md. Die darunterstehenden Paketzahlen
+und Detailentscheidungen beschreiben frühere Zwischenstände.
+
+VORHERIGES A5-/GMAIL-PAKET — 13.10.2026
+docs/34_Final_TODO.md bündelt die verbindlichen Abschlussaufgaben A1–A7.
+Reale Gmail-Anmeldung und zwei Testmails sind erfolgreich abgeschlossen.
+Backup-Wiederherstellung, Aufbewahrung und lokaler Diagnoseexport sind implementiert.
+Damaliger Gesamtlauf: 638 Tests, 637 bestanden, ein optionaler Vault-Test übersprungen;
+Quellen unverändert. Weitere 144 wiederholte UI-Prüfungen bestanden.
+Empfang beider bisherigen Gmail-Testmails am 13.10.2026 vom Benutzer bestätigt.
+Zusätzlich freigegebene TEST 3/4 samt persönlichen PDFs: Gmail-Draft, Sofort-/Termin-
+versand und Inhalts-/Hash-Rückvergleich erfolgreich; docs/39_Gmail_Attachment_Review.md.
+A1–A3 sind implementiert; Anleitung: docs/35_Completion_A1_A3.md.
+A5-Apptexte und Dialoge sind DE/EN ergänzt; Neustart, Rückwechsel und
+492 verwendete Quellen bei vier Qt-Skalierungen geprüft. Native Abnahme offen.
+Anleitung/aktueller Prüfbericht: docs/38_Localization_UI_Completion.md.
+Prüfbericht: docs/36_Completion_Test_Report.txt; Laufzeit: docs/37_Runtime_Dependencies.md.
+Aktuelle lokale ZIP-Backups sind unverschlüsselt; Hinweise stehen in Settings,
+Wiederherstellungsdialog und Dokumentation. Verschlüsselung ist ein separater Ausbau.
+Installer, Nutzeranleitung und öffentliche OAuth-Verteilung folgen erst nach
+dem funktionalen Abschluss in B5. Weitere Anschlussaufträge stehen in B1–B4.
+Die nachstehenden älteren Einträge werden anhand dieser aktuellen Liste eingeordnet.
+
+VOR DOMAIN- UND RELEASE-FUNKTIONEN
+- Mindestversionen vor Paketierung bestätigen. Der aktuelle Code setzt Python 3.10+
+  voraus; das Schema nutzt SQLite-Features ab 3.8.0. Entwicklungsumgebung:
+  Python 3.13.3, SQLite 3.49.1.
+- JSON-Felder fachlich validieren, sobald die zugehörigen Domain-Modelle entstehen.
+- Bewerbungsstatus-Initialdaten und Terminalregel in Sprint 3 festgelegt; weitere
+  Übergangsregeln bei konkretem Bedarf ergänzen.
+- Fachliche Lösch- und Aufbewahrungsregeln vor Papierkorb- und Backup-Bereinigungsfunktionen klären.
+- Migration-Rollback testen: im Sprint 1 umgesetzt.
+- Migration Runner idempotent und fehlerfest machen: im Sprint 1 umgesetzt.
+- Zeitstempelformat festgelegt: UTC, ISO-8601 mit abschließendem Z.
+- Projektarchiv und Datenbankintegrität: Basis in Sprint 2 umgesetzt;
+  Wiederherstellung praktisch testen und Verschlüsselung festlegen vor Release.
+
+VOR GMAIL-RELEASE
+- Aktuelle Gmail OAuth Scopes und Verifikationsanforderungen prüfen.
+- Tokens sicher im Windows Credential Manager speichern.
+- Rate Limits und Providerfehler behandeln.
+- Unklare Versandresultate abgleichen, nicht blind wiederholen.
+- Anhänge prüfen und Freigaben/Testversand implementieren.
+- Implementiert: OAuth/PKCE, fest ausgewählter Windows-Vault-Backend,
+  sichere Token-Erneuerung, Empfänger-/Anhangsvalidierung, Freigabe, begrenzte
+  Netzwerklaufzeiten und Versandprotokolle. 429/5xx/Timeout beim Send-Aufruf
+  gelten als unklar; es gibt keine automatische Send-Wiederholung.
+- Scopes: gmail.compose und gmail.readonly (Google: restricted). Öffentliche
+  OAuth-Verifikation und Release-Bedingungen müssen vor Verteilung geprüft werden.
+- Offen: echte Anmeldung und kontrollierter Testversand mit Google-Clientdatei.
+
+VOR DOKUMENT-RELEASE
+- Unterstützte DOCX-Elemente definieren.
+- Platzhalter über Word-Runs hinweg testen.
+- Header/Footer, Tabellen, Bilder, Hyperlinks und Seitenumbrüche testen.
+- LibreOffice-Konvertierungsfehler behandeln.
+- Analyse und Ersetzung, gespeicherte Feldzuordnungen/Pflichtwerte, neue Versionen,
+  SHA-256-Prüfung auf externe Änderungen und Dokumentensätze sind umgesetzt.
+- Temporäre DOCX-/optionale PDF-Vorschau erzeugt keine Dokument-Datensätze.
+- PDF-Anbindung und Fehlerfälle sind mit Testdoubles geprüft; echte
+  Konvertierung/Layoutprüfung benötigt eine lokale LibreOffice-Installation.
+
+VOR ÖFFENTLICHEM RELEASE
+- Lizenzen aller Abhängigkeiten prüfen.
+- Datenschutz-/Aufbewahrungsregeln festlegen.
+- Backup-Verschlüsselung/Schlüsselverwaltung entscheiden.
+- Installer, portable Version und Updateprozess testen.
+- Diagnoseexport auf sensible Daten prüfen.
+
+MVP-ABNAHME
+- Neue Datenbank lässt sich initialisieren.
+- Migrationen sind versioniert und kontrolliert.
+- Fremdschlüssel bei jeder Verbindung aktiv.
+- Ungültige Referenzen werden abgewiesen.
+- Unternehmen/Kontakte/Bewerbungen konsistent verknüpfbar.
+- Dokumente und Vorlagenversionen nachvollziehbar.
+- Importfehler je Zeile dokumentiert.
+- E-Mail-Jobs speichern unveränderliche Snapshots.
+- Unklare Sendungen werden nicht blind erneut gesendet.
+- Lange Aufgaben blockieren die UI nicht.
+- Backup und Wiederherstellung sind getestet.
+- Tests sind reproduzierbar.
+
+STATUS
+- Konzeptanforderungen: dokumentiert.
+- Architektur: dokumentiert.
+- Initiales SQL: versioniert und über den Migration Runner ausführbar.
+- Sprint-1-Datenbankbasis: abgeschlossen.
+- Sprint-2-Projektbasis: abgeschlossen.
+- Sprint-3-Bewerbungsdomain: abgeschlossen.
+- Sprint-4-Dokumentbasis: umgesetzt; Abnahme wegen echtem PDF-/Layoutlauf noch offen.
+- Sprint-5-Import: abgeschlossen; CSV/XLSX, Profile, feste Laufkonfiguration,
+  Zeilenfehler, Duplikatentscheidungen, atomare Importbelege und Wiederaufnahme.
+- Sprint-6-E-Mail: implementiert und automatisch geprüft; echte Gmail-Abnahme offen.
+- Sprint-7-Oberfläche: Bedienabläufe, Dokumentvorschau, Import und E-Mail umgesetzt.
+  Datensatzbearbeitung, Bewerberprofile, Stellen und Kontaktzuordnungen sind bedienbar.
+  Nachfassen und eigene Erinnerungen mit Kalender/Zeitzonen sind implementiert.
+- Zentrale Einstellungen: Design/Akzentfarbe/Anzeigezeitzone sowie Export- und Word-Replace-Vorgaben dauerhaft gespeichert.
+- Arbeitsbereich/Projektmodus/Projektziel, direkte Editoren und lokale Toasts sind umgesetzt.
+- Einzelaufträge mit Bearbeitung, Kalender/Zeitzone, Prüfung/Freigabe, manuellem
+  Versand und Ergebnisaktionen funktionieren vollständig im Arbeitsbereich.
+- 482 Tests in der Gesamtsuite: 481 erfolgreich, nativer Windows-Vault-Test
+  dort absichtlich übersprungen und separat außerhalb der Sandbox erfolgreich.
+- JSON-Validierung für weitere flexible Felder und vollständige Löschregeln: offen.
+- Python-Datenbankschicht und Bewerbungs-/Dokumentdomain: Basis umgesetzt;
+  echte Gmail-Abnahme und weitere GUI-/Benutzerabläufe offen.
+
+NÄCHSTER SCHRITT
+Sprint 4 praktisch abnehmen, sobald LibreOffice verfügbar ist. Text-/PDF-Vorschau
+und der Import sind sichtbar angebunden. Sprint 6: echte Gmail-Anmeldung und
+kontrollierten Testversand abnehmen. Weitere GUI-Bedienabläufe aus Sprint 7 fortführen.
+Feature-/UI-Liste: docs/12_Feature_Status.md. Priorisierte neue Aufträge:
+docs/14_Workspace_TODO.md. Projektassistent mit optionalem Profil/Standardsignatur
+und Zusammenfassung ergänzt. Kontextübernahme aus Bewerbung/Kontakt samt
+Dokumentauswahl implementiert. E-Mail-Vorlagen mit Versionen/Duplikaten und
+bestätigter Vorschau nutzbar. Excel-/Listenquellen, DOCX-Text und persönliche
+Bewerbungsanhänge sind eingebunden. Gemeinsame Bulk-Freigabe/Ausführung mit Planung,
+Abstand, Pause/Fortsetzen/Abbruch und Einzelabgleich ist implementiert und automatisch
+geprüft. Ausführung benötigt App und Gruppenfenster. docs/21_Bulk_Delivery.txt.
+Wiederverwendbare Listen/Profile/Standardwerte, CSV/XLSX-Export und der eigene
+Word-Replace-Bereich mit Datenzeilen/DOCX-/PDF-Ausgabe sind implementiert.
+Hotkeys mit Einstellungen, Hilfe und Konfliktprüfung sind implementiert.
+Builder-Kern einschließlich Word Replace/PDF, Datenzeilen, typisierten Steckern,
+Versionen und lokalen Entwurfsgruppen ist implementiert (docs/27_Email_Builder.txt).
+Builder-Ausbau: 22 Bausteinarten, Live-/Medien-/Dokumenttext-Vorschauen, eigene
+Bulk-Aufträge/Planung, mittlere Maustaste, Suchpalette und acht Themes implementiert.
+Arbeitsstandsicherung/Wiederherstellung, Links/Buttons/Listen, Anordnung und
+Bausteinauswahl implementiert. Arbeitsstände erlauben unfertige Eingaben und
+liegen getrennt von benannten Versionen; Konflikte pausieren (Migration 010).
+Fertiger Mailrenderer direkt am E-Mail-Baustein/Mail-Tab und automatische
+persönliche Canvas-/Medienvorschauen implementiert. Lokale Qt-HTML-Darstellung;
+praktischer Vergleich mit Gmail/Outlook bleibt Teil der Sammelabnahme.
+OAuth-Seite mit Tab-Schließen, gemeinsame Vorlagen/HTML, DOCX-Duplikate,
+Dokumenttabellen/ZIP-Pakete und konfigurierbare Tastaturverbindungen sind implementiert.
+Graphtransfer ebenfalls fertig; Quellen beim Import neu zuordnen. Pixelart-Logo eingebunden.
+Anleitung: docs/28_Completion_Package.md. Manuelle Sammelabnahme weiter offen.
+Nächste Arbeit: Inline-Medien, Bedingungen/Gruppen/UI/Vorgaben,
+animierte Themes und Quoten-/Hintergrundausbau.
+Manuelle Zwischenabnahmen werden auf Benutzerwunsch gebündelt; offene echte
+Gmail-/LibreOffice-/Windows-Prüfungen sind in docs/25_Bundled_Acceptance.md gesammelt.

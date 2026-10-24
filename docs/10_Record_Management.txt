@@ -1,0 +1,54 @@
+EMAILCENTER — DATENSÄTZE, STELLEN UND KONTAKTZUORDNUNGEN
+Stand: 2026-10-11
+
+ANLEGEN UND BEARBEITEN
+1. Projekt öffnen; Unternehmen, Kontakte, Bewerberprofile, Stellen oder
+   Bewerbungen in der Seitenleiste wählen.
+2. Anlegen öffnet ein Formular. Pflichtnamen/-titel eingeben; bei Stellen
+   muss ein bestehendes Unternehmen ausgewählt sein.
+3. Zum Bearbeiten eine Zeile auswählen und Bearbeiten anklicken.
+4. Speichern läuft im Hintergrund. Erst eine erfolgreiche Speicherung schließt
+   den Dialog und aktualisiert Liste sowie Auswahlwerte. Bei Fehlern bleiben
+   die eingegebenen Werte zur Korrektur erhalten.
+5. Während der Speicherung ist der Dialog gesperrt. Schließen/Abbrechen kann
+   keine noch laufende Speicherung verwerfen.
+
+BEWERBUNGEN UND STELLEN
+- Stellen: Titel, Unternehmen, Referenznummer, Ort, Quell-URL, Beschreibung,
+  Beschäftigungsart und Frist. Liste und Suche behandeln %/_ wörtlich.
+- Bewerbungen: Unternehmen, Stelle, Profil, Datum, Nachfasszeit, Quelle und
+  Notizen. Der Status bleibt in der separaten Aktion Status ändern; die
+  bestehenden Terminalregeln gelten weiter.
+- Eine Stelle ohne gewähltes Bewerbungsunternehmen übernimmt ihr Unternehmen.
+  Widersprüchliche Unternehmen werden abgewiesen.
+- Das Unternehmen einer bereits verwendeten Stelle lässt sich erst ändern,
+  wenn die zugehörigen Bewerbungen ihre Stellenzuordnung gelöst haben.
+- Datum/Frist: JJJJ-MM-TT. Nachfassen: Datum, Uhrzeit und UTC-Offset,
+  beispielsweise 2026-10-20T09:00:00+02:00. Nachfassen zeigt diese Termine an;
+  dort lässt sich der Zeitpunkt über einen Kalenderdialog verschieben.
+
+KONTAKTE ZUORDNEN
+1. Unter Unternehmen oder Bewerbungen eine Zeile auswählen, Kontakte zuordnen.
+2. Kontakt auswählen, optionale Rolle eingeben und Zuordnung speichern.
+3. Bestehende Zeile auswählen, Rolle ändern und erneut speichern. Eine
+   vorhandene Zuordnung wird aktualisiert; es entsteht keine zweite Verbindung.
+4. Bei Unternehmen ist ein Hauptkontakt wählbar. Ein neu gewählter Hauptkontakt
+   löst diese Markierung beim bisherigen Hauptkontakt innerhalb derselben Transaktion.
+5. Ausgewählte Zuordnung entfernen löst die Verbindung; der Kontakt bleibt bestehen.
+   Archivierte Kontakte bleiben als solche sichtbar und können entkoppelt werden.
+6. Aktualisieren lädt Zuordnungen erneut. Bei zwischenzeitlichen Änderungen
+   schlägt die Speicherung fehl; anschließend aktualisieren und erneut bearbeiten.
+
+DATENERHALT UND GRENZEN
+- Datensatzbearbeitung erkennt zwischenzeitliche Änderungen auch innerhalb
+  derselben Sekunde. Bei Konflikten Dialog schließen und erneut öffnen.
+- Nicht bearbeitete Felder einschließlich langer importierter Notizen,
+  Adress-/Custom-JSON und bestehender Archivbezüge bleiben erhalten.
+- Neue Zuordnungen dürfen nur aktive vorhandene Datensätze verwenden.
+- Änderungen und Aktivitätsprotokoll werden gemeinsam bestätigt oder zurückgerollt.
+- Bestehende Dokumente und vorbereitete E-Mail-Snapshots bleiben eigenständige
+  gespeicherte Ergebnisse. Neue Dokumenterzeugung übernimmt aktualisierte Werte.
+- Bearbeitung von Adressen/Custom-JSON und Archivieren/Löschen sind noch keine
+  Funktionen dieser Dialoge. Erinnerungen: eigene Nachfassseite, docs/11_Reminders.txt.
+- Automatisch geprüft: zehn Datenverwaltungstests und vier zusätzliche Qt-Tests.
+  Manuelle Windows-Abnahme steht noch aus. Ansicht: docs/records_preview.png.

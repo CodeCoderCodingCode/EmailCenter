@@ -1,0 +1,109 @@
+EMAILCENTER — CSV-/XLSX-IMPORT
+Stand: 2026-10-11 | Sprint 5
+
+BEDIENUNG
+1. Ein Projekt öffnen und Datenimport auswählen.
+2. CSV- oder XLSX-Datei auswählen. Die erste Zeile enthält eindeutige,
+   vollständige Spaltenüberschriften. XLSX: gewünschtes Tabellenblatt auswählen.
+3. Importziel wählen: Unternehmen, Kontakte oder Bewerbungen.
+4. Quellspalten den Zielfeldern zuordnen. Pflichtfelder sind markiert.
+   Eine Quellspalte kann nur einem Zielfeld zugeordnet werden. Nicht zugeordnete
+   Spalten erzeugen keine fachlichen Felder, bleiben im Zeilenprotokoll erhalten.
+5. Optional ein bestehendes Profil wählen oder das Mapping mit einem neuen
+   Profilnamen speichern. Das Profil enthält Ziel, Mapping und Leseoptionen.
+6. Vorschau vorbereiten. Es entstehen eine Projektkopie und ein gespeicherter
+   Importlauf; Unternehmen/Kontakte/Bewerbungen werden dabei noch nicht angelegt.
+7. Zeilen und Fehler prüfen; Zeile korrigieren oder überspringen. Bei erkannten
+   Duplikaten kann ausdrücklich eine Neuanlage freigegeben werden.
+8. Gültige Zeilen importieren. Die Oberfläche verarbeitet Stapel zu 100 Zeilen
+   im Hintergrund. Import anhalten pausiert nach der laufenden Zeile.
+9. Den Lauf in der Historie später erneut auswählen und fortsetzen. Bereits
+   importierte Zeilen werden auch nach Projektwechsel oder Neustart ausgelassen.
+   Die ursprünglich ausgewählte Datei darf inzwischen verschoben/gelöscht sein.
+
+ZIELFELDER
+Unternehmen:
+- name (Pflicht), website, industry, notes.
+Kontakte:
+- display_name (Pflicht), first_name, last_name, email, phone, position, notes.
+Bewerbungen:
+- title (Pflicht), company_name, applicant_email, status_code,
+  application_date, source, notes.
+- company_name verweist auf genau ein vorhandenes aktives Unternehmen.
+- applicant_email verweist auf genau ein vorhandenes aktives Bewerberprofil.
+  Fehlende oder mehrdeutige Referenzen werden als Zeilenfehler angezeigt.
+- Ohne status_code wird draft verwendet. Standardcodes: draft, preparing,
+  sent, interview, offer, accepted, rejected, withdrawn. Benutzerdefinierte
+  Statuscodes müssen bereits im Projekt vorhanden sein.
+- Datum: JJJJ-MM-TT oder TT.MM.JJJJ; Excel-Datumszellen werden übernommen.
+  Ein Datum mit Uhrzeit ist nur um Mitternacht zulässig.
+- E-Mail-Adressen werden auf ein einfaches Format geprüft; Websites auf
+  HTTP/HTTPS. Bei fehlendem Website-Schema wird https:// ergänzt.
+- Kontaktzuordnungen, Stellen, Bewerberprofile und benutzerdefinierte Felder
+  sind noch keine eigenen Importziele.
+
+DATEIFORMATE
+- CSV: UTF-8 mit/ohne BOM; automatische Alternative Windows-1252.
+  Zeichensatz und Trennzeichen können vor dem Vorbereiten geändert werden.
+  Trennzeichen: Komma, Semikolon, Tab oder |. Anführungszeichen und mehrzeilige
+  Werte werden unterstützt. Zeilennummern zählen logische Datensätze, ab 2.
+- XLSX: ein ausgewähltes Blatt pro Lauf, Lesen im Read-only-Modus.
+  Formeln und Excel-Fehlerwerte machen die betreffende Zeile ungültig;
+  Formeln werden nicht ausgeführt. Formelüberschriften werden abgewiesen.
+- Telefonnummern mit führenden Nullen in Excel als Text speichern. Numerische
+  Excel-Werte enthalten die verlorenen führenden Nullen nicht mehr.
+- Leerzeilen werden protokolliert und übersprungen. Zusätzliche gefüllte
+  Zellen ohne Überschrift sind Zeilenfehler.
+- Grenzen: 50 MiB Quelldatei, 100.000 Datenzeilen, 200 Spalten, insgesamt
+  1.000.000 Zellen; XLSX-ZIP-Inhalt höchstens 200 MiB entpackt.
+  Zellwerte über 32.768 Zeichen werden als Fehler markiert.
+
+DUPLIKATE
+- Vergleich ignoriert Groß-/Kleinschreibung, normalisiert Unicode und fasst
+  Leerzeichen zusammen. Es gibt kein unscharfes Matching und kein Zusammenführen.
+- Unternehmen: gleicher Name.
+- Kontakte: gleiche E-Mail, falls vorhanden; sonst gleicher Name und Telefon.
+- Bewerbungen: gleicher Titel, Unternehmen und Bewerberprofil.
+- Geprüft wird gegen aktive Projektdatensätze und gegen gültige Zeilen im Lauf.
+  Vor jeder Neuanlage werden Projektreferenzen und Duplikate erneut geprüft.
+- Eine Duplikatfreigabe erlaubt nur die Neuanlage dieser Zeile. Nach einer
+  Korrektur wird die Freigabe zurückgesetzt und die Zeile erneut geprüft.
+
+PROTOKOLL UND WIEDERAUFNAHME
+- imports/<Lauf-ID>/<Dateiname> enthält die Quelldateikopie. SHA-256 erkennt
+  Änderungen zwischen Analyse und Vorbereitung bzw. während der Kopie.
+- Migration 003 ergänzt configuration_json und source_file_hash am Lauf.
+  Die Konfiguration ist unabhängig vom späteren Stand eines Importprofils.
+- Originalwerte und korrigierte Werte bleiben getrennt gespeichert.
+- Status je Zeile: Valid, Invalid, DuplicateReview, Imported, Skipped, Failed.
+  Fehler und die erzeugte Datensatz-ID sind im Protokoll nachvollziehbar.
+- Datensatz und Importbeleg werden zusammen bestätigt oder zurückgerollt.
+  Bei Bewerbungen gehört die Aktivitätsprotokollierung zur selben Transaktion.
+- Fehler einer Zeile stoppen andere gültige Zeilen nicht. Failed-Zeilen können
+  korrigiert und erneut geprüft werden. Imported/Skipped sind abgeschlossen.
+- processed_rows zählt Imported + Skipped + Invalid + Failed, also nicht allein
+  erfolgreich angelegte Datensätze. error_rows zählt Invalid + Failed.
+  Offene Duplikate werden separat angezeigt.
+- Nach dem letzten gültigen Datensatz endet ein Lauf als Completed oder
+  CompletedWithErrors; Fehler/Duplikate können danach weiter bearbeitet werden.
+- Alte Läufe ohne vollständige V3-Konfiguration werden erhalten, können aber
+  nicht automatisch fortgesetzt werden. Dafür einen neuen Import vorbereiten.
+
+TECHNISCHE ANBINDUNG
+- import_sources.py: begrenzte CSV-/XLSX-Leser und eindeutige Mappingvorschläge.
+- ImportService: inspect, prepare, list_profiles, list_runs, list_rows,
+  process, edit_row und review_row. process akzeptiert eine Stapelgröße von
+  1 bis 1.000 sowie eine zwischen Zeilen abgefragte Abbruchfunktion.
+- WorkspaceService/Qt-Worker halten Datenbankarbeit außerhalb der Widgets.
+- requirements.txt fixiert openpyxl 3.1.5 und defusedxml 0.7.1 neben PySide6.
+
+PRÜFUNG
+20 Importtests, sechs GUI-Importtests und ein Upgrade-Test für Migration 003.
+Abnahme von Sprint 5 mit damals 93 Tests; aktuellen Gesamtstand siehe README.
+Prüft unter anderem Quelländerungen, Profile, Unicode,
+CSV-Zeilen, XLSX-Daten/Formeln, Fehlerisolierung, Duplikate, atomare Belege,
+Wiederaufnahme nach Neustart und GUI-Pause. Screenshot: docs/import_preview.png.
+
+REFERENZEN
+https://openpyxl.readthedocs.io/en/stable/optimized.html
+https://pypi.org/project/openpyxl/

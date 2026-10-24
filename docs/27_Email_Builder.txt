@@ -1,0 +1,228 @@
+EMAILCENTER — VISUELLER E-MAIL-BUILDER
+Stand: 12.10.2026 · Sprint 7 · Projektschema 10
+
+EINSTIEG
+Projekt öffnen → Arbeitsbereich → E-Mail-Builder öffnen, oder eigene Navigation.
+Der Einstieg enthält Daten → Betreff/Text → E-Mail. Im Datenbaustein Excel-/CSV-
+Importzeilen oder eine gespeicherte/manuelle Liste auswählen. Alle Quellfelder
+und die vorhandenen Zuordnungsprofile bleiben über dieselben Dialoge nutzbar.
+Ohne Datenbaustein sind direkte Einzelmails mit einem Empfängerbaustein möglich.
+
+ZEICHENFLÄCHE
+Bausteine aus der Palette ziehen oder doppelklicken; „Baustein +“ funktioniert
+auch bei schmalen Fenstern. Baustein auswählen und rechts Eigenschaften ändern.
+Ausgang zum Eingang ziehen, oder Ausgang und danach Eingang anklicken.
+Farben zeigen Datentypen: values = Datenfelder, email = Empfänger,
+text = Text/Betreff, file = Datei/DOCX/PDF/Bild/Video.
+Unpassende Stecker, doppelte Einzelanschlüsse und Kreise werden abgewiesen.
+Ein Datenbaustein und ein E-Mail-Ausgang je Graph; bis 100 Bausteine/400 Kanten.
+Vor Vorschau müssen alle Bausteine zur E-Mail beitragen. Unfertige Graphen mit
+noch fehlenden Anschlüssen können gespeichert werden; ungültige Regeln nicht.
+
+Einzel-/Mehrfachauswahl: anklicken bzw. Auswahlrahmen in der Zeichenfläche.
+Entf/Backspace: Auswahl einschließlich zugehöriger Verbindungen löschen.
+Ctrl+D: gewählte Bausteine mit ihren Eigenschaften duplizieren.
+Ctrl+Z / Ctrl+Y: bis 100 Änderungen rückgängig machen / wiederholen.
+Ctrl+Mausrad oder +/-: Zoom 25–250 %. Einpassen zeigt den ganzen Ablauf.
+Mittlere Maustaste halten und ziehen: Ansicht verschieben, ohne Bausteine zu ändern.
+Bausteinsuche filtert die Palette. Beim Ziehen eines Steckers erscheint eine
+Verbindungslinie; vorhandene Kanten werden beim Bewegen direkt aktualisiert.
+„Anordnen“ verteilt die Bausteine von links nach rechts entlang ihrer Verbindungen,
+ohne Eigenschaften oder Anschlussreihenfolge zu ändern; Undo nimmt die Anordnung
+zurück. Neue Bausteine aus Palette/Menü erhalten einen freien Platz. Explizite
+Drag-&-Drop-Positionen bleiben maßgeblich. Die Auswahl über den Eigenschaften
+springt zum gewählten Baustein und zeigt dessen Einstellungen.
+Diese Kürzel betreffen die fokussierte Zeichenfläche; Texteditoren behalten
+ihre eigene Bearbeitung. Ctrl+S speichert im Builder eine Graphversion.
+
+PERSONALISIERUNG UND ANHÄNGE
+Text-/Empfängerbausteine nutzen {{contact.display_name}}, {{company.name}},
+{{application.cover_letter}} und eigene zugeordnete Felder. values anschließen.
+HTML wird im E-Mail-Ausgang gewählt: eigene Textbaustein-Markierung bleibt,
+Datenwerte werden escaped. Platzhalter werden einmal ersetzt, nicht rekursiv.
+Mehrere body-/attachments-Eingänge folgen der Reihenfolge ihrer Verbindungen.
+Empfänger/Betreff besitzen jeweils einen Eingang. Ein Entwurf je Datenzeile.
+
+TEXTARTEN UND EDITOR-VORSCHAU
+Betreff: eigener Ausgangstyp, passt in subject, nicht in body.
+Beschreibung/Anschreiben, Absatz, Anrede und Gruß/Signaturtext: persönliche Texte.
+Überschrift: Text oder bei HTML-Ausgabe h2. Trennlinie: Text oder HTML-hr.
+HTML-Inhalt: eigener HTML-Ausgang; E-Mail-Ausgang muss HTML verwenden.
+Link und Button: Beschriftung plus HTTP(S)- oder mailto:-Adresse; beide können
+persönliche Datenfelder enthalten. Textausgabe: Beschriftung (Adresse), HTML:
+Link bzw. formatierter Button. Zugangsdaten, ungültige Ports und Leerzeichen
+in Adressen werden abgewiesen. Links im Editor werden nicht geöffnet.
+Liste/Aufzählung: ein Eintrag pro Zeile, optional nummeriert; leere Zeilen werden
+ausgelassen. Textausgabe mit Aufzählungszeichen/Nummern, HTML als ul/ol-Liste.
+Mit Bedingungen und Zusammenführen stehen insgesamt 24 Bausteinarten bereit.
+Universeller Text bleibt mit älteren Abläufen kompatibel und erlaubt HTML-Markierung.
+Die übrigen Textarten behandeln Markierung als Text, damit Inhalte aus Listen
+sichtbar bleiben. Werte aus Datenfeldern werden im HTML immer escaped.
+
+Textbausteine zeigen beim Tippen eine Live-Vorschau. Nach Zeilenprüfung erscheinen
+persönliche Werte automatisch in den Eigenschaften und den Bausteinbeschriftungen.
+Die Vorschauzeile oberhalb der Eigenschaften gilt für sämtliche Tabs und Bausteine.
+
+FERTIGE MAIL DIREKT IM EDITOR
+E-Mail-Baustein auswählen: der Renderer zeigt Empfänger, Betreff, fertige Nachricht
+inklusive Signatur und Anhangliste direkt in den Eigenschaften. Der Mail-Tab zeigt
+dieselbe Nachricht; „Nachricht gerendert anzeigen“ ist standardmäßig aktiv.
+Abwählen zeigt den Prüfbericht mit Rohtext, Anhängen und Dokumenttexten.
+Auf der Zeichenfläche erscheint am E-Mail-Baustein zusätzlich eine Mail-Miniatur.
+Vor Zeilenvorschau wird eine ausdrücklich ungeprüfte Skizze aus verbundenen Texten
+angezeigt. Sie ersetzt keine Datenprüfung, Bestätigung oder Versandfreigabe.
+Nach Änderungen werden persönliche Miniaturen und die Bestätigung verworfen.
+„Alle Zeilen vorschauen“ aktualisiert den Renderer und die Bausteine automatisch.
+
+VORSCHAU AUTOLOAD
+Bilder erhalten nach Zeilenprüfung automatisch Miniaturen auf der Zeichenfläche.
+Bild/PDF/Video am ausgewählten Baustein laden im Hintergrund direkt in den
+Eigenschaften; bereits ausgewertete DOCX-/Word-Replace-Texte erscheinen sofort.
+Kein zusätzlicher Medien-Button nötig. Beim Wechsel der Zeile aktualisieren sich
+Mail, Beschriftungen und ausgewählte Medien gemeinsam. Alte Antworten dürfen
+keine neuere Ansicht überschreiben. Maximal sechs Dateien/40 MiB im Mediencache;
+Miniaturen bleiben separat als kleine Pixelbilder auf der Zeichenfläche erhalten.
+Geänderte Dateien werden erkannt, Eingaben/Mail bleiben sichtbar; vor Erstellung
+eine neue Zeilenvorschau verlangen. Autoload erzeugt keine Dokumente/Entwürfe.
+„Vorschau im Editor“ bleibt für manuelle Prüfung auch ohne fertigen Graphen verfügbar.
+
+Externe Bilder/Links werden nicht automatisch geladen/geöffnet. Der Renderer
+verwendet die lokale Qt-HTML-Anzeige; das Layout kann von Gmail/Outlook abweichen.
+Videos starten über Abspielen / Pause; Codecs hängen vom lokalen Qt-Backend ab.
+Word Replace zeigt den persönlichen Dokumenttext der gewählten Vorschauzeile.
+DOCX wird als Text angezeigt; Word-Seitenlayout ist noch offen. Generierte PDFs
+entstehen weiterhin erst bei Gruppenanlage; danach Layout in der Gruppe prüfen.
+Ansicht: docs/builder_renderer_preview.png.
+
+Gemeinsame Dateien: im passenden Baustein wählen oder lokale Dateien auf die
+Zeichenfläche ziehen und Übernahme bestätigen; anschließend file mit
+attachments verbinden. Persönliche Dateien: Pfad {{attachment.path}} wählen
+und values vom Datenbaustein verbinden. Absolute vorhandene Dateipfade nötig.
+Dateitypen/Größe werden geprüft. Bis 20 Anhänge, zusammen maximal 20 MiB.
+Bilder/Videos werden angehängt; Links lassen sich als Textbaustein verwenden.
+Inline-Bilder und eingebettete Videos sind noch nicht implementiert.
+
+DOKUMENTKETTE
+DOCX.file → Word Replace.docx → DOCX → PDF.docx → E-Mail.attachments.
+Daten.values → Word Replace.values; Regeln: Suchen, direkter Ersatz oder Datenfeld.
+Dokumenttext wird persönlich ersetzt und in der Zeilenvorschau angezeigt.
+Offene DOCX-Platzhalter sperren die Ausgabe. Originale bleiben erhalten.
+DOCX kann alternativ direkt nach Word Replace angehängt werden.
+PDF benötigt LibreOffice in Einstellungen → Word Replace. Vorschau zeigt
+DOCX-Text und PDF-Zieltyp; PDF entsteht bei Erstellung der lokalen Gruppe.
+PDF-Layout, echte Konvertierung und Windows-DPI bleiben manuell abzunehmen.
+Keine dauerhaften Dokumente entstehen durch eine Vorschau.
+
+PRÜFEN UND WEITERVERWENDEN
+Alle Zeilen vorschauen → je Empfänger Betreff, Text, Fehler, Anhänge und
+Dokumenttext prüfen → Bestätigung setzen → Lokale Entwurfsgruppe erstellen.
+Fehler in einer Zeile sperren die gesamte Gruppe. Änderungen an Graph, Konto,
+Signatur oder Konverter verwerfen die UI-Vorschau; aktuelle Daten/Dateien werden
+beim Erstellen und nach Kopieren/Konvertieren nochmals geprüft.
+Datei-/DB-Fehler und Abbruch rollen die gesamte Gruppe zurück.
+Erzeugte DOCX/PDF-Dateien werden registriert, Anhänge erhalten feste Kopien.
+„Gruppe prüfen / senden“ öffnet die vorhandene Freigabe und Versandplanung.
+Bei Ausgabe „Nur lokale Entwürfe“ werden keine Versandaufträge angelegt.
+Verbinden, Vorschau und Gruppenanlage lösen keinen Versand aus.
+Auftragsfreigabe, Termin, Abstand, Pause/Fortsetzen und Versandbericht folgen
+dem bestehenden Gruppenversand (21_Bulk_Delivery.txt).
+
+BULK-AUFTRÄGE DIREKT IM BUILDER
+Unter Plan die Ausgabe wählen: Nur lokale Entwürfe, Sofortversand vorbereiten
+oder Versandtermin planen. Für Aufträge ein verbundenes Konto wählen, optional
+Start und Zeitzone festlegen, Abstand 1–3600 Sekunden einstellen.
+Zeilen prüfen, bestätigen und „Entwürfe & Planung erstellen“ wählen.
+Entwürfe und Versandplanung werden gemeinsam gespeichert; bei ungültiger Planung
+bleibt keine halbe Gruppe zurück. Anschließend erstellt der Worker feste Aufträge
+je Zeile und öffnet das Gruppenfenster. Erst dort freigeben und Versand starten.
+Abbruch/Fehler während der Auftragsvorbereitung behalten die Gruppe und bereits
+erstellte Kopien; im Gruppenfenster Vorbereitung fortsetzen. Doppelte Kopien werden
+verhindert. Termine/Abstände gelten wie beim bestehenden Gruppenversand.
+
+VERSIONEN UND EINSTELLUNGEN
+Version speichern: neuer Ablauf oder neue unveränderliche Graphversion.
+Als Kopie speichern: unabhängiger Builder. Name/Version oben öffnen; Änderungen
+vor Wechsel ausdrücklich verwerfen. Alte Graphversionen lesen aktuelle Quellen.
+Gespeicherte Mailentwürfe behalten dagegen die fest übernommenen Werte/Dateien.
+Versionskonflikte und manipulierte Graphdaten werden erkannt. Projektsicherung
+enthält Graphen/Versionen automatisch. Manuelle Quelldaten werden mitgespeichert;
+Excel-/Listenquellen bleiben Referenzen. Entfernte Quellen erneut zuordnen.
+Einstellungen → E-Mail-Builder: Raster, Einrasten, Standardzoom und Autosicherung.
+Einstellungen → Design: acht Paletten mit eigener Akzentfarbe. Die obere Leiste
+schaltet innerhalb des gewählten Hell-/Dunkel-Paars um und erhält den Graphen.
+
+ARBEITSSTAND UND WIEDERHERSTELLUNG
+Die Autosicherung ist standardmäßig aktiv und speichert nach drei Sekunden
+Eingabepause. In den Einstellungen ein-/ausschalten und 1–60 Sekunden wählen.
+Sie läuft im vorhandenen Datenbank-Worker; währenddessen weiter bearbeiten.
+Vor Projektwechsel, Backup und App-Schließen wird der neueste Stand nachgesichert.
+Arbeitsstände liegen getrennt von benannten Graphversionen im Projekt (Migration
+010) und sind im Projektbackup enthalten. Es gibt einen aktuellen Arbeitsstand
+je Projekt, keine zusätzliche Version für jeden Tastendruck.
+
+Gesichert werden Graph samt unfertigen Texten/Regeln, Name, genaue Basisversion,
+Konto/Signatur, letzte Gruppe, Versandplanung und Ansicht. Beim Öffnen des Builders
+wird der letzte Stand wiederhergestellt. Vorschauen, Versandbestätigung und Undo-
+Historie werden nicht wiederhergestellt; aktuelle Quellen und Freigabe neu prüfen.
+Dateibausteine bleiben Verweise, und externe Originaldateien werden durch die
+Arbeitsstandsicherung nicht kopiert. Vor Anwendung werden sie erneut geprüft.
+
+Unter Plan: „Arbeitsstand jetzt sichern“ oder „Gesicherten Arbeitsstand laden“.
+Diese Aktionen funktionieren auch bei ausgeschalteter Autosicherung. Ohne
+Autosicherung werden neue Eingaben beim Schließen nicht automatisch gespeichert.
+„Version speichern“/Ctrl+S bleibt die ausdrückliche benannte Graphversion und
+verlangt gültige Texte/Regeln; die Arbeitsstandsicherung erlaubt unfertige Eingaben.
+
+Änderungen aus einem zweiten Fenster pausieren die Sicherung. Eingaben bleiben
+im Editor; vor Neu laden eine benannte Kopie speichern, soweit der Graph gültig
+ist. Defekte Arbeitsstände bleiben ebenfalls erhalten. Projektwechsel/Schließen
+halten bei pausierter Sicherung an. Unter Plan neu laden oder bewusst ersetzen;
+bei Konflikten zuerst die aktuelle Revision laden. Ausschalten der Autosicherung
+ermöglicht Schließen ohne neue Sicherung. Schreibfehler zeigen einen Hinweis und
+werden erneut versucht. Die Sicherung erzeugt weder Entwürfe noch Versandaufträge.
+
+NOCH OFFEN
+wählbare Standardbausteine und dauerhafte Undo-Historie;
+Inline-Medien, freie Anhangnamen/Anhangreihenfolge
+und wiederverwendbare Bausteingruppen; DOCX-Seitenlayout und PDF-Vorab-Konvertierung.
+PDF-/Windows-/Gmail-Abnahme gesammelt in 25_Bundled_Acceptance.md.
+
+TASTATUR UND PORTABLE GRAPHVORLAGEN
+- Canvas vollständig per Tastatur: Baustein und Stecker auswählen, Ausgang
+  mit Return aktivieren, Ziel/Eingang wählen, erneut Return. Escape abbricht.
+  Alt+E wählt Verbindungen zum Löschen; eigene Belegung unter Hotkeys, F1 zeigt sie.
+  Typprüfung und Undo gelten wie bei Mausverbindungen. Details: 26_Hotkeys.txt.
+- Graph / Optionen → Graphvorlage exportieren/importieren. JSON enthält die
+  Bausteine, Texte/Regeln, Positionen und Verbindungen. Enthaltene Texte vor
+  Weitergabe prüfen; Empfängerlisten, Quelldateien und lokale Dateipfade neu zuordnen.
+- Export ist atomar, vorhandene Datei ausdrücklich ersetzen. Projektinterne Ziele
+  unter exports; Datei bis 3 MB. Import prüft Formatversion, Felder, Größen und Graph.
+- Nach Vorschau des Importumfangs ausdrücklich den aktuellen Graphen ersetzen.
+  Ablehnen/Fehler erhält Eingaben. Übernahme beginnt einen unabhängigen Ablauf mit
+  leerer Datenquelle/Dateipfaden; Konto/Signatur/Planung/Gruppe neu wählen. Alte Versionen
+  bleiben erhalten. Neu zuordnen → Zeilenvorschau → eigene Version speichern.
+- Graphdateiimport erzeugt keine Entwürfe/Aufträge und übernimmt keine Versandfreigabe.
+
+TEXTWAHL / ZUSAMMENFÜHREN UND PANELS
+- Neue Bausteine Bedingung / Textwahl und Texte zusammenführen. Werte → Bedingung;
+  Datenfeld/Prüfung wählen, yes/no als verbundene Texte oder Ersatztext. Es wird
+  nur der gewählte Text für die Nachricht benötigt. Keine Ausdrücke/Programme.
+- parts nimmt mehrere Texte in Verbindungsreihenfolge; Trenntext selbst wählen.
+  Betreff ohne Zeilenumbruch, HTML-Teile im Nachrichtentext erhalten.
+- Persönliche Vorschau erscheint am Baustein und in der fertigen Mail; Änderungen
+  verlangen neue Zeilenprüfung. Die Textwahl steuert keine Anhänge/Versandaufträge.
+- Graph / Optionen: Palette/Eigenschaften ausblenden, Panelbreiten speichern,
+  kompakte Werkzeuge. Einstellungen → Builder enthält dieselben Vorgaben.
+- Neue Abläufe übernehmen verbundenes Projektstandardkonto und Nachrichtenformat;
+  gespeicherte Graphen/Arbeitsstände behalten ihre Angaben.
+- Planung enthält Kontotagesbudget und Versandfenster; Prüfung/Freigabe bleibt separat.
+Anleitung und Ansicht: 29_Sprint_7_Expansion.md. 24 Bausteinarten sind implementiert.
+
+ENDSPURT — STANDARDGRAPH UND HISTORIE
+Unter Einstellungen/Builder neun Text-/Nachrichtenarten als Standard wählen
+und ordnen. Datenquelle, Betreff und E-Mail gehören immer zum neuen Graphen.
+Undo/Redo-Graphhistorie wird im Arbeitsstand gespeichert: höchstens 100 Einträge
+und begrenzte Größe je Stapel. Alte Arbeitsstände bleiben lesbar; Vorschau und
+Versandfreigabe werden beim Wiederherstellen nicht übernommen.
+Neue Planung übernimmt globale Vorgaben, Projektvorgaben haben Vorrang.
+Details: docs/31_Endspurt.md; Abnahme Paket J.

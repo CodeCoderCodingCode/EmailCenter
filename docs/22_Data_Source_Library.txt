@@ -1,0 +1,48 @@
+EMAILCENTER — WIEDERVERWENDBARE DATENLISTEN UND ZUORDNUNGSPROFILE
+Stand: 12.10.2026 | Sprint 5-Ausbau / 7A | Migration 008
+
+DATENLISTEN
+1. Im Bulk-Dialog oder unter Word Replace die manuelle Datenliste öffnen.
+2. Ansprechpartner, E-Mail, Anrede, Firma, Stelle, Anschreiben und eigene
+   angebotene Felder eingeben. Excel-Zellen lassen sich mit Strg+V einfügen.
+   DOCX-Text kann weiterhin gezielt in eine ausgewählte Zelle übernommen werden.
+3. Einen Listenname vergeben und Liste im Projekt speichern wählen.
+4. Gespeicherte Listen können später in beiden Bereichen ausgewählt werden.
+   Laden ersetzt nach Bestätigung die aktuelle Tabelle. Änderungen speichern
+   aktualisiert dieselbe Liste mit stabilen Zeilenkennungen.
+5. Als neue Kopie oder Neue manuelle Liste erstellt beim nächsten Speichern
+   eine unabhängige Liste mit eigenen Zeilenkennungen.
+6. Unveränderte gespeicherte Listen werden als Quelle referenziert. Geänderte,
+   nicht gespeicherte Tabellen werden beim Übernehmen als manuelle Werte kopiert.
+
+Bis zu 100 nicht leere Zeilen je Liste. Eine E-Mail-Adresse ist zum Speichern
+nicht erforderlich, beispielsweise für reine Dokumentdaten. Bulk prüft die
+Adressen vor Erstellung einer Entwurfsgruppe. Word Replace benötigt nur die
+Felder, die eine Ersetzungsregel tatsächlich als Datenfeld verlangt.
+
+ZUORDNUNGSPROFILE
+1. Excel/CSV zuerst im Datenimport vorbereiten; ungültige Zeilen korrigieren
+   und ungeprüfte Duplikate entscheiden.
+2. In der Excel-/CSV-Quellenauswahl Importlauf und Spalten zuordnen.
+3. Optional einen Standardwert je Feld eingeben. Leere Quellwerte können
+   damit aufgefüllt oder ausdrücklich beibehalten werden. Standardwerte für
+   zusätzliche Felder ohne Quellspalte sind ebenfalls möglich.
+4. Zuordnung speichern legt ein benanntes Profil im Projekt ab. Ein ausgewähltes
+   Profil mit gleichem Namen kann aktualisiert werden.
+5. Profil wählen und Profil anwenden übernimmt Zuordnung, Standards und Leerwertregel.
+   Nicht mehr vorhandene Quellspalten werden nicht stillschweigend ersetzt.
+6. Persönliche Werte im Bulk-Editor haben Vorrang vor Quell- und Standardwerten.
+
+DATEN UND ÄNDERUNGEN
+- Listen/Profile gehören zum jeweiligen Projekt und damit zu dessen DB-Backup.
+- Gleichnamige Listen/Profile und veraltete Bearbeitungen werden abgewiesen.
+- Wird eine Quelle nach einer Vorschau geändert, muss die Vorschau erneut geprüft
+  werden. Bereits gespeicherte E-Mail-Entwürfe behalten ihre erfassten Werte.
+- Entfernte Listenzeilen können nicht mehr als Live-Quelle aufgelöst werden.
+- Migration 008 ergänzt eigene Tabellen und erhält vorhandene Kontakte,
+  Importläufe, Entwurfsgruppen und Versandaufträge.
+
+OFFEN
+Listen-/Profilverwaltung mit eigenem Löschen, strukturierte DOCX/PDF-Tabellen,
+Builder-Anschluss und die manuelle Sammelabnahme. Siehe docs/14_Workspace_TODO.md
+und docs/25_Bundled_Acceptance.md.

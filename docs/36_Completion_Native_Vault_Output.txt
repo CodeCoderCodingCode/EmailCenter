@@ -1,0 +1,6 @@
+test_native_windows_vault_roundtrip_only_uses_temporary_test_identity (test_mail.VaultTests.test_native_windows_vault_roundtrip_only_uses_temporary_test_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.448s
+
+OK

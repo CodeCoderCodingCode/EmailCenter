@@ -1,0 +1,85 @@
+EMAILCENTER — EINZELAUFTRÄGE IM ARBEITSBEREICH
+Stand: 2026-10-12
+
+VORAUSSETZUNGEN
+- Ein Projekt ist geöffnet. Gmail für tatsächlichen Versand über Gmail verbinden
+  im Arbeitsbereich oder unter E-Mail verbinden. Kontostatus zeigt die Adresse;
+  Einrichtung/echte Abnahme siehe docs/09_Gmail_Workflow.txt.
+- Lokale Entwürfe lassen sich auch ohne verbundenes Konto speichern.
+
+ABLAUF
+1. Arbeitsbereich öffnen und Modus E-Mail-Aufträge auswählen. Im Bewerbungsmodus
+   erscheint der E-Mail-Bereich ebenfalls, sobald Entwürfe/Aufträge vorhanden sind.
+2. Neuer Entwurf: Konto, Empfänger, Betreff, Nachricht und bei Bedarf Signatur,
+   Bewerbung, Dateien oder Projektdokumente auswählen. Speichern bleibt lokal.
+3. Entwürfe auswählen; Entwurf bearbeiten lädt aktuelle Daten direkt in den Editor.
+4. Senden / planen: Absenderkonto wählen. Ohne Termin heißt die Aktion Senden,
+   mit Termin Versand planen. Anschließend öffnet sich die Prüfung/Freigabe.
+   Ohne Termin manuell, ansonsten Kalender/Uhrzeit und
+   Zeitzone wählen. Die Vorgabe kommt aus den Einstellungen. Die Uhrzeit gehört
+   zur ausgewählten Zeitzone. Termin muss in der Zukunft liegen.
+   Nicht existierende/doppeldeutige Uhrzeiten werden abgewiesen. Bei einer
+   doppelten Uhrzeit alternativ UTC wählen und den gewünschten Zeitpunkt in UTC eingeben.
+   Bei vor der Anmeldung gespeicherten Entwürfen wird ein einziges verbundenes
+   Konto vorgeschlagen; bei mehreren Konten ausdrücklich wählen. Die Zuordnung
+   wird mit dem erfolgreich vorbereiteten Auftrag gespeichert.
+5. Bei Vorprüfungsfehlern bleiben Kalender/Zeitzone und Dialog erhalten.
+   Konto, Empfänger, Werte und unveränderte Anhänge müssen gültig sein.
+6. Erfolgreiche Vorbereitung öffnet die Prüfung: feste Empfänger, Inhalt,
+   Signatur, Anhänge und Termin. Checkbox markieren und Freigeben wählen.
+   Alternativ Freigeben & jetzt senden: ausdrücklich bestätigen; dies sendet
+   sofort, auch vor einem gewählten Termin. Freigeben allein löst keinen Sofortversand aus.
+7. Zurück im Arbeitsbereich ist der neue Auftrag ausgewählt. Jetzt senden
+   erfordert zusätzlich die ausdrückliche Bestätigung dieser Nachricht.
+8. Status und nächste nötige Aktion erscheinen beim ausgewählten Auftrag.
+   Nach Versand ist Jetzt senden gesperrt. Prüfen zeigt Versandversuche.
+
+GEPLANTE UND UNKLARE AUFTRÄGE
+- Freigabe eines Termins plant den Auftrag; sie sendet nicht sofort.
+- Automatische geplante Ausführung über den Scheduler im Arbeitsbereich oder
+  unter E-Mail pro Sitzung einschalten. Beide Anzeigen sind synchron. Jetzt senden ist eine ausdrückliche
+  manuelle Ausführung, auch wenn der geplante Zeitpunkt noch nicht erreicht ist.
+- Neustart/Standby: überfällige Aufträge erneut prüfen/freigeben.
+- Ergebnis unklar: Gmail abgleichen. Jetzt senden/Stornieren bleiben gesperrt;
+  keine automatische Wiederholung. Eindeutiger Versandbeleg bestätigt den Status.
+- Stornieren erfordert Bestätigung; gesendete/unklare Nachrichten werden nicht
+  als ungesendet behandelt.
+
+BEDIENUNG UND GRENZEN
+- Entwürfe / Versandaufträge ist eine Auswahl innerhalb des Arbeitsbereichs.
+- 25 Einträge pro Seite, Zurück/Weiter; Auswahl bleibt nach Aktualisierung erhalten,
+  soweit der Eintrag auf der geladenen Seite vorhanden ist.
+- Neuer Auftrag springt zur ersten Auftragsseite und markiert den Auftrag.
+- Doppelklick öffnet Entwurfsbearbeitung bzw. Auftragsprüfung.
+- Bewerbung/Kontakt über die Kontextkarte im Arbeitsbereich wählen; Empfänger,
+  Betreff und Texteinstieg prüfen, passende Bewerbungsdokumente ausdrücklich
+  anhängen. Anleitung: docs/17_Mail_Context.txt.
+- E-Mail-Vorlagen direkt im Arbeitsbereich oder im Editor verwalten. Konkrete
+  Version prüfen, Platzhalter ergänzen und Betreff/Text/Format ausdrücklich
+  übernehmen. Anleitung: docs/18_Mail_Templates.txt. Bulk-Ausbau folgt.
+- Tests nutzen einen lokalen Testprovider; der Agent führte keinen echten Versand aus.
+  Nutzer meldet am 12.10., dass Anmeldung und Sofortversand funktionieren.
+- Die Browser-Rückmeldung bestätigt nur den Empfang von Googles Antwort; die
+  Kontoverbindung muss anschließend in der App sichtbar werden.
+- Schönere OAuth-Seite und Tab-schließen-Button sind in docs/14_Workspace_TODO.md geplant.
+- Screenshot mit Testdaten: docs/mail_workspace_preview.png.
+
+PRÜFUNG
+- Fünf zusätzliche Qt-Tests: kompletter Einzelablauf, Bearbeitung/Bestätigungen,
+  Kalender/Zeitzone, erhaltene Eingaben, Pagination, Storno und unklare Resultate.
+  Eine Sommerzeitlücke bleibt unverändert im Kalender stehen und erzeugt keinen Auftrag.
+- Ein Workspace-Test: frische Entwurfsdaten, Seitenwechsel und fehlende Entwürfe.
+- Fünf weitere E-Mail-Tests: alte Entwürfe, atomare Senderwahl, ausdrücklicher
+  Sofortversand vor Termin, Vorprüfungsfehler und Sperre unklarer Ergebnisse.
+- Sechs weitere Qt-Tests: alter Entwurf vor Login, Kontoauswahl/Bearbeitung,
+  Mehrkontoauswahl, direkte Anmeldung/Scheduler, sofortiger Versand und Fehlererholung.
+- Gesamtsuite: siehe README_START_HERE.txt. Native Windows-/Gmail-Abnahme offen.
+
+BULK-ENTWURFSGRUPPEN
+Im Arbeitsbereich Bulk-E-Mails öffnen, Kontakte suchen/mehrfach auswählen,
+persönliche Vorlagenwerte und Bewerbungsdokumente prüfen, gemeinsame Dateien
+anhängen und lokale Entwurfsgruppen atomar speichern/wieder öffnen.
+Gespeicherte Gruppen → Gruppenversand öffnen: feste Aufträge vorbereiten, gemeinsam
+freigeben und direkt/geplant mit Abstand ausführen. Fortschritt, Pause/Fortsetzen,
+Abbruch und Einzelabgleich sind implementiert. docs/21_Bulk_Delivery.txt.
+Acht Servicetests und sechs Qt-Tests prüfen diesen Ausbau. docs/19_Bulk_Drafts.txt.

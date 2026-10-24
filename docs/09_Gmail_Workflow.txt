@@ -1,0 +1,161 @@
+EMAILCENTER — GMAIL-EINRICHTUNG UND VERSAND
+Stand: 2026-10-11 | Sprint 6 in Arbeit, echte Gmail-Abnahme offen
+
+GOOGLE CLOUD EINRICHTEN
+1. Gewünschtes Google-Cloud-Projekt auswählen.
+2. APIs & Dienste > Bibliothek > Gmail API aktivieren.
+3. Google Auth Platform > Branding: App-Name, Support- und Kontakt-E-Mail.
+4. Audience/Zielgruppe: für ein privates Gmail-Konto External/Extern.
+   Im Testmodus die eigene Gmail-Adresse als Testnutzer hinzufügen.
+5. Data Access/Datenzugriff: gmail.compose und gmail.readonly hinzufügen.
+   Vollständige Namen:
+   https://www.googleapis.com/auth/gmail.compose
+   https://www.googleapis.com/auth/gmail.readonly
+6. Clients > Client erstellen > Desktop-App; JSON-Datei herunterladen.
+   Keine leere Datei selbst anlegen. Keine eigene Redirect-Website nötig:
+   EmailCenter verwendet einen temporären Listener auf 127.0.0.1.
+7. Die Clientdatei lokal außerhalb des Projektordners aufbewahren. Unter
+   E-Mail > Gmail verbinden auswählen und im Systembrowser anmelden.
+   Anmeldung hat ein Zeitlimit von 180 Sekunden; abgebrochene Anmeldung
+   lässt sich erneut starten. Die Dateiinhalte müssen nicht in den Chat.
+
+FIX / BEDIENUNG AB 2026-10-12
+- Nach Programmupdate die App schließen und über Start_EmailCenter.cmd neu starten.
+- Die Browserantwort allein bestätigt noch keine gespeicherte Kontoverbindung.
+  In der App muss unter Verbunden die Gmail-Adresse erscheinen.
+- Vor der Anmeldung gespeicherte Entwürfe: Senden / planen öffnen und
+  Absenderkonto auswählen. Bei genau einem verbundenen Konto wird dieses
+  vorgeschlagen; bei mehreren Konten ist eine ausdrückliche Auswahl nötig.
+- Absender und Auftrag werden zusammen gespeichert. Alte Versandaufträge
+  behalten ihren unveränderlichen Absender-Snapshot.
+- Freigeben plant/autorisiert den Auftrag. Freigeben & jetzt senden führt nach
+  Bestätigung sofort aus, auch vor einem geplanten Zeitpunkt. Auch Jetzt senden
+  im Arbeitsbereich kann einen freigegebenen Terminauftrag ausdrücklich vorziehen.
+- Der Scheduler ist direkt im Arbeitsbereich erreichbar und hält Termine ein.
+  Schöne OAuth-Abschlussseite und Tab-schließen-Button: docs/14_Workspace_TODO.md.
+
+BERECHTIGUNGEN UND TOKEN
+- gmail.compose erlaubt Entwürfe und Versand. gmail.readonly ermöglicht
+  Suche/Belegprüfung für unklar gebliebene Sendungen. Google stuft beide
+  als restricted ein; öffentliche Verteilung/Verifikation ist Release-Arbeit.
+- OAuth nutzt State/PKCE, Systembrowser und Googles Desktop-Flow.
+- Tokens einschließlich Refresh-Token werden im Windows Credential Manager
+  unter Projekt-ID/Konto-ID abgelegt. WinVault ist ausdrücklich gewählt;
+  es gibt keinen Fallback auf unverschlüsselte Dateien.
+- Große Token-Daten werden in begrenzte Credential-Blöcke geteilt. Eine neue
+  Generation wird vor dem Umschalten des Verweises vollständig gespeichert.
+- Token-Erneuerung erfolgt vor Gmail-Aufrufen und wird sicher gespeichert.
+  Fehler in der Anmeldung/Tokenablage verhindern den nachfolgenden Send-Aufruf.
+- Trennen entfernt die lokale Anmeldung und deaktiviert das Konto im Projekt.
+  Geplante Aufträge benötigen nach Neuverbindung eine neue Freigabe.
+  Trennen widerruft keine bereits gesendeten Nachrichten oder Google-Freigaben.
+- Projektbackups enthalten keine OAuth-Tokens. Auf einem anderen Windows-Konto
+  oder Rechner muss Gmail erneut verbunden werden.
+
+ENTWURF UND SIGNATUR
+1. Unter E-Mail > Entwürfe > Neu: Konto, Bewerbung und Signatur wählen.
+2. An/Cc/Bcc als einzelne Adressen ohne Anzeigenamen eintragen; mehrere
+   Adressen durch Semikolon oder Komma trennen. Mindestens ein An-Empfänger,
+   insgesamt höchstens 100 und keine doppelten Empfänger.
+3. Betreff und Text eingeben. Optional HTML-Quelltext; die Vorschau zeigt
+   den Quelltext, rendert keine externen Bilder und führt keinen Inhalt aus.
+4. Dateien hinzufügen oder ein erzeugtes Dokument aus dem Projekt anhängen.
+   Höchstens 20 Anhänge mit zusammen maximal 20 MiB. Beim Speichern entstehen
+   feste Projektkopien. Mehrzeiliger Text bleibt erhalten.
+5. Entwurf speichern bleibt lokal. Bearbeiten ändert nur den Entwurf.
+6. In Gmail speichern erzeugt/aktualisiert einen Gmail-Entwurf. Das sendet
+   keine Nachricht. Ein extern in Gmail versendeter Entwurf ist ein separater
+   Vorgang und wird nicht automatisch als lokaler Versandauftrag behandelt.
+   Lokaler Versand entfernt einen separat gespeicherten Gmail-Entwurf nicht.
+7. Signatur anlegen speichert Text und optional HTML. Beim Vorbereiten des
+   Versandauftrags wird der aktuelle Signaturinhalt in die Nachricht übernommen.
+
+VERSANDAUFTRAG UND FREIGABE
+1. Entwurf auswählen > Senden / planen (ohne Termin Senden, mit Termin Versand planen).
+2. Optional lokalen Termin eingeben, z. B. 2026-10-20T09:30, Zeitzone
+   Europe/Berlin. Leer bedeutet manueller Versand nach Freigabe.
+   Zeitzonen werden über zoneinfo/tzdata aufgelöst; UTC wird gespeichert.
+   Nicht existierende Uhrzeiten werden abgewiesen. Doppeldeutige Uhrzeiten
+   bei Zeitumstellung benötigen einen Offset, z. B. 2026-10-25T02:30+01:00.
+3. Der neue Auftrag zeigt den festen Absender, alle Empfänger inklusive Bcc,
+   Betreff, Nachricht mit Signatur, Anhänge und Termin. Checkbox zur Prüfung
+   bestätigen und Freigeben klicken. Das allein sendet eine manuelle Nachricht nicht.
+4. Jetzt senden führt nach einer zusätzlichen Bestätigung den freigegebenen
+   Auftrag aus. Geplante Termine dürfen noch nicht in der Zukunft liegen.
+5. Automatische geplante Nachrichten nur bei Bedarf per Checkbox einschalten.
+   Sie gilt für die aktuelle Projektsitzung. EmailCenter muss geöffnet bleiben;
+   geprüft wird alle 15 Sekunden, höchstens ein Auftrag pro Prüflauf.
+   Manuelle Aufträge ohne Termin sind vom Scheduler ausgeschlossen.
+6. Änderungen am Entwurf, der Signatur oder Ursprungsdatei verändern einen
+   vorbereiteten Auftrag nicht. Für Änderungen einen neuen Auftrag vorbereiten
+   und den bisherigen ungesendeten Auftrag stornieren.
+
+NEUSTART, STANDBY UND FEHLER
+- Beim Projektöffnen werden überfällige geplante/versandbereite Aufträge als
+  erneut zu prüfen markiert. Der Nachversand braucht eine ausdrückliche Freigabe.
+- Der Scheduler erkennt eine Timerlücke über 90 Sekunden, beispielsweise
+  nach Standby. Überfällige Aufträge werden ebenfalls zur Prüfung gesperrt.
+  Das Aktivieren des Schedulers prüft bereits überfällige Aufträge erneut.
+- Vor dem einzelnen Send-Aufruf werden Sending und ein Started-Versuch atomar
+  gespeichert. Die Gmail-POST-Anfrage wird nicht automatisch wiederholt.
+- Erfolgreicher Providerbeleg, Sent-Status und Aktivitätsprotokoll werden
+  gemeinsam bestätigt. Bereits versendete Aufträge werden nicht erneut gesendet.
+- Ein Send-Timeout, Verbindungsabbruch, HTTP 429/5xx oder eine unlesbare
+  Erfolgsantwort bedeutet Uncertain. Ein Neustart während Sending führt zu
+  ReconciliationRequired. Beide Zustände sperren weiteren Versand.
+- Gmail abgleichen sucht in Gesendet nach der festen RFC-Message-ID und prüft
+  deren Header/SENT-Label. Genau ein Beleg bestätigt Sent; kein oder mehrere
+  Belege lassen den Auftrag gesperrt. Später erneut abgleichen ist möglich.
+  Ein fehlender Treffer beweist keinen fehlgeschlagenen Versand.
+- Eindeutig abgewiesene Send-Anfragen werden Failed. Nur diese können nach
+  erneuter Prüfung ausdrücklich freigegeben werden. Kein automatischer Retry.
+- Geänderte/fehlende Projektkopien, falscher Absender oder ungültige Freigabe
+  verhindern den Versand. Alte Aufträge ohne vollständigen V4-Snapshot sind
+  erhalten, müssen aber neu vorbereitet werden.
+- Stornieren ist für ungesendete bzw. eindeutig fehlgeschlagene Aufträge möglich.
+  Bereits versendete und unklare Nachrichten lassen sich hier nicht zurückrufen.
+
+TECHNIK UND PRÜFUNG
+- mail_models.py: Adressen, Empfänger, Zeitumstellung und MIME-Erzeugung.
+- credentials.py: projektbezogene Windows-Tokenablage mit begrenzten Blöcken.
+- gmail.py: OAuth und REST-Provider, begrenzte Netzwerkzeiten und Fehlerklassen.
+- mail_service.py: Entwürfe, Signaturen, feste Dateien, Freigabe, Zustandsregeln,
+  Scheduler, Versuchshistorie und positiver Versandabgleich.
+- ui/mail_page.py: Editor, Freigabedialog, Konten und Historie ohne Widget-SQL.
+- Migration 004 ergänzt Snapshot-/Freigabefelder und schützt Kernwerte per Trigger.
+- Nachrichten und Anhänge liegen unter exports/mail/ und sind im Backup enthalten.
+- Die hier verwendete JSON-Datei wurde auf Desktop-Format/Google-Endpunkte
+  geprüft; das bestätigt weder API-Aktivierung noch Google-Kontoberechtigungen.
+- Gesamtstand bei Sprint 6: 137 Tests, davon 136 in der normalen Suite erfolgreich.
+  Den aktuellen Gesamtstand nennt README_START_HERE.txt. Der native
+  Vault-Test ist dort opt-in und wurde separat erfolgreich unter Windows geprüft.
+  38 automatische Mail-Tests plus ein nativer Vault-Test und vier zusätzliche
+  GUI-Tests verwenden synthetische Daten bzw. Provider-Testdoubles.
+  Es wurden keine echten E-Mails verschickt.
+- Reproduzierbar: .\.venv\Scripts\python.exe -m unittest discover -s tests -v
+- Nativer Check außerhalb eingeschränkter Prozesse:
+  $env:PYTHONPATH = Join-Path (Get-Location) 'tests'
+  $env:EMAILCENTER_NATIVE_VAULT_TEST = '1'
+  .\.venv\Scripts\python.exe -m unittest test_mail.VaultTests.test_native_windows_vault_roundtrip_only_uses_temporary_test_identity -v
+  Remove-Item Env:EMAILCENTER_NATIVE_VAULT_TEST
+- Screenshot docs/mail_preview.png stammt aus der echten Qt-Oberfläche mit
+  Provider-Testdouble; Status Versendet bedeutet dort ausschließlich Testdaten.
+
+NOCH ABZUNEHMEN
+- Echte Gmail-OAuth-Anmeldung mit der heruntergeladenen Desktop-Clientdatei.
+- Ein ausdrücklich freigegebener Testversand an eine vereinbarte Testadresse,
+  einschließlich Anhang und Versandbeleg im echten Gmail-Konto.
+- Reale Provider-/Kontolimits und Verhalten der Message-ID beim Versand.
+- OAuth-Verifikation, Lizenz-/Datenschutzprüfung und Mehrinstanz-/Release-Abnahme.
+  Lokale Sperren und eine Nachrichten-ID garantieren keine Exactly-once-
+  Zustellung beim Provider.
+
+GOOGLE-REFERENZEN
+https://developers.google.com/workspace/gmail/api/quickstart/python
+https://developers.google.com/workspace/guides/configure-oauth-consent
+https://developers.google.com/workspace/gmail/api/auth/scopes
+https://developers.google.com/identity/protocols/oauth2/native-app
+https://developers.google.com/workspace/gmail/api/guides/sending
+https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.messages/list
+https://developers.google.com/workspace/gmail/api/guides/handle-errors
+https://googleapis.dev/python/google-auth-oauthlib/latest/reference/google_auth_oauthlib.flow.html

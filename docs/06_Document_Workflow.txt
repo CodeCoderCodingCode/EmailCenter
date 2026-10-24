@@ -1,0 +1,88 @@
+EMAILCENTER — DOKUMENTWORKFLOW / ENTWICKLERBEISPIEL
+Stand: 2026-10-11
+
+Der Dokumentworkflow ist als Python-Service vorhanden und über die vorgezogene
+Sprint-7-Oberfläche bedienbar: Vorlagen importieren/versionieren, Mapping,
+manuelle/aus Bewerbungen übernommene Werte, Textvergleich, DOCX und PDF-Anzeige.
+
+API (src im Python-Suchpfad):
+
+from emailcenter.project import create_project
+from emailcenter.document_service import DocumentService
+
+with create_project("C:/EmailCenter-Projekte/Beispiel") as project:
+    service = DocumentService(project)
+    imported = service.import_template(
+        "C:/Vorlagen/Bewerbung.docx",
+        name="Bewerbung",
+        mapping={"NAME": "applicant.name", "COMPANY": "company.name"},
+        required_placeholders=("NAME", "COMPANY"),
+    )
+    version_id = imported["version"]["id"]
+    result, document = service.generate_from_context(
+        version_id,
+        {"applicant": {"name": "Ada"}, "company": {"name": "Beispiel GmbH"}},
+        output_filename="Bewerbung-Ada.docx",
+    )
+    print(result.output_path, result.unresolved)
+
+    # Vorschau-Dateien bleiben nur innerhalb des with-Blocks erhalten.
+    with service.preview_document(
+        version_id, {"NAME": "Ada", "COMPANY": "Beispiel GmbH"}, with_pdf=False,
+    ) as preview:
+        print(preview.template_path, preview.generated.output_path)
+
+    # Benötigt LibreOffice; PDF erhält denselben Dokumentensatz wie das DOCX.
+    pdf_document = service.create_pdf_version(document["id"])
+
+VERSIONEN UND MAPPING
+- add_template_version(template_id, source_path, mapping=...,
+  required_placeholders=...) importiert eine neue Version. Alte Versionen und
+  deren Mapping bleiben erhalten. Für jede neue Version Mapping explizit angeben.
+- Mapping-Schlüssel sind erkannte Namen ohne {{ }}. Werte sind explizite
+  Feldpfade in verschachtelten Dictionaries, etwa applicant.name.
+- Fehlende Quellfelder werden nicht geraten. Pflichtwerte lösen die strukturierte
+  Ausnahme MissingRequiredValues mit der Liste placeholders aus.
+- Optional ungelöste Platzhalter verbleiben im DOCX; GenerationResult.unresolved
+  zeigt sie an. Vor endgültigem Versand/Export ist die GUI-Prüfung erforderlich.
+- Das gespeicherte Mapping und Pflichtwerte werden je Version eingefroren.
+- Änderungen an archivierten Vorlagen oder erzeugten DOCX werden vor Erzeugung
+  bzw. PDF-Konvertierung über SHA-256 erkannt. Änderungen als neue Version
+  importieren oder Dokument erneut erzeugen.
+
+DOKUMENTENSÄTZE
+- generate_document/generate_from_context legt standardmäßig einen neuen Satz an.
+- Mehrere Dateien: service.document_sets.create(name, application_id=...) aufrufen
+  und die ID als document_set_id bei jeder Erzeugung übergeben.
+- Dokument und Satz müssen derselben Bewerbung angehören. DOCX und sein PDF
+  behalten dieselbe Satz-ID und sind über source_document_id verknüpft.
+- Satz und Dokument-Datensatz werden gemeinsam in einer DB-Transaktion gespeichert.
+  Bei Fehlern werden erzeugte Dateien entfernt. Eine laufende fremde Transaktion
+  muss vor schreibenden Service-Aufrufen abgeschlossen werden.
+- DB und Dateisystem bilden keine gemeinsame Transaktion. Wiederherstellung
+  nach Prozessabbruch und Bereinigung verwaister Dateien gehören zu Sprint 8.
+
+VORSCHAU / PDF
+- preview_document erzeugt Arbeitskopien unter tmp, ohne Dokument-Datensätze
+  anzulegen. Beim Verlassen des Kontextes werden alle Vorschau-Dateien entfernt,
+  auch nach Fehlern. Für GUI-Anzeige den Kontext während der Vorschau offenhalten.
+- with_pdf=True aktiviert zusätzlich die LibreOffice-Konvertierung.
+- LibreOffice wird auf PATH und in üblichen Windows-Program-Files-Ordnern gesucht;
+  alternativ executable=... mit vollständigem soffice.exe-Pfad angeben.
+- Jeder Konvertierungslauf erhält ein eigenes temporäres LibreOffice-Profil.
+- Timeout, Exitcode, fehlende Ausgabe und PDF-Dateikennung werden geprüft.
+  Eine vorhandene Zieldatei wird erst nach erfolgreicher Konvertierung ersetzt.
+- PDF-Dateikennung ist eine Grundprüfung; vollständige PDF-/Layout-Abnahme fehlt.
+
+UNTERSTÜTZUNG UND ABNAHME
+- Platzhalter in Fließtext, Tabellen, Kopf-/Fußzeilen, Fuß-/Endnoten und Kommentaren;
+  auch über mehrere Word-Text-Runs verteilt.
+- Ersatztext übernimmt die Formatierung des ersten beteiligten Runs. Unveränderte
+  Paketbestandteile (z.B. Bilder) werden kopiert; komplexe Word-Strukturen sind
+  damit nicht pauschal auf Layouttreue geprüft.
+- Die Originalquelle wird unverändert archiviert/kopiert.
+- Automatische Tests verwenden kleine OOXML-Pakete und Testdoubles für LibreOffice;
+  sie ersetzen keine Sichtprüfung realer Word-Dokumente.
+- Lokal ist kein LibreOffice verfügbar. Echter PDF-Lauf und komplexe Layouttreue
+  bleiben als Abnahmepunkte dokumentiert. Sichtbarer Vorher-/Nachher-Textvergleich
+  und PDF-Anzeige sind vorhanden; der Textvergleich bildet kein Seitenlayout ab.

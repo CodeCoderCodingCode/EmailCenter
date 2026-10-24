@@ -1,0 +1,81 @@
+EMAILCENTER — E-MAIL-VORLAGEN
+Stand: 2026-10-12 | Sprint 4-Ausbau / 7A
+
+ANLEGEN UND VERWALTEN
+1. E-Mail-Vorlagen verwalten im Arbeitsbereich oder im E-Mail-Editor öffnen.
+2. Neue Vorlage: Name, Betreff, Format Text/HTML-Quelltext und Nachricht angeben.
+3. Platzhalter über Einfügen in Betreff/Nachricht einsetzen oder selbst schreiben.
+4. Speichern legt Version 1 an. Bearbeiten speichert eine neue Version; alte
+   Versionen behalten ihren Inhalt. Die Bibliothek zeigt die neueste Version.
+5. Versionen / Bearbeiten öffnet alle gespeicherten Versionen. Eine ältere Fassung
+   auswählen und als neue Version speichern oder Gewählte Version duplizieren.
+   Duplizieren erzeugt eine eigene Vorlage mit Version 1 und Namenszusatz (Kopie).
+6. Namenssuche und Seitenwechsel mit 25 Vorlagen pro Seite. Prozentzeichen,
+   Unterstriche und Anführungszeichen sind normale Suchzeichen.
+
+- Änderungen erkennen einen zwischenzeitlich geänderten Versionsstand. Fehler
+  behalten Eingaben. Versionen neu laden ersetzt sie erst nach Bestätigung.
+- Versionswechsel oder Duplizieren mit ungespeicherten Eingaben fragt vorher nach.
+- Die Vorlage enthält Betreff, Nachricht und Format. Empfänger, Konten, Signaturen
+  und Anhänge werden im konkreten Entwurf ausgewählt.
+
+PLATZHALTER
+- Syntax: {{company.name}} oder eigener Wert {{NOTE}}; optional Leerzeichen innerhalb
+  der Klammern. Alle verwendeten Platzhalter müssen vor der Übernahme ausgefüllt sein.
+- Projektwerte: application.title, application.application_date, company.name,
+  company.website, applicant.display_name, applicant.email, applicant.phone,
+  job.title, job.reference_number, job.location, contact.display_name, contact.email.
+- Bewerbungswerte werden aus der ausgewählten aktiven Bewerbung geladen.
+- Kontaktwerte werden aus dem ausdrücklich ausgewählten Ansprechpartner übernommen,
+  solange der Empfänger im Entwurf seiner übernommenen Adresse entspricht. Bei
+  manuell geändertem Empfänger bleiben Kontaktplatzhalter zur ausdrücklichen Eingabe offen.
+- Eigene oder fehlende Werte direkt in der Vorschau ergänzen. Auch übernommene
+  Werte sind dort für diese Nachricht änderbar; Stammdaten bleiben unverändert.
+- Maximal 50 verschiedene Platzhalter. Es gibt keine Ausdrücke, Funktionsaufrufe
+  oder rekursive Auswertung eingefügter Werte. HTML-Werte werden als Text maskiert.
+- Zeilenumbrüche in Betreffwerten und zu lange Betreffzeilen werden abgewiesen.
+
+IM ENTWURF VERWENDEN
+1. Im E-Mail-Editor eine konkrete Vorlage und Version auswählen, Vorlage prüfen.
+2. Vorschau zeigt Betreff, Text bzw. HTML-Quelltext, aufgelöste Werte und fehlende
+   Pflichtwerte. Fehlende Werte ergänzen und Vorschau aktualisieren.
+3. Nach jeder Wertänderung ist die vorherige Vorschau für die Übernahme gesperrt.
+4. Betreff, Nachricht und Format im Entwurf ersetzen markieren und In Entwurf
+   übernehmen. Empfänger/Cc/Bcc, Konto, Signatur, Bewerbungsbezug und Anhänge bleiben erhalten.
+5. Entwurf weiter bearbeiten und speichern. Erst Prüfung/Freigabe eines gesonderten
+   Versandauftrags ermöglicht Versand. Die Vorschau schreibt keinen Entwurf und sendet nicht.
+
+- Abbrechen lässt den bisherigen Entwurf unverändert. Fehler behalten Vorschauwerte.
+- Aus dem Editor angelegte Vorlagen erscheinen nach Speichern in dessen Auswahl;
+  eine neue Version ersetzt keine bereits ausdrücklich ausgewählte ältere Version.
+- Gespeicherte Entwürfe und vorbereitete Aufträge besitzen ihren eigenen Inhalt.
+  Spätere Vorlagenänderungen verändern diese Inhalte nicht.
+- Vorlagen bleiben im Projekt und beim Wiederöffnen erhalten; bestehendes Schema
+  unterstützt sie bereits. DOCX-Vorlagen und ihre Zuordnungen bleiben nutzbar.
+
+PRÜFUNG
+- Neun Servicetests: Versionen/Wiederöffnung, Duplikate, Suche/Pagination,
+  Kontextauflösung, fehlende Werte, HTML-Maskierung, Headerprüfung, Konflikte,
+  Integritätsprüfung, atomarer Rollback und unveränderte Entwürfe/Aufträge.
+- Sechs Qt-Tests: Bibliothek, Versionen, Duplikate, Validierung/Fehlererholung,
+  Vorschau/Bestätigung, fehlende Werte, HTML und erhaltene Empfänger/Anhänge.
+- Screenshot mit Testdaten: docs/mail_template_preview.png.
+- Automatisierte Prüfung nutzt einen Testprovider; kein echter Versand durch den Agenten.
+
+NOCH OFFEN
+- Weitere Vorlagen-/Kontovorgaben und globale Bibliothek.
+- Reales Mail-Layout mit Gmail/Outlook und Vorlagenwechsel gesammelt abnehmen.
+
+GEMEINSAME BIBLIOTHEK UND VORSCHAU
+- Unter Vorlagen gemeinsam DOCX und E-Mail suchen; Typfilter und Seitenwechsel.
+  Jede Zeile ist eine konkrete Version. DOCX verwenden bzw. E-Mail bearbeiten
+  öffnen die passende Funktion; ausgewählte ältere Mailversion wird berücksichtigt.
+- Version duplizieren erzeugt eine unabhängige Vorlage. Bei DOCX werden Inhalt,
+  Feldzuordnung, Pflichtwerte und Beschreibung übernommen; Original unverändert.
+  Fehlende/veränderte Quellen, auch während des Kopierens, werden abgewiesen.
+- Der E-Mail-Editor zeigt eine gerenderte Text-/HTML-Ansicht während der Eingabe.
+  Platzhalter dort noch ungeprüft. Die persönliche Vorschau besitzt Nachricht
+  und Quelltext als Tabs; geänderte Werte sperren Übernahme bis zur neuen Vorschau.
+- Darstellung über lokalen Qt-Renderer; keine externen Bilder/Tracker/Dateien.
+  Nachrichtenvorlagen sind bereits im Einzel- und Bulk-Ablauf nutzbar.
+- Ansichten: docs/templates_library_preview.png und docs/mail_template_renderer_preview.png.

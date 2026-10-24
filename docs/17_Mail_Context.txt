@@ -1,0 +1,64 @@
+EMAILCENTER — E-MAIL AUS BEWERBUNG ODER KONTAKT
+Stand: 2026-10-12 | Sprint 7A / 6
+
+EINSTIEG
+- Im Arbeitsbereich: Karte E-Mail aus Bewerbung / Kontakt; Typ und konkreten
+  Datensatz auswählen, anschließend E-Mail aus Auswahl schreiben.
+- Unter Bewerbungen oder Kontakte: Zeile auswählen und E-Mail schreiben.
+  Der Editor öffnet sich direkt; die bisherige Seite bleibt bestehen.
+
+VORSCHLÄGE PRÜFEN
+- Bewerbung: Bewerbungsbezug, Betreff, Stellenbezeichnung/Referenz und kurzer
+  Texteinstieg. Den Nachrichtentext vor dem Speichern vervollständigen.
+- Ansprechpartner der Bewerbung haben Vorrang. Ohne aktive zugeordnete Kontakte
+  werden Ansprechpartner des aktiven Unternehmens angeboten.
+- Genau ein gültiger Ansprechpartner wird vorgeschlagen. Bei mehreren bleibt
+  An zunächst leer; Ansprechpartner wählen und Empfänger übernehmen anklicken.
+  Beim Unternehmensfallback wird ein gültiger Hauptkontakt vorgeschlagen.
+- Ungültige/fehlende E-Mail-Adressen werden erklärt; manuelle Eingabe bleibt möglich.
+  Archivierte Kontakte werden nicht angeboten. Die Profiladresse wird nicht als
+  Empfänger oder Gmail-Absender verwendet.
+- Kontakt: Empfänger, neutraler Betreff und Anrede. Es wird keine Bewerbung erraten.
+- Empfänger übernehmen passt die Anrede nur an, solange der Texteinstieg noch
+  unverändert ist. Ein bereits selbst geschriebener Nachrichtentext bleibt bestehen.
+
+ANHÄNGE
+- Bei Bewerbungen enthält die Dokumentauswahl ausschließlich aktive Dokumente
+  dieser Bewerbung, einschließlich über Dokumentensätze zugeordneter Dateien.
+- DOCX und PDF sind ausdrücklich auswählbar. Dokument wählen und Anhängen
+  anklicken; nichts wird automatisch angehängt. Wiederholtes Anhängen derselben
+  Dokument-ID erzeugt keinen doppelten Anhang.
+- Kontakte haben keine eigene Dokumentzuordnung; Projektdateien können manuell
+  ausgewählt werden. Dateien hinzufügen bleibt in jedem Modus verfügbar.
+- Speichern verwendet den bestehenden Mailservice: feste Dateikopien, gültige
+  Projektreferenzen, Dateiprüfung und 20-MiB-Gesamtlimit. Spätere Änderungen am
+  ursprünglichen Dokument verändern den gespeicherten Entwurf nicht.
+
+BESTEHENDEN ENTWURF ERGÄNZEN
+1. Bewerbung im Editor auswählen und Kontext übernehmen anklicken.
+2. Bestätigen, dass Empfänger, Betreff, Text, Format und bisherige Anhangsauswahl
+   ersetzt werden. Das erzeugt Vorschläge in Textformat mit leerer Anhangsauswahl.
+   Konto und Signatur behalten ihre Auswahl; Dokumente danach ausdrücklich anhängen.
+3. Änderungen prüfen und Entwurf speichern. Die bestehende Entwurf-ID bleibt erhalten.
+
+- Reine Bewerbungswahl ersetzt keine Inhalte. Bei geändertem Bezug werden alte
+  Kontakt-/Dokumentvorschläge gesperrt und der noch geladene Kontext erklärt.
+- Fehler beim Kontextladen behalten alle Eingaben. Abbrechen schreibt keinen
+  neuen Entwurf. Bereits gespeicherte Aufträge behalten ihren festen Snapshot.
+- Der Editor scrollt bei schmalen/niedrigen Fenstern; Speichern/Abbrechen bleiben
+  am unteren Rand erreichbar. Datensatzaktionsleisten umbrechen in mehrere Zeilen.
+- Erst separater Auftrag, Prüfung und Freigabe erlauben Versand. Kontext laden
+  verbindet kein Konto und sendet keine E-Mail.
+
+PRÜFUNG
+- Sieben Servicetests: Priorität, Hauptkontakt, Mehrfachwahl, fehlende/ungültige
+  Adressen, Archivmarkierungen, unpassende Referenzen, Dokumentzuordnung und
+  unveränderte Entwürfe/Dateien bei reinen Kontextanfragen.
+- Fünf Qt-Tests: Einstieg aus Arbeitsbereich/Listen, Empfängerwahl, Dateikopie,
+  manueller Text, Bestätigung/Fehlererholung, Abbruch und schmale Darstellung.
+- Automatisierte Prüfung nutzt einen Testprovider; kein echter Versand durch den Agenten.
+- Screenshot mit Testdaten: docs/mail_context_preview.png.
+
+NÄCHSTER AUSBAU
+- Wiederverwendbare E-Mail-Vorlagen, Bulk-Empfänger, Personalisierung und Export.
+- Projekt-/Kontovorgaben, Signaturverwaltung und vollständige Windows-/DPI-Abnahme.

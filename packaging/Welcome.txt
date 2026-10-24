@@ -1,0 +1,9 @@
+Willkommen bei EmailCenter
+
+Bewerbungen und E-Mails mit persönlichen Texten, Excel-Daten und passenden Anhängen vorbereiten, prüfen und versenden.
+
+Enthalten: E-Mail-Builder, Word Replace, echte PDF-Konvertierung, bearbeitbare Vorlagen und bebilderter Offline-Guide.
+
+Die Installation erfolgt für deinen Windows-Nutzer. Python und LibreOffice müssen nicht separat installiert werden. Optional kannst du Startmenü- und Desktop-Verknüpfungen wählen.
+
+Für den Gmail-Versand meldest du dich mit deinem eigenen Google-Konto an. Der Betreiber muss deine Google-Kontoadresse vorab als Testnutzer freigeschaltet haben.
